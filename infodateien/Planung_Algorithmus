@@ -1,0 +1,11 @@
+1. Einarbeitung in die Tools (1 1/2 Wochen) bis zum 29.4
+2. Jedem Wort sein Synset zuordnen. Beachtung von POS (Noun...) bis zum 2.5. -> Feld in dem Objekt
+3. Gruppieren der Wortobjekt nach Rolle 
+4. Gruppieren / Ausschließen auf Basis der Synsets (3 Wochen bis zum 28.5.)
+5. Dominanzbewertung (2 Wochen bis zum 11.6.)
+
+
+Hinweise von Delfmann:
+	- perform bill audit <--> check invoice (Problem: check und audit (verb, noun)) -> Derivate; Einbau von Heuristiken, die solche erkennen 
+	  (Ähnlichkeitsgrad errechnen)
+	- Regler einbauen, die je nach Stärke der Bindung filtern

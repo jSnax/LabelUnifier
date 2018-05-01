@@ -1,0 +1,20 @@
+Projekt in Git pushen
+1. $ git init
+2. $ git remote add origin <userpath aus gitlab>
+3. $ git add .
+4. $ git commit -m '<message>'
+5. $ git push -u origin <branch>
+
+Einbindung in Eclipse:
+1. "Show View" -> "Other"
+2. "Felder ausfüllen (https verwenden und Adresse aus dem Git Feld angeben, nicht die URL)
+3. Projekt importieren! (ansonsten wird weiterhin im default-workspace weitergearbeitet)
+4. Changes zum Index hinzufügen und Commit Message hinzufügen
+4. Changes comitten
+5. Branches beachten
+
+in Case needed: Commiting über Git Bash hinzufügen
+1. cd zu gewünschtem directory
+2. add <data>
+3. commit -m '<message>'
+4. push -u origin <branch> 
