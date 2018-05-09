@@ -1,15 +1,16 @@
 package de.uni_koblenz.cluster;
 
 import de.uni_koblenz.label.*;
-import de.uni_koblenz.enums.*;
+//import de.uni_koblenz.enums.*;
+import edu.stanford.nlp.trees.*;
 
-public class GrammaticalRelation {
+public class GrammaticalRelationBetweenWords {
 
 	private Word relatedWord1;
 	private Word relatedWord2;
-	private RelationType grammaticalRelationType;
+	private GrammaticalRelation grammaticalRelationType;
 	
-	public GrammaticalRelation() {
+	public GrammaticalRelationBetweenWords() {
 		
 	}
 	
@@ -28,14 +29,15 @@ public class GrammaticalRelation {
 	public void setRelatedWord2(Word relatedWord2) {
 		this.relatedWord2 = relatedWord2;
 	}
-	
-	public RelationType getGrammaticalRelationType() {
+
+	public GrammaticalRelation getGrammaticalRelationType() {
 		return grammaticalRelationType;
 	}
-	
-	public void setGrammaticalRelationType(RelationType grammaticalRelationType) {
+
+	public void setGrammaticalRelationType(GrammaticalRelation grammaticalRelationType) {
 		this.grammaticalRelationType = grammaticalRelationType;
 	}
+	
 	
 	
 	

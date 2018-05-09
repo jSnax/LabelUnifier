@@ -1,8 +1,7 @@
 package de.uni_koblenz.label;
 
 import de.uni_koblenz.enums.*;
-
-import de.uni_koblenz.cluster.*;
+import edu.stanford.nlp.trees.*;
 
 public class Word {
 
@@ -17,6 +16,7 @@ public class Word {
 		
 	}
 	
+	
 	public PartOfSpeechTypes getPartOfSpeech() {
 		return partOfSpeech;
 	}
@@ -25,14 +25,18 @@ public class Word {
 		this.partOfSpeech = partOfSpeech;
 	}
 	
+
+	
 	public GrammaticalRelation[] getGrammaticalRelations() {
 		return grammaticalRelations;
 	}
-	
+
+
 	public void setGrammaticalRelations(GrammaticalRelation[] grammaticalRelations) {
 		this.grammaticalRelations = grammaticalRelations;
 	}
-	
+
+
 	public String getBaseform() {
 		return baseform;
 	}
