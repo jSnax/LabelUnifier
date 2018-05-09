@@ -1,7 +1,6 @@
 package de.uni_koblenz.cluster;
 
 import de.uni_koblenz.label.*;
-//import de.uni_koblenz.enums.*;
 import edu.stanford.nlp.trees.*;
 
 public class GrammaticalRelationBetweenWords {
