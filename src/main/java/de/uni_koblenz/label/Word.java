@@ -1,8 +1,16 @@
 package de.uni_koblenz.label;
 
-import de.uni_koblenz.enums.*;
+import java.util.List;
+import java.util.Properties;
 
+import de.uni_koblenz.enums.*;
 import de.uni_koblenz.cluster.*;
+import edu.stanford.nlp.ling.CoreAnnotations.LemmaAnnotation;
+import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
+import edu.stanford.nlp.ling.CoreAnnotations.TokensAnnotation;
+import edu.stanford.nlp.pipeline.Annotation;
+import edu.stanford.nlp.pipeline.StanfordCoreNLP;
+import edu.stanford.nlp.util.CoreMap;
 
 public class Word {
 
@@ -38,6 +46,7 @@ public class Word {
 	}
 	
 	public void setBaseform(String baseform) {
+		
 		this.baseform = baseform;
 	}
 	
@@ -63,6 +72,28 @@ public class Word {
 	
 	public void setDominance(Integer dominance) {
 		this.dominance = dominance;
+	}
+	
+	public void stem(String toStem){
+		StanfordCoreNLP pipeline = new StanfordCoreNLP(new Properties(){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			{
+			  setProperty("annotators", "tokenize,ssplit,pos,lemma");
+			}});
+
+			Annotation token = new Annotation(toStem);
+			pipeline.annotate(token); 
+			List<CoreMap> list = token.get(SentencesAnnotation.class);
+			String stemmed = list
+			                        .get(0).get(TokensAnnotation.class)
+			                        .get(0).get(LemmaAnnotation.class);
+			toStem = stemmed;
+			System.out.println(toStem);
+	
 	}
 	
 	
