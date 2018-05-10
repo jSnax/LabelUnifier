@@ -74,15 +74,16 @@ public class Word {
 		this.dominance = dominance;
 	}
 	
-	public void stem(String toStem){
+	/*  stem(String toStem)
+	 *  method to get the lemma of a single Word using the CoreNLP Lemmatizer.
+	 */ 
+	public void stem(String toStem){		 
 		StanfordCoreNLP pipeline = new StanfordCoreNLP(new Properties(){
-			/**
-			 * 
-			 */
+			
 			private static final long serialVersionUID = 1L;
-
 			{
-			  setProperty("annotators", "tokenize,ssplit,pos,lemma");
+			  setProperty("annotators", "tokenize,ssplit,pos,lemma"); 
+			  	// initialize annotator dependencies 
 			}});
 
 			Annotation token = new Annotation(toStem);
@@ -92,8 +93,6 @@ public class Word {
 			                        .get(0).get(TokensAnnotation.class)
 			                        .get(0).get(LemmaAnnotation.class);
 			toStem = stemmed;
-			System.out.println(toStem);
-	
 	}
 	
 	
