@@ -65,6 +65,18 @@ public class Word {
 		this.dominance = dominance;
 	}
 	
-	
+	/* stem nimmt String originalForm als Input und gibt String(?) baseForm als Output
+	 * 
+	 * public void stem (String originalForm) {
+		
+		*/
+		
+	/* Calculate dominance nimmt Label[] ?? und gibt eine geordnete Reihenfolge von Integern dominance aus - d.h. berechnet das dominante Wort/Label
+		 * 
+		 * public void calculateDominance (Label[] ??){
+		 * 
+		 * }
+
+	 */
 	
 }
