@@ -1,16 +1,12 @@
 package de.uni_koblenz.label;
 
-import java.util.List;
-import java.util.Properties;
-
-import de.uni_koblenz.enums.*;
-import de.uni_koblenz.cluster.*;
-import edu.stanford.nlp.ling.CoreAnnotations.LemmaAnnotation;
-import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
-import edu.stanford.nlp.ling.CoreAnnotations.TokensAnnotation;
-import edu.stanford.nlp.pipeline.Annotation;
-import edu.stanford.nlp.pipeline.StanfordCoreNLP;
-import edu.stanford.nlp.util.CoreMap;
+import de.uni_koblenz.cluster.GrammaticalRelation;
+import de.uni_koblenz.enums.PartOfSpeechTypes;
+import de.uni_koblenz.enums.RoleLeopold;
+import net.sf.extjwnl.JWNLException;
+import net.sf.extjwnl.data.IndexWord;
+import net.sf.extjwnl.data.POS;
+import net.sf.extjwnl.dictionary.Dictionary;
 
 public class Word {
 
@@ -23,6 +19,16 @@ public class Word {
 	
 	public Word() {
 		
+	}
+	public Word(String originalForm) {
+		this.originalForm = originalForm;
+	}
+	public Word(PartOfSpeechTypes partOfSpeech) {
+		this.partOfSpeech = partOfSpeech;
+	}
+	public Word(String originalForm, PartOfSpeechTypes partOfSpeech) {
+		this.originalForm = originalForm;
+		this.partOfSpeech = partOfSpeech;
 	}
 	
 	public PartOfSpeechTypes getPartOfSpeech() {
@@ -76,7 +82,7 @@ public class Word {
 	
 	/*  stem(String toStem)
 	 *  method to get the lemma of a single Word using the CoreNLP Lemmatizer.
-	 */ 
+	 
 	public void stem(String toStem){		 
 		StanfordCoreNLP pipeline = new StanfordCoreNLP(new Properties(){
 			
@@ -93,8 +99,57 @@ public class Word {
 			                        .get(0).get(TokensAnnotation.class)
 			                        .get(0).get(LemmaAnnotation.class);
 			toStem = stemmed;
+	}*/ 
+
+
+	public static void stemWord(Word input) throws JWNLException {
+		
+		Dictionary dict = Dictionary.getDefaultResourceInstance();
+		
+		POS pos = null;
+		
+		if (input.getPartOfSpeech().equals(PartOfSpeechTypes.NOUN_SINGULAR_MASS) ||
+				input.getPartOfSpeech().equals(PartOfSpeechTypes.NOUN_PLURAL) || 
+				input.getPartOfSpeech().equals(PartOfSpeechTypes.PROPER_NOUN_SINGULAR) ||
+				input.getPartOfSpeech().equals(PartOfSpeechTypes.PROPER_NOUN_PLURAL) ||
+				input.getPartOfSpeech().equals(PartOfSpeechTypes.NOUN_PHRASE)){ 
+	        pos = POS.NOUN; 
+	      } else if (input.getPartOfSpeech().equals(PartOfSpeechTypes.VERB_BASE) ||
+	    		  input.getPartOfSpeech().equals(PartOfSpeechTypes.VERB_PAST) ||
+	    		  input.getPartOfSpeech().equals(PartOfSpeechTypes.VERB_GERUND_OR_PRESENT_PARTICIPLE) ||
+	    		  input.getPartOfSpeech().equals(PartOfSpeechTypes.VERB_PAST_PARTICIPLE) ||
+	    		  input.getPartOfSpeech().equals(PartOfSpeechTypes.VERB_NON_3RD_PERSON_SINGULAR_PRESENT) ||
+	    		  input.getPartOfSpeech().equals(PartOfSpeechTypes.VERB_3RD_PERSON_SINGULAR_PRESENT) ||
+	    		  input.getPartOfSpeech().equals(PartOfSpeechTypes.VERB_PHRASE)) { 
+	        pos = POS.VERB; 
+	      } else if (input.getPartOfSpeech().equals(PartOfSpeechTypes.ADVERB) || 
+	    		  input.getPartOfSpeech().equals(PartOfSpeechTypes.ADJECTIVE_COMPARATIVE) ||
+	    		  input.getPartOfSpeech().equals(PartOfSpeechTypes.ADVERB_SUPERLATIVE)) { 
+	        pos = POS.ADVERB; 
+	      } else if (input.getPartOfSpeech().equals(PartOfSpeechTypes.ADJECTIVE) ||
+	    		  input.getPartOfSpeech().equals(PartOfSpeechTypes.ADJECTIVE_COMPARATIVE) ||
+	    		  input.getPartOfSpeech().equals(PartOfSpeechTypes.ADJECTIVE_SUPERLATIVE)) { 
+	        pos = POS.ADJECTIVE; 
+	      }else {
+	    	pos = null;  
+	      }
+	    
+		if(pos == null) {
+			input.setBaseform(input.getOriginalForm());
+		} else {
+            IndexWord word = dict.getIndexWord(pos, input.getOriginalForm());
+            String lemma = null;
+            if (word != null) {
+                lemma = word.getLemma();
+            } else {
+                IndexWord toForm = dict.getMorphologicalProcessor().lookupBaseForm(pos, input.getOriginalForm());
+                if (toForm != null) {
+                    lemma = toForm.getLemma();
+                } else {
+                    lemma = input.getOriginalForm();
+                }
+            }
+            input.setBaseform(lemma);	
+		}
 	}
-	
-	
-	
 }
