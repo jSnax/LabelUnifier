@@ -4,14 +4,15 @@ import de.uni_koblenz.enums.PartOfSpeechTypes;
 import de.uni_koblenz.enums.RoleLeopold;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Properties;
 
 import edu.stanford.nlp.ie.util.RelationTriple;
 import edu.stanford.nlp.ling.CoreAnnotations;
+import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.naturalli.NaturalLogicAnnotations;
-import edu.stanford.nlp.pipeline.Annotation;
-import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
 import net.sf.extjwnl.JWNLException;
 import edu.stanford.nlp.pipeline.*;
@@ -21,7 +22,8 @@ import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 public class Label {
 	
 	private Word[] wordsarray;
-	private CoreSentence labelAsCoreSentence;
+	// changed variable #############################
+	private CoreSentence[] labelAsCoreSentenceList;
 	private String labelAsString;
 	private SemanticGraph parsedLabel;
 	private boolean isFinal;
@@ -30,8 +32,21 @@ public class Label {
 		
 	}
 	
-	public Label(String labelAsString) {
+	public Label(String labelAsString) throws JWNLException {
+		//store label as string
+		this.labelAsString=labelAsString;	
+		// annotate label
+		CoreDocument document = new CoreDocument(this.labelAsString);
+		LabelList.pipeline.annotate(document);
 		
+		// store sentences in Label object
+		List<CoreSentence> labelAsCoreSentenceListList = new ArrayList<CoreSentence>();
+		for (CoreSentence sentence:document.sentences()) {
+			labelAsCoreSentenceListList.add(sentence);
+		}
+		this.setLabelAsCoreSentenceList(labelAsCoreSentenceListList.toArray(new CoreSentence[labelAsCoreSentenceListList.size()]));
+		
+		createWordsArray();
 	}
 	
 	
@@ -42,13 +57,13 @@ public class Label {
 	public void setWordsarray(Word[] wordsarray) {
 		this.wordsarray = wordsarray;
 	}
-	
-	public CoreSentence getLabelAsCoreSentence() {
-		return labelAsCoreSentence;
+	// changed######################### 
+	public CoreSentence[] getLabelAsCoreSentenceList() {
+		return labelAsCoreSentenceList;
 	}
-	
-	public void setLabelAsCoreSentence(CoreSentence labelAsCoreSentence) {
-		this.labelAsCoreSentence = labelAsCoreSentence;
+	// changed##########################
+	public void setLabelAsCoreSentenceList(CoreSentence[] labelAsCoreSentenceList) {
+		this.labelAsCoreSentenceList = labelAsCoreSentenceList;
 	}
 	
 	public String getLabelAsString() {
@@ -78,118 +93,21 @@ public class Label {
 	/*
 	 * method to convert a String into a Word-array
 	 */ 
-	public Word[] createWordsArray(String input){
-		
-	String cleanedS = input.replaceAll("[^a-zA-Z]", " ").toLowerCase();
-		
-		String sa[] = cleanedS.split(" ");
-		Word[] w = new Word[sa.length];
-
-		for(int i=0; i < w.length; i++){
-			w[i] = new Word(sa[i]);
+	public void createWordsArray() throws JWNLException{
+		// create words
+		List<Word> wordsarrayList = new ArrayList<Word>();
+		for (CoreSentence sentence:labelAsCoreSentenceList) {
+			List<CoreLabel> tokens = sentence.tokens();
+			for (CoreLabel token:tokens) {
+				// Word constructor
+				wordsarrayList.add(new Word(token));
+				
+			}
 		}
-		
-	return w;
+		this.setWordsarray(wordsarrayList.toArray(new Word[wordsarrayList.size()]));
 	}
 	
-	/*
-	 * method to tag a label into PartOfSpeechTypes
-	 */
-	public void tagLabel(String text) throws IOException, ClassNotFoundException, JWNLException {
 
-		MaxentTagger maxentTagger = new MaxentTagger("taggers/english-left3words-distsim.tagger");;
-        String tag = maxentTagger.tagString(text);
-        
-        String[] eachTag = tag.split("\\s+");
-        
-        Word[] w = createWordsArray(text);
-
-        System.out.println("Semantic Analysis:");
-        
-        for(int i = 0; i< eachTag.length; i++) {
-        	
-			w[i] = new Word();
-			w[i].setOriginalForm(eachTag[i].split("_")[0]);
-        	
-        	if(eachTag[i].split("_")[1].equals("CC")) {
-                w[i].setPartOfSpeech(PartOfSpeechTypes.COORDINATING_CONJUNCTION);
-        	}else if(eachTag[i].split("_")[1].equals("CD")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.CARDINAL_NUMBER);
-        	}else if(eachTag[i].split("_")[1].equals("DT")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.DETERMINER);
-        	}else if(eachTag[i].split("_")[1].equals("EX")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.EXISTENTIAL_THERE);
-        	}else if(eachTag[i].split("_")[1].equals("FW")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.FOREIGN_WORD);
-        	}else if(eachTag[i].split("_")[1].equals("IN")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.PREPOSITION_SUBORDINATING_CONJUNCTION);
-        	}else if(eachTag[i].split("_")[1].equals("JJ")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.ADJECTIVE);
-        	}else if(eachTag[i].split("_")[1].equals("JJR")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.ADJECTIVE_COMPARATIVE);
-        	}else if(eachTag[i].split("_")[1].equals("JJS")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.ADJECTIVE_SUPERLATIVE);
-        	}else if(eachTag[i].split("_")[1].equals("NN")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.NOUN_SINGULAR_MASS);
-        	}else if(eachTag[i].split("_")[1].equals("NNS")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.NOUN_PLURAL);
-        	}else if(eachTag[i].split("_")[1].equals("NNP")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.PROPER_NOUN_SINGULAR);
-        	}else if(eachTag[i].split("_")[1].equals("NNPS")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.PROPER_NOUN_PLURAL);
-        	}else if(eachTag[i].split("_")[1].equals("PDT")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.PREDETERMINER);		
-        	}else if(eachTag[i].split("_")[1].equals("NP")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.NOUN_PHRASE);
-        	}else if(eachTag[i].split("_")[1].equals("PP")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.PREPOSITIONAL_PHRASE);
-        	}else if(eachTag[i].split("_")[1].equals("VP")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.VERB_PHRASE);
-        	}else if(eachTag[i].split("_")[1].equals("PRP")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.PERSONAL_PRONOUN);
-        	}else if(eachTag[i].split("_")[1].equals("RB")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.ADVERB);
-        	}else if(eachTag[i].split("_")[1].equals("RBR")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.ADVERB_COMPARATIVE);
-        	}else if(eachTag[i].split("_")[1].equals("RBS")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.ADJECTIVE_SUPERLATIVE);
-        	}else if(eachTag[i].split("_")[1].equals("RP")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.PARTICLE);
-        	}else if(eachTag[i].split("_")[1].equals("SYM")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.SYMBOL);
-        	}else if(eachTag[i].split("_")[1].equals("TO")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.TO);
-        	}else if(eachTag[i].split("_")[1].equals("UH")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.INTERJECTION);
-        	}else if(eachTag[i].split("_")[1].equals("VB")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.VERB_BASE);
-        	}else if(eachTag[i].split("_")[1].equals("VBD")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.VERB_PAST);
-        	}else if(eachTag[i].split("_")[1].equals("VBG")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.VERB_GERUND_OR_PRESENT_PARTICIPLE);
-        	}else if(eachTag[i].split("_")[1].equals("VBN")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.VERB_PAST_PARTICIPLE);
-        	}else if(eachTag[i].split("_")[1].equals("VBP")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.VERB_NON_3RD_PERSON_SINGULAR_PRESENT);
-        	}else if(eachTag[i].split("_")[1].equals("VBZ")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.VERB_3RD_PERSON_SINGULAR_PRESENT);
-        	}else if(eachTag[i].split("_")[1].equals("WDT")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.WH_DETERMINER);
-        	}else if(eachTag[i].split("_")[1].equals("WP")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.WH_PRONOUN);
-        	}else if(eachTag[i].split("_")[1].equals("WRB")){
-        		w[i].setPartOfSpeech(PartOfSpeechTypes.WH_ADVERB);
-        	}else {
-        		w[i].setPartOfSpeech(null);
-        	}
-        	Word.stemWord(w[i]);
- 
-        	System.out.println(i+1 +": " + w[i].getPartOfSpeech() + ": " + 
-        			w[i].getOriginalForm() + " -> " + 
-        			w[i].getBaseform());
-
-        }
-	}
 	
 	
 	public static void defineRole(String input) {
