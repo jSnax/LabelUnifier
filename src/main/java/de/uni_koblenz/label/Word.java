@@ -35,6 +35,8 @@ public class Word {
 		setOriginalForm(token.originalText());
 		tagLabel();
 		stemWord();
+		System.out.println("new Word");
+		System.out.println("Word "+ originalForm +"; Baseform " + baseform + "; POS " + partOfSpeech);	
 	}
 	public Word(PartOfSpeechTypes partOfSpeech) {
 		this.partOfSpeech = partOfSpeech;
