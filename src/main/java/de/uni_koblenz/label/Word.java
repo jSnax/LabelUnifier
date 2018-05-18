@@ -101,7 +101,18 @@ public class Word {
 	public void tagLabel() {
 		String pos=token.tag();
         System.out.println("Semantic Analysis:");
-        	if(pos.equals("CC")) {
+
+        
+        // NEUE PART OF SPEECH ABFRAGE
+        for (PartOfSpeechTypes type : PartOfSpeechTypes.values()) {
+        	if (pos.equals(type.getShortType())) {
+        		this.setPartOfSpeech(type);
+        		break;
+        	}
+        }
+        
+        
+        /**if(pos.equals("CC")) {
                 this.setPartOfSpeech(PartOfSpeechTypes.COORDINATING_CONJUNCTION);
         	}else if(pos.equals("CD")){
         		this.setPartOfSpeech(PartOfSpeechTypes.CARDINAL_NUMBER);
@@ -171,7 +182,7 @@ public class Word {
         		this.setPartOfSpeech(PartOfSpeechTypes.WH_ADVERB);
         	}else {
         		this.setPartOfSpeech(null);
-        	}
+        	}**/
         }
 	
 	/*  stem(String toStem)

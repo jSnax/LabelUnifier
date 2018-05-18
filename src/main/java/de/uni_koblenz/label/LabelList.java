@@ -22,7 +22,7 @@ public class LabelList {
 	public LabelList(String[] input) throws JWNLException {
 		// Setup CORENLP Pipeline
 		Properties props = new Properties();
-		props.setProperty("annotators", "tokenize, ssplit, pos, lemma, depparse, ner, natlog, openie");
+		props.setProperty("annotators", "tokenize, ssplit, pos, lemma, depparse, natlog, openie");//, ner");
 		pipeline = new StanfordCoreNLP(props);
 		
 		// Create list and add Label objects for each string of the input array.
