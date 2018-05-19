@@ -8,14 +8,16 @@ public class GrammaticalRelation {
 	private Word relatedWord1;
 	private Word relatedWord2;
 	private RelationType grammaticalRelationType;
+	private String grammaticalRelationName;
 	
 	public GrammaticalRelation() {
 		
 	}
 	// new method
-	public GrammaticalRelation(Word relatedWord1, Word relatedWord2) {
+	public GrammaticalRelation(Word relatedWord1, Word relatedWord2, String grammaticalRelationName) {
 		this.relatedWord1=relatedWord1;
 		this.relatedWord2=relatedWord2;		
+		this.grammaticalRelationName=grammaticalRelationName;
 	}
 	
 	public Word getRelatedWord1() {
@@ -40,6 +42,12 @@ public class GrammaticalRelation {
 	
 	public void setGrammaticalRelationType(RelationType grammaticalRelationType) {
 		this.grammaticalRelationType = grammaticalRelationType;
+	}
+	public String getGrammaticalRelationName() {
+		return grammaticalRelationName;
+	}
+	public void setGrammaticalRelationName(String grammaticalRelationName) {
+		this.grammaticalRelationName = grammaticalRelationName;
 	}
 	
 	

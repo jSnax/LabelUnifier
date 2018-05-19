@@ -113,7 +113,7 @@ public class Label {
 		    	Word sourceWord=wordsarrayListTemp.get(edge.getSource().index()-1);
 		    	Word targetWord=wordsarrayListTemp.get(edge.getTarget().index()-1);
 		    	//create GrammaticalRelation
-		    	GrammaticalRelation grammaticalRelationTemp= new GrammaticalRelation(sourceWord,targetWord);
+		    	GrammaticalRelation grammaticalRelationTemp= new GrammaticalRelation(sourceWord,targetWord,edge.getRelation().getLongName());
 		    	//store grammatical Relation in both words
 		    	sourceWord.addGrammaticalRelation(grammaticalRelationTemp);
 		    	targetWord.addGrammaticalRelation(grammaticalRelationTemp);
