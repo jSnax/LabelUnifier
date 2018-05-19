@@ -17,8 +17,7 @@ public class MainPP {
 		LabelList input=new LabelList(test);
 		
 		System.out.println("Algorithm completed");
-		System.out.println(input.getInputLabels()[0].getWordsarray()[0].getPartOfSpeech());
-		System.out.println(input.getInputLabels()[0].getWordsarray()[0].getOriginalForm());
-		System.out.println(input.getInputLabels()[0].getWordsarray()[0].getBaseform());
+		//print all words and variables
+		System.out.println(input);
 	}
 }

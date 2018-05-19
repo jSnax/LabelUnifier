@@ -178,4 +178,13 @@ public class Label {
 	    }
 	    
 	}
+	@Override
+	public String toString() {
+		String result="Label:\n";
+		for (Word word:wordsarray) {
+			result+=word.toString()+"\n";
+			
+		}
+		return result;
+	}
 }

@@ -44,5 +44,14 @@ public class LabelList {
 		this.inputLabels = inputLabels;
 	}
 	
+	@Override
+	public String toString() {
+		String result="Result:\n";
+		for (Label label:inputLabels) {
+			result+=label.toString()+"\n";
+			
+		}
+		return result;
+	}
 	
 }

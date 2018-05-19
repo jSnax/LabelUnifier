@@ -37,8 +37,6 @@ public class Word {
 		setOriginalForm(token.originalText());
 		tagLabel();
 		stemWord();
-		System.out.println("new Word");
-		System.out.println("Word "+ originalForm +"; Baseform " + baseform + "; POS " + partOfSpeech);	
 	}
 	public Word(PartOfSpeechTypes partOfSpeech) {
 		this.partOfSpeech = partOfSpeech;
@@ -106,7 +104,6 @@ public class Word {
 	 */
 	public void tagLabel() {
 		String pos=token.tag();
-        System.out.println("Semantic Analysis:");
 
         
         // NEUE PART OF SPEECH ABFRAGE
@@ -262,5 +259,9 @@ public class Word {
             }
             setBaseform(lemma);	
 		}
+	}
+	@Override
+	public String toString() {
+	  return "Word: "+ originalForm +" Base: " + baseform + " POS: " + partOfSpeech;
 	}
 }
