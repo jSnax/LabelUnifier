@@ -1,6 +1,7 @@
 package de.uni_koblenz.label;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import de.uni_koblenz.cluster.GrammaticalRelation;
 import de.uni_koblenz.enums.PartOfSpeechTypes;
@@ -17,7 +18,8 @@ public class Word {
 	private CoreLabel token;
 	
 	private PartOfSpeechTypes partOfSpeech;
-	private GrammaticalRelation[] grammaticalRelations;
+	// changed from array to arraylist #####################
+	private ArrayList<GrammaticalRelation> grammaticalRelations=new ArrayList<GrammaticalRelation>();
 	private String baseform;
 	private String originalForm;
 	private RoleLeopold role;
@@ -54,12 +56,16 @@ public class Word {
 		this.partOfSpeech = partOfSpeech;
 	}
 	
-	public GrammaticalRelation[] getGrammaticalRelations() {
+	public ArrayList<GrammaticalRelation> getGrammaticalRelations() {
 		return grammaticalRelations;
 	}
 	
-	public void setGrammaticalRelations(GrammaticalRelation[] grammaticalRelations) {
+	public void setGrammaticalRelations(ArrayList<GrammaticalRelation> grammaticalRelations) {
 		this.grammaticalRelations = grammaticalRelations;
+	}
+	// new method ##########################
+	public void addGrammaticalRelation(GrammaticalRelation grammaticalRelation) {
+		this.grammaticalRelations.add(grammaticalRelation);
 	}
 	
 	public String getBaseform() {

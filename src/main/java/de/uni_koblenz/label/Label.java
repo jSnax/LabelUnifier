@@ -1,5 +1,6 @@
 package de.uni_koblenz.label;
 
+import de.uni_koblenz.cluster.GrammaticalRelation;
 import de.uni_koblenz.enums.PartOfSpeechTypes;
 import de.uni_koblenz.enums.RoleLeopold;
 
@@ -96,14 +97,37 @@ public class Label {
 	public void createWordsArray() throws JWNLException{
 		// create words
 		List<Word> wordsarrayList = new ArrayList<Word>();
+		List<Word> wordsarrayListTemp = new ArrayList<Word>();
 		for (CoreSentence sentence:labelAsCoreSentenceList) {
 			List<CoreLabel> tokens = sentence.tokens();
 			for (CoreLabel token:tokens) {
-				// Word constructor
-				wordsarrayList.add(new Word(token));
+				//create words and put them in a temporary list (easier to work with index)
+				wordsarrayListTemp.add(new Word(token));
 				
 			}
+			//create grammatical relations and add them
+			SemanticGraph graph=sentence.dependencyParse();
+			//go through all grammatical relations of the current sentence
+		    for(SemanticGraphEdge edge:graph.edgeIterable()) {
+		    	//get the Word equivalent of the tokens
+		    	Word sourceWord=wordsarrayListTemp.get(edge.getSource().index()-1);
+		    	Word targetWord=wordsarrayListTemp.get(edge.getTarget().index()-1);
+		    	//create GrammaticalRelation
+		    	GrammaticalRelation grammaticalRelationTemp= new GrammaticalRelation(sourceWord,targetWord);
+		    	//store grammatical Relation in both words
+		    	sourceWord.addGrammaticalRelation(grammaticalRelationTemp);
+		    	targetWord.addGrammaticalRelation(grammaticalRelationTemp);
+		    }
+				
+				
+				
+			
+			//add the wordlist of this single sentence to the complete list of words
+			wordsarrayList.addAll(wordsarrayListTemp);
+			wordsarrayListTemp.clear();
 		}
+		
+		
 		this.setWordsarray(wordsarrayList.toArray(new Word[wordsarrayList.size()]));
 	}
 	

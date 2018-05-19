@@ -12,6 +12,11 @@ public class GrammaticalRelation {
 	public GrammaticalRelation() {
 		
 	}
+	// new method
+	public GrammaticalRelation(Word relatedWord1, Word relatedWord2) {
+		this.relatedWord1=relatedWord1;
+		this.relatedWord2=relatedWord2;		
+	}
 	
 	public Word getRelatedWord1() {
 		return relatedWord1;
