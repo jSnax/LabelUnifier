@@ -7,7 +7,7 @@ import de.uni_koblenz.cluster.*;
 public class Word {
 
 	private PartOfSpeechTypes partOfSpeech;
-	private GrammaticalRelation[] grammaticalRelations;
+	private GrammaticalRelationBetweenWords[] grammaticalRelations;
 	private String baseform;
 	private String originalForm;
 	private RoleLeopold role;
@@ -25,11 +25,11 @@ public class Word {
 		this.partOfSpeech = partOfSpeech;
 	}
 	
-	public GrammaticalRelation[] getGrammaticalRelations() {
+	public GrammaticalRelationBetweenWords[] getGrammaticalRelations() {
 		return grammaticalRelations;
 	}
 	
-	public void setGrammaticalRelations(GrammaticalRelation[] grammaticalRelations) {
+	public void setGrammaticalRelations(GrammaticalRelationBetweenWords[] grammaticalRelations) {
 		this.grammaticalRelations = grammaticalRelations;
 	}
 	
