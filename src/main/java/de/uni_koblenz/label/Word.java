@@ -2,6 +2,7 @@ package de.uni_koblenz.label;
 
 import de.uni_koblenz.enums.*;
 
+
 import java.util.List;
 
 import de.uni_koblenz.cluster.*;
@@ -18,6 +19,10 @@ public class Word {
 	
 	public Word() {
 		
+	}
+	
+	public Word(String originalForm) {
+		this.originalForm = originalForm;
 	}
 	
 	public PartOfSpeechTypes getPartOfSpeech() {
@@ -78,6 +83,9 @@ public class Word {
 	
 	public void addSynonym(String newSyn){
 		Synonyms.add(newSyn);
+
+
+
 	}
 	
 	/* stem nimmt String originalForm als Input und gibt String(?) baseForm als Output
