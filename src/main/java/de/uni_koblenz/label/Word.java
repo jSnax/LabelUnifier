@@ -2,6 +2,8 @@ package de.uni_koblenz.label;
 
 import de.uni_koblenz.enums.*;
 
+import java.util.List;
+
 import de.uni_koblenz.cluster.*;
 
 public class Word {
@@ -12,6 +14,7 @@ public class Word {
 	private String originalForm;
 	private RoleLeopold role;
 	private Integer dominance;
+	private List<String> Synonyms;
 	
 	public Word() {
 		
@@ -63,6 +66,18 @@ public class Word {
 	
 	public void setDominance(Integer dominance) {
 		this.dominance = dominance;
+	}
+	
+	public List<String> getSynonyms() {
+		return Synonyms;
+	}
+	
+	public void setSynonyms(List<String> Synonyms) {
+		this.Synonyms = Synonyms;
+	}
+	
+	public void addSynonym(String newSyn){
+		Synonyms.add(newSyn);
 	}
 	
 	/* stem nimmt String originalForm als Input und gibt String(?) baseForm als Output
