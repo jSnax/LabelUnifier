@@ -16,6 +16,7 @@ public class Word {
 	private RoleLeopold role;
 	private Integer dominance;
 	private List<String> Synonyms;
+
 	
 	public Word() {
 		
@@ -87,6 +88,7 @@ public class Word {
 
 
 	}
+}
 	
 	/* stem nimmt String originalForm als Input und gibt String(?) baseForm als Output
 	 * 
@@ -102,4 +104,3 @@ public class Word {
 
 	 */
 	
-}
