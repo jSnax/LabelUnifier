@@ -16,7 +16,6 @@ import net.sf.extjwnl.dictionary.Dictionary;
 
 public class MainPP {
 	public static void main (String args[]) throws JWNLException {
-		System.out.println("Hello");
 		Word CHECK = new Word();
 		Word INVOICE = new Word();
 		Word VERIFY = new Word();
