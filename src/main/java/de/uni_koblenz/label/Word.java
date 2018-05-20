@@ -1,10 +1,9 @@
 package de.uni_koblenz.label;
 
 import de.uni_koblenz.enums.*;
-import de.uni_koblenz.ppbks18.IWordnetLibrary;
 import de.uni_koblenz.cluster.*;
 
-public class Word implements IWordnetLibrary {
+public class Word {
 
 	private PartOfSpeechTypes partOfSpeech;
 	private GrammaticalRelationBetweenWords[] grammaticalRelations;
@@ -12,7 +11,6 @@ public class Word implements IWordnetLibrary {
 	private String originalForm;
 	private RoleLeopold role;
 	private Integer dominance;
-	private String[] synonyms;
 	
 	public Word() {
 		
@@ -69,14 +67,7 @@ public class Word implements IWordnetLibrary {
 	public void setDominance(Integer dominance) {
 		this.dominance = dominance;
 	}
-	
-	public void createSynonyms() {
-		this.synonyms = IWordnetLibrary.wordnet.getSynonyms(this.originalForm,"n");
-	}
-	
-	public String[] getSynonyms() {
-		return synonyms;
-	}
+}
 	
 	/* stem nimmt String originalForm als Input und gibt String(?) baseForm als Output
 	 * 
@@ -92,4 +83,3 @@ public class Word implements IWordnetLibrary {
 
 	 */
 	
-}
