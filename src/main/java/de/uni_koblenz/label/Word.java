@@ -214,33 +214,8 @@ public class Word {
 		
 		Dictionary dict = Dictionary.getDefaultResourceInstance();
 		
-		POS pos = null;
-		
-		if (getPartOfSpeech().equals(PartOfSpeechTypes.NOUN_SINGULAR_MASS) ||
-				getPartOfSpeech().equals(PartOfSpeechTypes.NOUN_PLURAL) || 
-				getPartOfSpeech().equals(PartOfSpeechTypes.PROPER_NOUN_SINGULAR) ||
-				getPartOfSpeech().equals(PartOfSpeechTypes.PROPER_NOUN_PLURAL) ||
-				getPartOfSpeech().equals(PartOfSpeechTypes.NOUN_PHRASE)){ 
-	        pos = POS.NOUN; 
-	      } else if (getPartOfSpeech().equals(PartOfSpeechTypes.VERB_BASE) ||
-	    		  getPartOfSpeech().equals(PartOfSpeechTypes.VERB_PAST) ||
-	    		  getPartOfSpeech().equals(PartOfSpeechTypes.VERB_GERUND_OR_PRESENT_PARTICIPLE) ||
-	    		  getPartOfSpeech().equals(PartOfSpeechTypes.VERB_PAST_PARTICIPLE) ||
-	    		  getPartOfSpeech().equals(PartOfSpeechTypes.VERB_NON_3RD_PERSON_SINGULAR_PRESENT) ||
-	    		  getPartOfSpeech().equals(PartOfSpeechTypes.VERB_3RD_PERSON_SINGULAR_PRESENT) ||
-	    		  getPartOfSpeech().equals(PartOfSpeechTypes.VERB_PHRASE)) { 
-	        pos = POS.VERB; 
-	      } else if (getPartOfSpeech().equals(PartOfSpeechTypes.ADVERB) || 
-	    		  getPartOfSpeech().equals(PartOfSpeechTypes.ADJECTIVE_COMPARATIVE) ||
-	    		  getPartOfSpeech().equals(PartOfSpeechTypes.ADVERB_SUPERLATIVE)) { 
-	        pos = POS.ADVERB; 
-	      } else if (getPartOfSpeech().equals(PartOfSpeechTypes.ADJECTIVE) ||
-	    		  getPartOfSpeech().equals(PartOfSpeechTypes.ADJECTIVE_COMPARATIVE) ||
-	    		  getPartOfSpeech().equals(PartOfSpeechTypes.ADJECTIVE_SUPERLATIVE)) { 
-	        pos = POS.ADJECTIVE; 
-	      }else {
-	    	pos = null;  
-	      }
+		POS pos = partOfSpeech.getJwnlType();
+		System.out.println(pos);
 	    
 		if(pos == null) {
 			setBaseform(getOriginalForm());
