@@ -215,7 +215,7 @@ public class Word {
 		Dictionary dict = Dictionary.getDefaultResourceInstance();
 		
 		POS pos = partOfSpeech.getJwnlType();
-		System.out.println(pos);
+		//System.out.println(pos);
 	    
 		if(pos == null) {
 			setBaseform(getOriginalForm());
@@ -237,6 +237,11 @@ public class Word {
 	}
 	@Override
 	public String toString() {
-	  return "Word: "+ originalForm +" Base: " + baseform + " POS: " + partOfSpeech;
+		String grammaticalRelationAsString=" Grammatical relations: ";
+		for(GrammaticalRelation grammaticalRelation:grammaticalRelations) {
+			grammaticalRelationAsString+=grammaticalRelation.getGrammaticalRelationName()+"; ";
+		}
+		
+		return "Word: "+ originalForm +" Base: " + baseform + " POS: " + partOfSpeech + grammaticalRelationAsString;
 	}
 }

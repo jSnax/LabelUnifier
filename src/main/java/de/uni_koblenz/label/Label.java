@@ -2,6 +2,7 @@ package de.uni_koblenz.label;
 
 import de.uni_koblenz.cluster.GrammaticalRelation;
 import de.uni_koblenz.enums.PartOfSpeechTypes;
+import de.uni_koblenz.enums.RelationName;
 import de.uni_koblenz.enums.RoleLeopold;
 
 import java.io.IOException;
@@ -112,8 +113,17 @@ public class Label {
 		    	//get the Word equivalent of the tokens
 		    	Word sourceWord=wordsarrayListTemp.get(edge.getSource().index()-1);
 		    	Word targetWord=wordsarrayListTemp.get(edge.getTarget().index()-1);
+		    	// get RelationName Enum from String
+		    	RelationName relationName=null;
+		    	try {
+		    		relationName=RelationName.valueOf(edge.getRelation().getLongName().toUpperCase().replace(' ', '_'));
+		    	}catch(IllegalArgumentException e){
+		    		relationName=null;
+		    	}finally {
+		    		
+		    	}
 		    	//create GrammaticalRelation
-		    	GrammaticalRelation grammaticalRelationTemp= new GrammaticalRelation(sourceWord,targetWord,edge.getRelation().getLongName());
+		    	GrammaticalRelation grammaticalRelationTemp= new GrammaticalRelation(sourceWord,targetWord,relationName);
 		    	//store grammatical Relation in both words
 		    	sourceWord.addGrammaticalRelation(grammaticalRelationTemp);
 		    	targetWord.addGrammaticalRelation(grammaticalRelationTemp);
