@@ -16,6 +16,8 @@ import net.sf.extjwnl.dictionary.Dictionary;
 
 public class MainPP {
 	public static void main (String args[]) throws JWNLException {
+		System.out.println("Started.");
+		Dictionary dictionary = Dictionary.getDefaultResourceInstance();
 		Word CHECK = new Word();
 		Word INVOICE = new Word();
 		Word VERIFY = new Word();
@@ -25,7 +27,11 @@ public class MainPP {
 		INVOICE.setBaseform("invoice");
 		VERIFY.setBaseform("verify");
 		BILL.setBaseform("bill");
-		// set their baseform
+		CHECK.setPartOfSpeech(PartOfSpeechTypes.VERB_BASE);
+		INVOICE.setPartOfSpeech(PartOfSpeechTypes.NOUN_SINGULAR_MASS);
+		VERIFY.setPartOfSpeech(PartOfSpeechTypes.VERB_BASE);
+		BILL.setPartOfSpeech(PartOfSpeechTypes.NOUN_SINGULAR_MASS);
+		// set their baseform and their POS
 		Label label1 = new Label();
 		Label label2 = new Label();
 		// Create two Labels
@@ -40,6 +46,7 @@ public class MainPP {
 		// Create empty Label array and fill it with the two labels
 		testList.setInputLabels(labelarray1);
 		// Set Input Labels to previously created Label array
+		System.out.println("Printing Labels:");
 		for (int i = 0; i < testList.getInputLabels().length; i++){
 			for (int j = 0; j < testList.getInputLabels()[i].getWordsarray().length; j++){
 				System.out.println(testList.getInputLabels()[i].getWordsarray()[j].getBaseform());
@@ -48,6 +55,7 @@ public class MainPP {
 		// Simply print the two labels
 		testList.findSynsets(labelarray1);
 		// Fill Synonym lists for each word
+		System.out.println("Printing Synonyms:");
 		for (int i = 0; i < testList.getInputLabels().length; i++){
 			for (int j = 0; j < testList.getInputLabels()[i].getWordsarray().length; j++){
 				System.out.println(testList.getInputLabels()[i].getWordsarray()[j].getSynonyms());

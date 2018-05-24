@@ -18,5 +18,8 @@ public class WordCluster {
 		this.matchingWords = matchingWords;
 	}
 	
+	public void matchSynonyms() {
+	}
+	
 	
 }
