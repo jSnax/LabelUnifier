@@ -128,7 +128,21 @@ public class Label {
 		    	sourceWord.addGrammaticalRelation(grammaticalRelationTemp);
 		    	targetWord.addGrammaticalRelation(grammaticalRelationTemp);
 		    }
-				
+		    //define Role
+		    if(sentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).isEmpty()) {
+		    	System.out.println("No OpenIE Triple");
+		    }else {
+		    	for(CoreLabel tripletoken : sentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).iterator().next().relation) {
+					wordsarrayListTemp.get(tripletoken.index()-1).setRole(RoleLeopold.ACTION);
+				}
+		    	for(CoreLabel tripletoken : sentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).iterator().next().object) {
+					wordsarrayListTemp.get(tripletoken.index()-1).setRole(RoleLeopold.BUSINESS_OBJECT);
+				}
+		    	for(CoreLabel tripletoken : sentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).iterator().next().subject) {
+					wordsarrayListTemp.get(tripletoken.index()-1).setRole(null);
+				}
+
+		    }
 				
 				
 			

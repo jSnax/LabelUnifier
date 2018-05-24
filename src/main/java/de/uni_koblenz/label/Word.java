@@ -34,6 +34,8 @@ public class Word {
 	// main method
 	public Word(CoreLabel token) throws JWNLException {
 		this.token=token;
+		// gets overwritten by method in Label/Sentence Object
+		role=RoleLeopold.OPTIONAL_INFORMATION_FRAGMENT;
 		setOriginalForm(token.originalText());
 		tagLabel();
 		stemWord();
@@ -242,6 +244,6 @@ public class Word {
 			grammaticalRelationAsString+=grammaticalRelation.getGrammaticalRelationName()+"; ";
 		}
 		
-		return "Word: "+ originalForm +" Base: " + baseform + " POS: " + partOfSpeech + grammaticalRelationAsString;
+		return "Word: "+ originalForm +" Base: " + baseform + " POS: " + partOfSpeech + " Role: " + role + grammaticalRelationAsString;
 	}
 }
