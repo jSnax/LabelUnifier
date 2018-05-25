@@ -3,7 +3,7 @@ package de.uni_koblenz.label;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import de.uni_koblenz.cluster.GrammaticalRelation;
+import de.uni_koblenz.cluster.GrammaticalRelationBetweenWords;
 import de.uni_koblenz.enums.PartOfSpeechTypes;
 import de.uni_koblenz.enums.RoleLeopold;
 import edu.stanford.nlp.ling.CoreLabel;
@@ -19,7 +19,7 @@ public class Word {
 	
 	private PartOfSpeechTypes partOfSpeech;
 	// changed from array to arraylist #####################
-	private ArrayList<GrammaticalRelation> grammaticalRelations=new ArrayList<GrammaticalRelation>();
+	private ArrayList<GrammaticalRelationBetweenWords> grammaticalRelations=new ArrayList<GrammaticalRelationBetweenWords>();
 	private String baseform;
 	private String originalForm;
 	private RoleLeopold role;
@@ -56,15 +56,15 @@ public class Word {
 		this.partOfSpeech = partOfSpeech;
 	}
 	
-	public ArrayList<GrammaticalRelation> getGrammaticalRelations() {
+	public ArrayList<GrammaticalRelationBetweenWords> getGrammaticalRelations() {
 		return grammaticalRelations;
 	}
 	
-	public void setGrammaticalRelations(ArrayList<GrammaticalRelation> grammaticalRelations) {
+	public void setGrammaticalRelations(ArrayList<GrammaticalRelationBetweenWords> grammaticalRelations) {
 		this.grammaticalRelations = grammaticalRelations;
 	}
 	// new method ##########################
-	public void addGrammaticalRelation(GrammaticalRelation grammaticalRelation) {
+	public void addGrammaticalRelation(GrammaticalRelationBetweenWords grammaticalRelation) {
 		this.grammaticalRelations.add(grammaticalRelation);
 	}
 	
@@ -240,7 +240,7 @@ public class Word {
 	@Override
 	public String toString() {
 		String grammaticalRelationAsString=" Grammatical relations: ";
-		for(GrammaticalRelation grammaticalRelation:grammaticalRelations) {
+		for(GrammaticalRelationBetweenWords grammaticalRelation:grammaticalRelations) {
 			grammaticalRelationAsString+=grammaticalRelation.getGrammaticalRelationName()+"; ";
 		}
 		

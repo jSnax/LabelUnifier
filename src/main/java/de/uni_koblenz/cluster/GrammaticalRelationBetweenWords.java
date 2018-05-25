@@ -3,18 +3,18 @@ package de.uni_koblenz.cluster;
 import de.uni_koblenz.label.*;
 import de.uni_koblenz.enums.*;
 
-public class GrammaticalRelation {
+public class GrammaticalRelationBetweenWords {
 
 	private Word sourceWord;
 	private Word targetWord;
 	private RelationType grammaticalRelationType;
 	private RelationName grammaticalRelationName;
 	
-	public GrammaticalRelation() {
+	public GrammaticalRelationBetweenWords() {
 		
 	}
 	// new method
-	public GrammaticalRelation(Word sourceWord, Word targetWord, RelationName grammaticalRelationName) {
+	public GrammaticalRelationBetweenWords(Word sourceWord, Word targetWord, RelationName grammaticalRelationName) {
 		this.sourceWord=sourceWord;
 		this.sourceWord=targetWord;		
 		this.grammaticalRelationName=grammaticalRelationName;

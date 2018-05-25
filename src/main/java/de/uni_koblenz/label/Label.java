@@ -1,6 +1,6 @@
 package de.uni_koblenz.label;
 
-import de.uni_koblenz.cluster.GrammaticalRelation;
+import de.uni_koblenz.cluster.GrammaticalRelationBetweenWords;
 import de.uni_koblenz.enums.PartOfSpeechTypes;
 import de.uni_koblenz.enums.RelationName;
 import de.uni_koblenz.enums.RoleLeopold;
@@ -123,7 +123,7 @@ public class Label {
 		    		
 		    	}
 		    	//create GrammaticalRelation
-		    	GrammaticalRelation grammaticalRelationTemp= new GrammaticalRelation(sourceWord,targetWord,relationName);
+		    	GrammaticalRelationBetweenWords grammaticalRelationTemp= new GrammaticalRelationBetweenWords(sourceWord,targetWord,relationName);
 		    	//store grammatical Relation in both words
 		    	sourceWord.addGrammaticalRelation(grammaticalRelationTemp);
 		    	targetWord.addGrammaticalRelation(grammaticalRelationTemp);
