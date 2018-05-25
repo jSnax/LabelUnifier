@@ -1,24 +1,29 @@
 package de.uni_koblenz.cluster;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.uni_koblenz.label.*;
 
 public class WordCluster {
 
-	private Word[] matchingWords;
+	public List<Word> matchingWords;
 
-	public WordCluster() {
-		
+	public WordCluster(LabelList RemainingLabels) {
+		this.matchingWords = new ArrayList<Word>(); 
+		Word DefiningWord = RemainingLabels.getInputLabels()[0].getWordsarray()[0]; 
+		matchingWords.add(DefiningWord);
+		// Takes the first remaining word in the LabelList and creates a new WordCluster for it
+		//[CODE] RemainingLabels.matchSynonyms(RemainingLabels, DefiningWord, this); [CODE]
+		// Fill MatchingWords, has to be called in main since RemainingLabels will be changed by matchSynonyms
 	}
 	
-	public Word[] getMatchingWords() {
+	public List<Word> getMatchingWords() {
 		return matchingWords;
 	}
 
-	public void setMatchingWords(Word[] matchingWords) {
+	public void setMatchingWords(List<Word> matchingWords) {
 		this.matchingWords = matchingWords;
-	}
-	
-	public void matchSynonyms() {
 	}
 	
 	

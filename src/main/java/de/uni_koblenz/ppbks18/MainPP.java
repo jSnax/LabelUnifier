@@ -62,5 +62,21 @@ public class MainPP {
 			}	
 		}
 		// Print synonym lists
+		System.out.println("Printing Wordclusters");
+		List<WordCluster> AllClusters = new ArrayList<WordCluster>();
+		LabelList safetyList = new LabelList();
+		safetyList = testList;
+		while (safetyList.getInputLabels().length != 0){
+			WordCluster tempCluster = new WordCluster(safetyList);
+			safetyList = safetyList.matchSynonyms(safetyList, safetyList.getInputLabels()[0].getWordsarray()[0], tempCluster);
+			AllClusters.add(tempCluster);
+		}
+		for (int i = 0; i < AllClusters.size(); i++){
+			System.out.println("Cluster " +i);
+			for (int j = 0; j < AllClusters.get(i).matchingWords.size(); j++){
+				System.out.println(AllClusters.get(i).matchingWords.get(j).getBaseform());
+			}
+		}
+		// Prints Wordclusters
 	}
 }

@@ -3,6 +3,7 @@ package de.uni_koblenz.label;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.uni_koblenz.cluster.WordCluster;
 import net.sf.extjwnl.JWNLException;
 import net.sf.extjwnl.data.POS;
 import net.sf.extjwnl.data.PointerUtils;
@@ -85,5 +86,78 @@ public class LabelList {
 				}
 			}
 		}
+	}
+	
+	public LabelList matchSynonyms(LabelList RemainingLabels, Word DefiningWord, WordCluster Cluster) {
+		List<List<Word>> RemainingLabelsAsList = new ArrayList<List<Word>>();
+		List<Integer> tempIntList = new ArrayList<Integer>();
+		for (int i = 0; i < RemainingLabels.getInputLabels().length; i++){
+			List<Word> tempWordList = new ArrayList<Word>();
+			for (int j = 0; j < RemainingLabels.getInputLabels()[i].getWordsarray().length; j++){
+				tempWordList.add(RemainingLabels.getInputLabels()[i].getWordsarray()[j]);
+			}
+			RemainingLabelsAsList.add(tempWordList);
+		}
+		RemainingLabelsAsList.get(0).remove(0);
+		// Transforms the Array of Arrays of Words into a List of List of Words. The first entry is removed since it was used to create the wordcluster
+		// If we change LabelList to an actual List instead of an array, this becomes redundant
+		for (int i = 0; i < RemainingLabelsAsList.size(); i++){
+			for (int j = 0; j < RemainingLabelsAsList.get(i).size(); j++){
+				if (DefiningWord.getPartOfSpeech() == RemainingLabelsAsList.get(i).get(j).getPartOfSpeech()){
+					if (DefiningWord.getSynonyms().contains(RemainingLabelsAsList.get(i).get(j).getBaseform()) || RemainingLabelsAsList.get(i).get(j).getSynonyms().contains(DefiningWord.getBaseform())){
+						Cluster.matchingWords.add(RemainingLabelsAsList.get(i).get(j));
+						tempIntList.add(j);
+						// Most basic form of matching. If POS match and one word is a synonym of the other, they have the same meaning
+						}
+					}
+				}
+			for (int j = tempIntList.size() - 1; j >= 0; j--){
+				int z = tempIntList.get(j);
+				RemainingLabelsAsList.get(i).remove(z);
+				tempIntList.remove(j);
+				// Removing all words in current label that found a match
+				// This has to be called after the previous for-loop in order to not mess around with the list size while iterating over it
+			}
+			}
+		for (int i = RemainingLabelsAsList.size() - 1; i >= 0; i--){
+			if (RemainingLabelsAsList.get(i).isEmpty()){
+				RemainingLabelsAsList.remove(i);
+				// Removing all labels that contain no more unmatched words
+				// This has to be called after the previous for-loop in order to not mess around with the list size while iterating over it
+			}
+		}
+		LabelList returningList = new LabelList();
+		Label[] returningArray = new Label[RemainingLabelsAsList.size()];
+		for (int i = RemainingLabelsAsList.size()-1; i >= 0; i--){
+			Word[] temp = new Word[RemainingLabelsAsList.get(i).size()];
+			for (int j = RemainingLabelsAsList.get(i).size() - 1; j >= 0; j--){
+				temp[j] = RemainingLabelsAsList.get(i).get(j);
+			}
+			Label tempLabel = new Label();
+			tempLabel.setWordsarray(temp);
+			returningArray[i] = tempLabel;
+		}
+		returningList.setInputLabels(returningArray);
+		// Transforms the list back into an array. Naturally, this will also be useless if we change LabelList to an actual list
+		return(returningList);
+		/* At this point, it seems logical to provide an example implementation of this function in a main-method. 
+		* In this example, testList is not defined. It has to be of type LabelList however.
+		* 
+		List<WordCluster> AllClusters = new ArrayList<WordCluster>();
+		LabelList safetyList = new LabelList();
+		safetyList = testList;
+		while (safetyList.getInputLabels().length != 0){
+			WordCluster tempCluster = new WordCluster(safetyList);
+			safetyList = safetyList.matchSynonyms(safetyList, safetyList.getInputLabels()[0].getWordsarray()[0], tempCluster);
+			AllClusters.add(tempCluster);
+		}
+		for (int i = 0; i < AllClusters.size(); i++){
+			System.out.println("Cluster " +i);
+			for (int j = 0; j < AllClusters.get(i).matchingWords.size(); j++){
+				System.out.println(AllClusters.get(i).matchingWords.get(j).getBaseform());
+			}
+		}
+		*
+		 */
 	}
 }
