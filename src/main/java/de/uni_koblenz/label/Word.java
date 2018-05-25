@@ -215,8 +215,10 @@ public class Word {
 	public void stemWord() throws JWNLException {
 		
 		Dictionary dict = Dictionary.getDefaultResourceInstance();
-		
-		POS pos = partOfSpeech.getJwnlType();
+		POS pos = null;
+		if(partOfSpeech!=null) {
+			pos = partOfSpeech.getJwnlType();
+		}
 		//System.out.println(pos);
 	    
 		if(pos == null) {

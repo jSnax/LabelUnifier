@@ -157,7 +157,7 @@ public class Label {
 	
 
 	
-	
+	/** not used
 	public static void defineRole(String input) {
 		
 		RoleLeopold action = RoleLeopold.ACTION;
@@ -198,10 +198,9 @@ public class Label {
 	            triple.subjectLemmaGloss() + "\t" +
 	            triple.relationLemmaGloss() + "\t" +
 	            triple.objectLemmaGloss());
-	      } */
+	      } 
 	    }
-	    
-	}
+	}*/
 	@Override
 	public String toString() {
 		String result="Label:\n";

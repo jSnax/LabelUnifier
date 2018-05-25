@@ -11,7 +11,7 @@ public class MainPP {
 	
 	public static void main (String args[]) throws JWNLException, ClassNotFoundException, IOException {
 	
-		String[] test=new String[] {"checking invoice","invoice checked","This is a really short sentence"};
+		String[] test=new String[] {"checking invoice","This is a short sentence","This is a sentence."};
 		System.out.println("Algorithm started");
 
 		LabelList input=new LabelList(test);
