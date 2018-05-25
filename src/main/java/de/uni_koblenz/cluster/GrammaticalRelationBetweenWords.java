@@ -1,43 +1,55 @@
 package de.uni_koblenz.cluster;
 
 import de.uni_koblenz.label.*;
-import edu.stanford.nlp.trees.*;
+import de.uni_koblenz.enums.*;
 
 public class GrammaticalRelationBetweenWords {
 
-	private Word relatedWord1;
-	private Word relatedWord2;
-	private GrammaticalRelation grammaticalRelationType;
+	private Word sourceWord;
+	private Word targetWord;
+	private RelationType grammaticalRelationType;
+	private RelationName grammaticalRelationName;
 	
 	public GrammaticalRelationBetweenWords() {
 		
 	}
-	
-	public Word getRelatedWord1() {
-		return relatedWord1;
+	// new method
+	public GrammaticalRelationBetweenWords(Word sourceWord, Word targetWord, RelationName grammaticalRelationName) {
+		this.sourceWord=sourceWord;
+		this.sourceWord=targetWord;		
+		this.grammaticalRelationName=grammaticalRelationName;
 	}
 	
-	public void setRelatedWord1(Word relatedWord1) {
-		this.relatedWord1 = relatedWord1;
+	public Word getSourceWord() {
+		return sourceWord;
 	}
 	
-	public Word getRelatedWord2() {
-		return relatedWord2;
+	public void setSourceWord(Word sourceWord) {
+		this.sourceWord = sourceWord;
 	}
 	
-	public void setRelatedWord2(Word relatedWord2) {
-		this.relatedWord2 = relatedWord2;
+	public Word getTargetWord() {
+		return targetWord;
 	}
-
-	public GrammaticalRelation getGrammaticalRelationType() {
+	public void setTargetWord(Word targetWord) {
+		this.targetWord = targetWord;
+	}
+	
+	public RelationType getGrammaticalRelationType() {
 		return grammaticalRelationType;
 	}
-
-	public void setGrammaticalRelationType(GrammaticalRelation grammaticalRelationType) {
+	
+	public void setGrammaticalRelationType(RelationType grammaticalRelationType) {
 		this.grammaticalRelationType = grammaticalRelationType;
 	}
-	
-	
+	public RelationName getGrammaticalRelationName() {
+		return grammaticalRelationName;
+	}
+	public void setGrammaticalRelationName(RelationName grammaticalRelationName) {
+		this.grammaticalRelationName = grammaticalRelationName;
+	}
+
 	
 	
 }
+

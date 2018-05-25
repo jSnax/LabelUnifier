@@ -72,3 +72,4 @@ public enum PartOfSpeechTypes {
 		this.jwnlType = jwnlType;
 	}
 }
+

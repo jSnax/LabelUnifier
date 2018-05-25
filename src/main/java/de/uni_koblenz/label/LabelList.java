@@ -10,12 +10,20 @@ import net.sf.extjwnl.data.PointerUtils;
 import net.sf.extjwnl.data.list.PointerTargetNode;
 import net.sf.extjwnl.data.list.PointerTargetNodeList;
 import net.sf.extjwnl.dictionary.Dictionary;
+import java.util.Properties;
+
+import edu.stanford.nlp.pipeline.StanfordCoreNLP;
+import net.sf.extjwnl.JWNLException;
+
 
 public class LabelList {
 	
-	private Label[] inputLabels;
+
 	private Word[] allWords;
+	private List<Label> inputLabels = new ArrayList<Label>();
+	// new variable #####################################
 	
+	public static StanfordCoreNLP pipeline;
 	public LabelList() {
 		
 	}
@@ -23,12 +31,29 @@ public class LabelList {
 	public LabelList(Word[] allWords) {
 		this.allWords = allWords;
 	}
+	// NEW METHOD ########################################
+	
+	public LabelList(String[] input) throws JWNLException {
+		// Setup CORENLP Pipeline
+		Properties props = new Properties();
+		props.setProperty("annotators", "tokenize, ssplit, pos, lemma, depparse, natlog, openie");//, ner");
+		pipeline = new StanfordCoreNLP(props);
+		
+		// add Label objects for each string of the input array.
+		for (String stringLabel:input) {
+			inputLabels.add(new Label(stringLabel));
+		}
+		
+		// transform arraylist into array and store it in LabeList.
 
-	public Label[] getInputLabels() {
+		
+	}
+
+	public List<Label> getInputLabels() {
 		return inputLabels;
 	}
 
-	public void setInputLabels(Label[] inputLabels) {
+	public void setInputLabels(List<Label> inputLabels) {
 		this.inputLabels = inputLabels;
 	}
 
@@ -40,6 +65,15 @@ public class LabelList {
 		this.allWords = allWords;
 	}
 	
+	@Override
+	public String toString() {
+		String result="Result:\n";
+		for (Label label:inputLabels) {
+			result+=label.toString()+"\n";
+			
+		}
+		return result;
+	}
 	
 	
 	public void findSynsets(Label[] allLabels) throws JWNLException{
@@ -49,7 +83,7 @@ public class LabelList {
 		PointerTargetNodeList nodelist = null;
 		for (int i=0; i < allLabels.length; i++){
 			// Iterate over all Labels, i refers to the current Label
-			for (int j = 0; j < allLabels[i].getWordsarray().length; j++){
+			for (int j = 0; j < allLabels[i].getWordsarray().size(); j++){
 				// Iterate over all Words in a certain Label, j refers to the current Word
 				tempWord = dictionary.getIndexWord(allLabels[i].getWordsarray()[j].getPartOfSpeech().getJwnlType(), allLabels[i].getWordsarray()[j].getBaseform());
 				// Transform baseform of Word j in Label i into an indexWord so extjwnl can use it
@@ -91,7 +125,7 @@ public class LabelList {
 	public LabelList matchSynonyms(LabelList RemainingLabels, Word DefiningWord, WordCluster Cluster) {
 		List<List<Word>> RemainingLabelsAsList = new ArrayList<List<Word>>();
 		List<Integer> tempIntList = new ArrayList<Integer>();
-		for (int i = 0; i < RemainingLabels.getInputLabels().length; i++){
+		for (int i = 0; i < RemainingLabels.getInputLabels().size(); i++){
 			List<Word> tempWordList = new ArrayList<Word>();
 			for (int j = 0; j < RemainingLabels.getInputLabels()[i].getWordsarray().length; j++){
 				tempWordList.add(RemainingLabels.getInputLabels()[i].getWordsarray()[j]);
