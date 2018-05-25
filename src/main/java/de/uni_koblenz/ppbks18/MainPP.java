@@ -53,7 +53,7 @@ public class MainPP {
 		testList.setInputLabels(labelarray1);
 		// Set Input Labels to previously created Label array
 		System.out.println("Printing Labels:");
-		for (int i = 0; i < testList.getInputLabels().length; i++){
+		for (int i = 0; i < testList.getInputLabels().size(); i++){
 			for (int j = 0; j < testList.getInputLabels()[i].getWordsarray().length; j++){
 				System.out.println(testList.getInputLabels()[i].getWordsarray()[j].getBaseform());
 			}	
@@ -62,7 +62,7 @@ public class MainPP {
 		testList.findSynsets(labelarray1);
 		// Fill Synonym lists for each word
 		System.out.println("Printing Synonyms:");
-		for (int i = 0; i < testList.getInputLabels().length; i++){
+		for (int i = 0; i < testList.getInputLabels().size(); i++){
 			for (int j = 0; j < testList.getInputLabels()[i].getWordsarray().length; j++){
 				System.out.println(testList.getInputLabels()[i].getWordsarray()[j].getSynonyms());
 			}	
@@ -72,7 +72,7 @@ public class MainPP {
 		List<WordCluster> AllClusters = new ArrayList<WordCluster>();
 		LabelList safetyList = new LabelList();
 		safetyList = testList;
-		while (safetyList.getInputLabels().length != 0){
+		while (safetyList.getInputLabels().size() != 0){
 			WordCluster tempCluster = new WordCluster(safetyList);
 			safetyList = safetyList.matchSynonyms(safetyList, safetyList.getInputLabels()[0].getWordsarray()[0], tempCluster);
 			AllClusters.add(tempCluster);
