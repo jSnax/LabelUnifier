@@ -23,9 +23,9 @@ import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
 public class Label {
 	
-	private Word[] wordsarray;
+	private List<Word> wordsarray = new ArrayList<Word>();
 	// changed variable #############################
-	private CoreSentence[] labelAsCoreSentenceList;
+	private List<CoreSentence> labelAsCoreSentenceList = new ArrayList<CoreSentence>();
 	private String labelAsString;
 	private SemanticGraph parsedLabel;
 	private boolean isFinal;
@@ -42,29 +42,28 @@ public class Label {
 		LabelList.pipeline.annotate(document);
 		
 		// store sentences in Label object
-		List<CoreSentence> labelAsCoreSentenceListList = new ArrayList<CoreSentence>();
+
 		for (CoreSentence sentence:document.sentences()) {
-			labelAsCoreSentenceListList.add(sentence);
+			labelAsCoreSentenceList.add(sentence);
 		}
-		this.setLabelAsCoreSentenceList(labelAsCoreSentenceListList.toArray(new CoreSentence[labelAsCoreSentenceListList.size()]));
 		
 		createWordsArray();
 	}
 	
 	
-	public Word[] getWordsarray() {
+	public List<Word> getWordsarray() {
 		return wordsarray;
 	}
 	
-	public void setWordsarray(Word[] wordsarray) {
+	public void setWordsarray(List<Word> wordsarray) {
 		this.wordsarray = wordsarray;
 	}
 	// changed######################### 
-	public CoreSentence[] getLabelAsCoreSentenceList() {
+	public List<CoreSentence> getLabelAsCoreSentenceList() {
 		return labelAsCoreSentenceList;
 	}
 	// changed##########################
-	public void setLabelAsCoreSentenceList(CoreSentence[] labelAsCoreSentenceList) {
+	public void setLabelAsCoreSentenceList(List<CoreSentence> labelAsCoreSentenceList) {
 		this.labelAsCoreSentenceList = labelAsCoreSentenceList;
 	}
 	
@@ -97,13 +96,12 @@ public class Label {
 	 */ 
 	public void createWordsArray() throws JWNLException{
 		// create words
-		List<Word> wordsarrayList = new ArrayList<Word>();
-		List<Word> wordsarrayListTemp = new ArrayList<Word>();
+		List<Word> wordsarrayTemp = new ArrayList<Word>();
 		for (CoreSentence sentence:labelAsCoreSentenceList) {
 			List<CoreLabel> tokens = sentence.tokens();
 			for (CoreLabel token:tokens) {
 				//create words and put them in a temporary list (easier to work with index)
-				wordsarrayListTemp.add(new Word(token));
+				wordsarrayTemp.add(new Word(token));
 				
 			}
 			//create grammatical relations and add them
@@ -111,8 +109,8 @@ public class Label {
 			//go through all grammatical relations of the current sentence
 		    for(SemanticGraphEdge edge:graph.edgeIterable()) {
 		    	//get the Word equivalent of the tokens
-		    	Word sourceWord=wordsarrayListTemp.get(edge.getSource().index()-1);
-		    	Word targetWord=wordsarrayListTemp.get(edge.getTarget().index()-1);
+		    	Word sourceWord=wordsarrayTemp.get(edge.getSource().index()-1);
+		    	Word targetWord=wordsarrayTemp.get(edge.getTarget().index()-1);
 		    	// get RelationName Enum from String
 		    	RelationName relationName=null;
 		    	try {
@@ -125,21 +123,21 @@ public class Label {
 		    	//create GrammaticalRelation
 		    	GrammaticalRelationBetweenWords grammaticalRelationTemp= new GrammaticalRelationBetweenWords(sourceWord,targetWord,relationName);
 		    	//store grammatical Relation in both words
-		    	sourceWord.addGrammaticalRelation(grammaticalRelationTemp);
-		    	targetWord.addGrammaticalRelation(grammaticalRelationTemp);
+		    	sourceWord.getGrammaticalRelations().add(grammaticalRelationTemp);
+		    	targetWord.getGrammaticalRelations().add(grammaticalRelationTemp);
 		    }
 		    //define Role
 		    if(sentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).isEmpty()) {
 		    	System.out.println("No OpenIE Triple");
 		    }else {
 		    	for(CoreLabel tripletoken : sentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).iterator().next().relation) {
-					wordsarrayListTemp.get(tripletoken.index()-1).setRole(RoleLeopold.ACTION);
+					wordsarrayTemp.get(tripletoken.index()-1).setRole(RoleLeopold.ACTION);
 				}
 		    	for(CoreLabel tripletoken : sentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).iterator().next().object) {
-					wordsarrayListTemp.get(tripletoken.index()-1).setRole(RoleLeopold.BUSINESS_OBJECT);
+					wordsarrayTemp.get(tripletoken.index()-1).setRole(RoleLeopold.BUSINESS_OBJECT);
 				}
 		    	for(CoreLabel tripletoken : sentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).iterator().next().subject) {
-					wordsarrayListTemp.get(tripletoken.index()-1).setRole(null);
+					wordsarrayTemp.get(tripletoken.index()-1).setRole(null);
 				}
 
 		    }
@@ -147,12 +145,10 @@ public class Label {
 				
 			
 			//add the wordlist of this single sentence to the complete list of words
-			wordsarrayList.addAll(wordsarrayListTemp);
-			wordsarrayListTemp.clear();
+			wordsarray.addAll(wordsarrayTemp);
+			wordsarrayTemp.clear();
 		}
 		
-		
-		this.setWordsarray(wordsarrayList.toArray(new Word[wordsarrayList.size()]));
 	}
 	
 

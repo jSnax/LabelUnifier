@@ -63,10 +63,6 @@ public class Word {
 	public void setGrammaticalRelations(ArrayList<GrammaticalRelationBetweenWords> grammaticalRelations) {
 		this.grammaticalRelations = grammaticalRelations;
 	}
-	// new method ##########################
-	public void addGrammaticalRelation(GrammaticalRelationBetweenWords grammaticalRelation) {
-		this.grammaticalRelations.add(grammaticalRelation);
-	}
 	
 	public String getBaseform() {
 		return baseform;

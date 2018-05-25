@@ -9,7 +9,7 @@ import net.sf.extjwnl.JWNLException;
 
 public class LabelList {
 	
-	private Label[] inputLabels;
+	private List<Label> inputLabels = new ArrayList<Label>();
 	// new variable #####################################
 	
 	public static StanfordCoreNLP pipeline;
@@ -25,22 +25,21 @@ public class LabelList {
 		props.setProperty("annotators", "tokenize, ssplit, pos, lemma, depparse, natlog, openie");//, ner");
 		pipeline = new StanfordCoreNLP(props);
 		
-		// Create list and add Label objects for each string of the input array.
-		List<Label> LabelListList = new ArrayList<Label>();
+		// add Label objects for each string of the input array.
 		for (String stringLabel:input) {
-			LabelListList.add(new Label(stringLabel));
+			inputLabels.add(new Label(stringLabel));
 		}
 		
 		// transform arraylist into array and store it in LabeList.
-		this.setInputLabels(LabelListList.toArray(new Label[LabelListList.size()]));
+
 		
 	}
 
-	public Label[] getInputLabels() {
+	public List<Label> getInputLabels() {
 		return inputLabels;
 	}
 
-	public void setInputLabels(Label[] inputLabels) {
+	public void setInputLabels(List<Label> inputLabels) {
 		this.inputLabels = inputLabels;
 	}
 	
