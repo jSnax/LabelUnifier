@@ -11,7 +11,7 @@ public class WordCluster {
 
 	public WordCluster(LabelList RemainingLabels) {
 		this.matchingWords = new ArrayList<Word>(); 
-		Word DefiningWord = RemainingLabels.getInputLabels()[0].getWordsarray()[0]; 
+		Word DefiningWord = RemainingLabels.getInputLabels().get(0).getWordsarray().get(0); 
 		matchingWords.add(DefiningWord);
 		// Takes the first remaining word in the LabelList and creates a new WordCluster for it
 		//[CODE] RemainingLabels.matchSynonyms(RemainingLabels, DefiningWord, this); [CODE]
