@@ -36,6 +36,7 @@ public class Word {
 	public Word() {
 		
 	}
+	
 	public Word(String originalForm) {
 		this.originalForm = originalForm;
 	}
@@ -48,9 +49,11 @@ public class Word {
 		tagLabel();
 		stemWord();
 	}
+	
 	public Word(PartOfSpeechTypes partOfSpeech) {
 		this.partOfSpeech = partOfSpeech;
 	}
+	
 	public Word(String originalForm, PartOfSpeechTypes partOfSpeech) {
 		this.originalForm = originalForm;
 		this.partOfSpeech = partOfSpeech;
@@ -256,6 +259,25 @@ public class Word {
             setBaseform(lemma);	
 		}
 	}
+	
+	/* calculates the dominance of a word based on the sum of it appeareance
+	 */
+	
+	public void calculateDominance(List<Word> allWords) {
+		int dominanceCalculator = 0;
+		for (int zaehler = 0; zaehler < allWords.size(); zaehler++) {
+			if (allWords.get(zaehler).baseform.equals(this.baseform)) {
+				dominanceCalculator++;
+			} else {
+				continue;
+			}
+			
+		}
+		this.dominance = dominanceCalculator;
+		
+	}
+	
+	
 	@Override
 	public String toString() {
 		String grammaticalRelationAsString=" Grammatical relations: ";

@@ -19,7 +19,7 @@ import net.sf.extjwnl.JWNLException;
 public class LabelList {
 	
 
-	private Word[] allWords;
+	private List<Word> allWords = new ArrayList<Word>();
 	private List<Label> inputLabels = new ArrayList<Label>();
 	// new variable #####################################
 	
@@ -27,10 +27,7 @@ public class LabelList {
 	public LabelList() {
 		
 	}
-	
-	public LabelList(Word[] allWords) {
-		this.allWords = allWords;
-	}
+
 	// NEW METHOD ########################################
 	
 	public LabelList(String[] input) throws JWNLException {
@@ -57,13 +54,22 @@ public class LabelList {
 		this.inputLabels = inputLabels;
 	}
 
-	public Word[] getAllWords() {
+	public List<Word> getAllWords() {
 		return allWords;
 	}
 
-	public void setAllWords(Word[] allWords) {
+	public void setAllWords(List<Word> allWords) {
 		this.allWords = allWords;
 	}
+
+	public void createAllWordsArray() {
+		for(int labelZaehler = 0; labelZaehler < this.inputLabels.size(); labelZaehler++) {		//Iteration over Labels
+			for(int wordZaehler = 0; wordZaehler < this.inputLabels.get(labelZaehler).getWordsarray().size(); wordZaehler++) {	//Iteration over Words
+				this.allWords.add(this.inputLabels.get(labelZaehler).getWordsarray().get(wordZaehler));		//add Word to allWords[]
+			}
+		}
+	}
+	
 	
 	@Override
 	public String toString() {
