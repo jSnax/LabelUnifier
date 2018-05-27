@@ -41,30 +41,36 @@ public class MainPP {
 		Label label1 = new Label();
 		Label label2 = new Label();
 		// Create two Labels
-		Word[] array1 = {CHECK, INVOICE};
-		Word[] array2 = {VERIFY, BILL};
-		// Create arrays over words
-		label1.setWordsarray(array1);
-		label2.setWordsarray(array2);
+		List<Word> list1 = new ArrayList<Word>();
+		List<Word> list2 = new ArrayList<Word>();
+		list1.add(CHECK);
+		list1.add(INVOICE);
+		list2.add(VERIFY);
+		list2.add(BILL);
+		// Create lists over words
+		label1.setWordsarray(list1);
+		label2.setWordsarray(list2);
 		// Fill Labels with word arrays
 		LabelList testList = new LabelList();
-		Label[] labelarray1 = {label1, label2};
-		// Create empty Label array and fill it with the two labels
-		testList.setInputLabels(labelarray1);
-		// Set Input Labels to previously created Label array
+		List<Label> labellist1 = new ArrayList<Label>();
+		labellist1.add(label1);
+		labellist1.add(label2);
+		// Create empty Label list and fill it with the two labels
+		testList.setInputLabels(labellist1);
+		// Set Input Labels to previously created Label list
 		System.out.println("Printing Labels:");
 		for (int i = 0; i < testList.getInputLabels().size(); i++){
-			for (int j = 0; j < testList.getInputLabels()[i].getWordsarray().length; j++){
-				System.out.println(testList.getInputLabels()[i].getWordsarray()[j].getBaseform());
+			for (int j = 0; j < testList.getInputLabels().get(i).getWordsarray().size(); j++){
+				System.out.println(testList.getInputLabels().get(i).getWordsarray().get(j).getBaseform());
 			}	
 		}
 		// Simply print the two labels
-		testList.findSynsets(labelarray1);
+		testList.findSynsets(testList);
 		// Fill Synonym lists for each word
 		System.out.println("Printing Synonyms:");
 		for (int i = 0; i < testList.getInputLabels().size(); i++){
-			for (int j = 0; j < testList.getInputLabels()[i].getWordsarray().length; j++){
-				System.out.println(testList.getInputLabels()[i].getWordsarray()[j].getSynonyms());
+			for (int j = 0; j < testList.getInputLabels().get(i).getWordsarray().size(); j++){
+				System.out.println(testList.getInputLabels().get(i).getWordsarray().get(j).getSynonyms());
 			}	
 		}
 		// Print synonym lists
@@ -74,7 +80,7 @@ public class MainPP {
 		safetyList = testList;
 		while (safetyList.getInputLabels().size() != 0){
 			WordCluster tempCluster = new WordCluster(safetyList);
-			safetyList = safetyList.matchSynonyms(safetyList, safetyList.getInputLabels()[0].getWordsarray()[0], tempCluster);
+			safetyList = safetyList.matchSynonyms(safetyList, tempCluster);
 			AllClusters.add(tempCluster);
 		}
 		for (int i = 0; i < AllClusters.size(); i++){
