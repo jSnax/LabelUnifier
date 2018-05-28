@@ -16,7 +16,7 @@ public class GrammaticalRelationBetweenWords {
 	// new method
 	public GrammaticalRelationBetweenWords(Word sourceWord, Word targetWord, RelationName grammaticalRelationName) {
 		this.sourceWord=sourceWord;
-		this.sourceWord=targetWord;		
+		this.targetWord=targetWord;		
 		this.grammaticalRelationName=grammaticalRelationName;
 	}
 	
@@ -50,5 +50,8 @@ public class GrammaticalRelationBetweenWords {
 	}
 
 	
-	
+	@Override
+	public String toString() {
+		return "Source: "+sourceWord+" Target: "+targetWord+" Name: " +grammaticalRelationName;
+	}
 }
