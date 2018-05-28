@@ -181,12 +181,12 @@ public class LabelList {
 			   the word at position i in DefiningLabel, they are considered equal. Else Equals will be set false.*/
 			if (Equals){
 				Cluster.matchingLabels.add(RemainingLabels.getInputLabels().get(i));
-				tempIntList.add(j);
+				tempIntList.add(i);
 			}
 			else Equals = true;
 			// Adds the equal label to the LabelCluster
 		}
-		for (int i = tempIntList.size(); i >= 0; i++){
+		for (int i = tempIntList.size() - 1; i >= 0; i--){
 			int z = tempIntList.get(i);
 			RemainingLabels.getInputLabels().remove(z);
 			tempIntList.remove(i);

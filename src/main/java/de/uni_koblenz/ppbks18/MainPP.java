@@ -77,7 +77,8 @@ public class MainPP {
 		System.out.println("Printing Wordclusters");
 		List<WordCluster> AllClusters = new ArrayList<WordCluster>();
 		LabelList safetyList = new LabelList();
-		safetyList = testList;
+		safetyList.setInputLabels(labellist1);
+		safetyList.findSynsets(safetyList);
 		int Position = 0;
 		while (safetyList.getInputLabels().size() != 0){
 			WordCluster tempCluster = new WordCluster(safetyList);
@@ -91,8 +92,20 @@ public class MainPP {
 				System.out.println(AllClusters.get(i).matchingWords.get(j).getBaseform());
 			}
 		}
+		// Prints Wordclusters
 		System.out.println("Printing LabelClusters");
-		safetyList = testList;
+		list1.add(CHECK);
+		list1.add(INVOICE);
+		list2.add(VERIFY);
+		list2.add(BILL);
+		// Create lists over words
+		label1.setWordsarray(list1);
+		label2.setWordsarray(list2);
+		// Fill Labels with word arrays
+		labellist1.add(label1);
+		labellist1.add(label2);
+		safetyList.setInputLabels(labellist1);
+		safetyList.findSynsets(safetyList);
 		// TEST DOESN'T WORK AS EXPECTED RIGHT NOW
 		// testList references same object as safetyList, so both Lists are empty at this point
 		List<LabelCluster> AllLabelClusters = new ArrayList<LabelCluster>();
@@ -104,12 +117,13 @@ public class MainPP {
 		for (int i = 0; i < AllLabelClusters.size(); i++){
 			System.out.println("Cluster " +i);
 			for (int j = 0; j < AllLabelClusters.get(i).matchingLabels.size(); j++){
+				System.out.println("Label " +j);
 				for (int z = 0; z < AllLabelClusters.get(i).matchingLabels.get(j).getWordsarray().size(); z++){
 					System.out.println(AllLabelClusters.get(i).matchingLabels.get(j).getWordsarray().get(z).getBaseform());
 				}
 			}
 		}
-		/*String[] test=new String[] {"checking invoice","This is a short sentence","This is a sentence."};
+		String[] test=new String[] {"checking invoice","This is a short sentence","This is a sentence."};
 		System.out.println("Algorithm started");
 
 		LabelList input=new LabelList(test);
@@ -117,7 +131,7 @@ public class MainPP {
 		System.out.println("Algorithm completed");
 		//print all words and variables
 		System.out.println(input);
-		// Prints Wordclusters
-		*/
+
+		
 	}
 }
