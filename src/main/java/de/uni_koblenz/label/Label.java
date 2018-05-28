@@ -7,6 +7,7 @@ import de.uni_koblenz.enums.RoleLeopold;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
@@ -14,13 +15,14 @@ import java.util.Properties;
 import edu.stanford.nlp.ie.util.RelationTriple;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.CoreLabel;
+import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.naturalli.NaturalLogicAnnotations;
 import edu.stanford.nlp.util.CoreMap;
 import net.sf.extjwnl.JWNLException;
 import edu.stanford.nlp.pipeline.*;
 import edu.stanford.nlp.semgraph.*;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
-
+import net.sf.extjwnl.data.POS;
 public class Label {
 	
 	private List<Word> wordsarray = new ArrayList<Word>();
@@ -127,8 +129,37 @@ public class Label {
 		    	targetWord.getGrammaticalRelations().add(grammaticalRelationTemp);
 		    }
 		    //define Role
+		    // check if OpenIE triple got created
+		    
+		    // get information from dependency tree root
 		    if(sentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).isEmpty()) {
-		    	System.out.println("No OpenIE Triple");
+		    	// get root as Word
+	    		Word root=wordsarrayTemp.get(sentence.dependencyParse().getFirstRoot().index()-1);
+
+
+		        // check if root of dependency tree is a verb
+		    	if(root.getPartOfSpeech().getJwnlType()==POS.VERB) {
+		    		// set root word as Action
+		    		root.setRole(RoleLeopold.ACTION);
+		    		// set business object and subject
+		    		RelationName[] subjects= {RelationName.SUBJECT,RelationName.NOMINAL_SUBJECT};
+		    		RelationName[] objects= {RelationName.DIRECT_OBJECT,RelationName.OBJECT};
+		    		for(GrammaticalRelationBetweenWords relation:root.getGrammaticalRelations()) {
+		    			//set business object
+		    			if(Arrays.asList(objects).contains(relation.getGrammaticalRelationName())) {
+		    				relation.getTargetWord().setRole(RoleLeopold.BUSINESS_OBJECT);
+		    			}
+		    			//set subject
+		    			if(Arrays.asList(subjects).contains(relation.getGrammaticalRelationName())) {
+		    				relation.getTargetWord().setRole(null);
+		    			}
+		    		}
+		    		
+		    	// if root is no verb	
+		    	}else {
+		    		System.out.println("ROLE: NO VERB AT ROOT for: " + sentence.text());
+		    	}
+		    // get information from OpenIE triple
 		    }else {
 		    	for(CoreLabel tripletoken : sentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).iterator().next().relation) {
 					wordsarrayTemp.get(tripletoken.index()-1).setRole(RoleLeopold.ACTION);
