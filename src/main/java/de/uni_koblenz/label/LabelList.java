@@ -3,6 +3,7 @@ package de.uni_koblenz.label;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.uni_koblenz.cluster.LabelCluster;
 import de.uni_koblenz.cluster.WordCluster;
 import net.sf.extjwnl.JWNLException;
 import net.sf.extjwnl.data.POS;
@@ -128,9 +129,10 @@ public class LabelList {
 		}
 	}
 	
-	public LabelList matchSynonyms(LabelList RemainingLabels, WordCluster Cluster) {
+	public LabelList matchSynonyms(LabelList RemainingLabels, WordCluster Cluster, Integer ClusterPosition) {
 		List<Integer> tempIntList = new ArrayList<Integer>();
 		Word DefiningWord = RemainingLabels.getInputLabels().get(0).getWordsarray().get(0);
+		RemainingLabels.getInputLabels().get(0).getWordsarray().get(0).setClusterPosition(ClusterPosition);
 		RemainingLabels.getInputLabels().get(0).getWordsarray().remove(0);
 		// Removing first entry of RemainingLabels since it is the 
 		for (int i = 0; i < RemainingLabels.getInputLabels().size(); i++){
@@ -138,6 +140,7 @@ public class LabelList {
 				if (DefiningWord.getPartOfSpeech() == RemainingLabels.getInputLabels().get(i).getWordsarray().get(j).getPartOfSpeech()){
 					if (DefiningWord.getSynonyms().contains(RemainingLabels.getInputLabels().get(i).getWordsarray().get(j).getBaseform()) || RemainingLabels.getInputLabels().get(i).getWordsarray().get(j).getSynonyms().contains(DefiningWord.getBaseform())){
 						Cluster.matchingWords.add(RemainingLabels.getInputLabels().get(i).getWordsarray().get(j));
+						RemainingLabels.getInputLabels().get(i).getWordsarray().get(j).setClusterPosition(ClusterPosition);
 						tempIntList.add(j);
 						// Most basic form of matching. If POS match and one word is a synonym of the other, they have the same meaning
 						}
@@ -159,24 +162,37 @@ public class LabelList {
 			}
 		}
 		return(RemainingLabels);
-		/* At this point, it seems logical to provide an example implementation of this function in a main-method. 
-		* In this example, testList is not defined. It has to be of type LabelList however.
-		* 
-		List<WordCluster> AllClusters = new ArrayList<WordCluster>();
-		LabelList safetyList = new LabelList();
-		safetyList = testList;
-		while (safetyList.getInputLabels().length != 0){
-			WordCluster tempCluster = new WordCluster(safetyList);
-			safetyList = safetyList.matchSynonyms(safetyList, safetyList.getInputLabels()[0].getWordsarray()[0], tempCluster);
-			AllClusters.add(tempCluster);
-		}
-		for (int i = 0; i < AllClusters.size(); i++){
-			System.out.println("Cluster " +i);
-			for (int j = 0; j < AllClusters.get(i).matchingWords.size(); j++){
-				System.out.println(AllClusters.get(i).matchingWords.get(j).getBaseform());
-			}
-		}
-		*
-		 */
 	}
+	
+	public LabelList matchLabels(LabelList RemainingLabels, List<WordCluster> ClusterList, LabelCluster Cluster){
+		Label DefiningLabel = RemainingLabels.getInputLabels().get(0);
+		RemainingLabels.getInputLabels().remove(0);
+		boolean Equals = true;
+		List<Integer> tempIntList = new ArrayList<Integer>();
+		for (int i = 0; i < RemainingLabels.getInputLabels().size(); i++){
+			int j = 0;
+			while (Equals && j < RemainingLabels.getInputLabels().get(i).getWordsarray().size()){
+				if (RemainingLabels.getInputLabels().get(i).getWordsarray().get(j).getClusterPosition() != DefiningLabel.getWordsarray().get(j).getClusterPosition()){
+					Equals = false;
+				}
+				j++;
+			}
+			/* Iterates over all Words in all Labels. If within a certain label each word at position i lies in the same WordCluster as
+			   the word at position i in DefiningLabel, they are considered equal. Else Equals will be set false.*/
+			if (Equals){
+				Cluster.matchingLabels.add(RemainingLabels.getInputLabels().get(i));
+				tempIntList.add(j);
+			}
+			else Equals = true;
+			// Adds the equal label to the LabelCluster
+		}
+		for (int i = tempIntList.size(); i >= 0; i++){
+			int z = tempIntList.get(i);
+			RemainingLabels.getInputLabels().remove(z);
+			tempIntList.remove(i);
+		}
+		// Removes matched Labels from the LabelList
+		return (RemainingLabels);
+	}
+	// It's important to call this method using a LabelCluster that was just created from RemainingLabels 
 }

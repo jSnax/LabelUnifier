@@ -31,6 +31,7 @@ public class Word {
 	private RoleLeopold role;
 	private Integer dominance;
 	private List<String> Synonyms;
+	private Integer ClusterPosition;
 
 	
 	public Word() {
@@ -111,6 +112,15 @@ public class Word {
 	public List<String> getSynonyms() {
 		return Synonyms;
 	}
+	
+	public Integer getClusterPosition() {
+		return ClusterPosition;
+	}
+
+	public void setClusterPosition(Integer clusterPosition) {
+		ClusterPosition = clusterPosition;
+	}
+	
 	/*
 	 * method to tag a label into PartOfSpeechTypes
 	 */
@@ -287,6 +297,8 @@ public class Word {
 		
 		return "Word: "+ originalForm +" Base: " + baseform + " POS: " + partOfSpeech + " Role: " + role + grammaticalRelationAsString;
 	}
+
+
 }
 	
 	/* stem nimmt String originalForm als Input und gibt String(?) baseForm als Output

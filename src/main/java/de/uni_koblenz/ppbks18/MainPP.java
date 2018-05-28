@@ -78,10 +78,12 @@ public class MainPP {
 		List<WordCluster> AllClusters = new ArrayList<WordCluster>();
 		LabelList safetyList = new LabelList();
 		safetyList = testList;
+		int Position = 0;
 		while (safetyList.getInputLabels().size() != 0){
 			WordCluster tempCluster = new WordCluster(safetyList);
-			safetyList = safetyList.matchSynonyms(safetyList, tempCluster);
+			safetyList = safetyList.matchSynonyms(safetyList, tempCluster, Position);
 			AllClusters.add(tempCluster);
+			Position++;
 		}
 		for (int i = 0; i < AllClusters.size(); i++){
 			System.out.println("Cluster " +i);
@@ -89,8 +91,25 @@ public class MainPP {
 				System.out.println(AllClusters.get(i).matchingWords.get(j).getBaseform());
 			}
 		}
-		
-		String[] test=new String[] {"checking invoice","This is a short sentence","This is a sentence."};
+		System.out.println("Printing LabelClusters");
+		safetyList = testList;
+		// TEST DOESN'T WORK AS EXPECTED RIGHT NOW
+		// testList references same object as safetyList, so both Lists are empty at this point
+		List<LabelCluster> AllLabelClusters = new ArrayList<LabelCluster>();
+		while (safetyList.getInputLabels().size() != 0){
+			LabelCluster tempLCluster = new LabelCluster(safetyList);
+			safetyList = safetyList.matchLabels(safetyList, AllClusters, tempLCluster);
+			AllLabelClusters.add(tempLCluster);
+		}
+		for (int i = 0; i < AllLabelClusters.size(); i++){
+			System.out.println("Cluster " +i);
+			for (int j = 0; j < AllLabelClusters.get(i).matchingLabels.size(); j++){
+				for (int z = 0; z < AllLabelClusters.get(i).matchingLabels.get(j).getWordsarray().size(); z++){
+					System.out.println(AllLabelClusters.get(i).matchingLabels.get(j).getWordsarray().get(z).getBaseform());
+				}
+			}
+		}
+		/*String[] test=new String[] {"checking invoice","This is a short sentence","This is a sentence."};
 		System.out.println("Algorithm started");
 
 		LabelList input=new LabelList(test);
@@ -99,6 +118,6 @@ public class MainPP {
 		//print all words and variables
 		System.out.println(input);
 		// Prints Wordclusters
-
+		*/
 	}
 }
