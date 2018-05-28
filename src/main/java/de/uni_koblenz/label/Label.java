@@ -25,9 +25,9 @@ import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 import net.sf.extjwnl.data.POS;
 public class Label {
 	
-	private List<Word> wordsarray = new ArrayList<Word>();
+
 	// changed variable #############################
-	private List<CoreSentence> labelAsCoreSentenceList = new ArrayList<CoreSentence>();
+	private List<Sentence> sentenceArray = new ArrayList<Sentence>();
 	private String labelAsString;
 	private SemanticGraph parsedLabel;
 	private boolean isFinal;
@@ -46,28 +46,12 @@ public class Label {
 		// store sentences in Label object
 
 		for (CoreSentence sentence:document.sentences()) {
-			labelAsCoreSentenceList.add(sentence);
+			sentenceArray.add(new Sentence(sentence));
 		}
-		
-		createWordsArray();
 	}
 	
 	
-	public List<Word> getWordsarray() {
-		return wordsarray;
-	}
-	
-	public void setWordsarray(List<Word> wordsarray) {
-		this.wordsarray = wordsarray;
-	}
-	// changed######################### 
-	public List<CoreSentence> getLabelAsCoreSentenceList() {
-		return labelAsCoreSentenceList;
-	}
-	// changed##########################
-	public void setLabelAsCoreSentenceList(List<CoreSentence> labelAsCoreSentenceList) {
-		this.labelAsCoreSentenceList = labelAsCoreSentenceList;
-	}
+
 	
 	public String getLabelAsString() {
 		return labelAsString;
@@ -93,95 +77,7 @@ public class Label {
 		this.isFinal = isFinal;
 	}
 	
-	/*
-	 * method to convert a String into a Word-array
-	 */ 
-	public void createWordsArray() throws JWNLException{
-		// create words
-		List<Word> wordsarrayTemp = new ArrayList<Word>();
-		for (CoreSentence sentence:labelAsCoreSentenceList) {
-			List<CoreLabel> tokens = sentence.tokens();
-			for (CoreLabel token:tokens) {
-				//create words and put them in a temporary list (easier to work with index)
-				wordsarrayTemp.add(new Word(token));
-				
-			}
-			//create grammatical relations and add them
-			SemanticGraph graph=sentence.dependencyParse();
-			//go through all grammatical relations of the current sentence
-		    for(SemanticGraphEdge edge:graph.edgeIterable()) {
-		    	//get the Word equivalent of the tokens
-		    	Word sourceWord=wordsarrayTemp.get(edge.getSource().index()-1);
-		    	Word targetWord=wordsarrayTemp.get(edge.getTarget().index()-1);
-		    	// get RelationName Enum from String
-		    	RelationName relationName=null;
-		    	try {
-		    		relationName=RelationName.valueOf(edge.getRelation().getLongName().toUpperCase().replace(' ', '_'));
-		    	}catch(IllegalArgumentException e){
-		    		relationName=null;
-		    	}finally {
-		    		
-		    	}
-		    	//create GrammaticalRelation
-		    	GrammaticalRelationBetweenWords grammaticalRelationTemp= new GrammaticalRelationBetweenWords(sourceWord,targetWord,relationName);
-		    	//store grammatical Relation in both words
-		    	sourceWord.getGrammaticalRelations().add(grammaticalRelationTemp);
-		    	targetWord.getGrammaticalRelations().add(grammaticalRelationTemp);
-		    }
-		    //define Role
-		    // check if OpenIE triple got created
-		    
-		    // get information from dependency tree root
-		    if(sentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).isEmpty()) {
-		    	// get root as Word
-	    		Word root=wordsarrayTemp.get(sentence.dependencyParse().getFirstRoot().index()-1);
 
-
-		        // check if root of dependency tree is a verb
-		    	if(root.getPartOfSpeech().getJwnlType()==POS.VERB) {
-		    		// set root word as Action
-		    		root.setRole(RoleLeopold.ACTION);
-		    		// set business object and subject
-		    		RelationName[] subjects= {RelationName.SUBJECT,RelationName.NOMINAL_SUBJECT};
-		    		RelationName[] objects= {RelationName.DIRECT_OBJECT,RelationName.OBJECT};
-		    		for(GrammaticalRelationBetweenWords relation:root.getGrammaticalRelations()) {
-		    			//set business object
-		    			if(Arrays.asList(objects).contains(relation.getGrammaticalRelationName())) {
-		    				relation.getTargetWord().setRole(RoleLeopold.BUSINESS_OBJECT);
-		    			}
-		    			//set subject
-		    			if(Arrays.asList(subjects).contains(relation.getGrammaticalRelationName())) {
-		    				relation.getTargetWord().setRole(null);
-		    			}
-		    		}
-		    		
-		    	// if root is no verb	
-		    	}else {
-		    		System.out.println("ROLE: NO VERB AT ROOT for: " + sentence.text());
-		    	}
-		    // get information from OpenIE triple
-		    }else {
-		    	for(CoreLabel tripletoken : sentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).iterator().next().relation) {
-					wordsarrayTemp.get(tripletoken.index()-1).setRole(RoleLeopold.ACTION);
-				}
-		    	for(CoreLabel tripletoken : sentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).iterator().next().object) {
-					wordsarrayTemp.get(tripletoken.index()-1).setRole(RoleLeopold.BUSINESS_OBJECT);
-				}
-		    	for(CoreLabel tripletoken : sentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).iterator().next().subject) {
-					wordsarrayTemp.get(tripletoken.index()-1).setRole(null);
-				}
-
-		    }
-				
-				
-			
-			//add the wordlist of this single sentence to the complete list of words
-			wordsarray.addAll(wordsarrayTemp);
-			wordsarrayTemp.clear();
-		}
-		
-	}
-	
 
 	
 	/** not used
@@ -231,8 +127,8 @@ public class Label {
 	@Override
 	public String toString() {
 		String result="Label:\n";
-		for (Word word:wordsarray) {
-			result+=word.toString()+"\n";
+		for (Sentence sentence:sentenceArray) {
+			result+=sentence.toString()+"\n";
 			
 		}
 		return result;
