@@ -14,11 +14,10 @@ import net.sf.extjwnl.data.POS;
 import net.sf.extjwnl.dictionary.Dictionary;
 
 public class Word {
-	// new variable #############
+	
 	private CoreLabel token;
 	
 	private PartOfSpeechTypes partOfSpeech;
-	// changed from array to arraylist #####################
 	private ArrayList<GrammaticalRelationBetweenWords> grammaticalRelations=new ArrayList<GrammaticalRelationBetweenWords>();
 	private String baseform;
 	private String originalForm;
@@ -111,80 +110,7 @@ public class Word {
         		break;
         	}
         }
-        
-        
-        /**if(pos.equals("CC")) {
-                this.setPartOfSpeech(PartOfSpeechTypes.COORDINATING_CONJUNCTION);
-        	}else if(pos.equals("CD")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.CARDINAL_NUMBER);
-        	}else if(pos.equals("DT")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.DETERMINER);
-        	}else if(pos.equals("EX")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.EXISTENTIAL_THERE);
-        	}else if(pos.equals("FW")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.FOREIGN_WORD);
-        	}else if(pos.equals("IN")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.PREPOSITION_SUBORDINATING_CONJUNCTION);
-        	}else if(pos.equals("JJ")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.ADJECTIVE);
-        	}else if(pos.equals("JJR")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.ADJECTIVE_COMPARATIVE);
-        	}else if(pos.equals("JJS")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.ADJECTIVE_SUPERLATIVE);
-        	}else if(pos.equals("NN")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.NOUN_SINGULAR_MASS);
-        	}else if(pos.equals("NNS")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.NOUN_PLURAL);
-        	}else if(pos.equals("NNP")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.PROPER_NOUN_SINGULAR);
-        	}else if(pos.equals("NNPS")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.PROPER_NOUN_PLURAL);
-        	}else if(pos.equals("PDT")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.PREDETERMINER);		
-        	}else if(pos.equals("NP")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.NOUN_PHRASE);
-        	}else if(pos.equals("PP")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.PREPOSITIONAL_PHRASE);
-        	}else if(pos.equals("VP")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.VERB_PHRASE);
-        	}else if(pos.equals("PRP")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.PERSONAL_PRONOUN);
-        	}else if(pos.equals("RB")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.ADVERB);
-        	}else if(pos.equals("RBR")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.ADVERB_COMPARATIVE);
-        	}else if(pos.equals("RBS")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.ADJECTIVE_SUPERLATIVE);
-        	}else if(pos.equals("RP")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.PARTICLE);
-        	}else if(pos.equals("SYM")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.SYMBOL);
-        	}else if(pos.equals("TO")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.TO);
-        	}else if(pos.equals("UH")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.INTERJECTION);
-        	}else if(pos.equals("VB")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.VERB_BASE);
-        	}else if(pos.equals("VBD")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.VERB_PAST);
-        	}else if(pos.equals("VBG")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.VERB_GERUND_OR_PRESENT_PARTICIPLE);
-        	}else if(pos.equals("VBN")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.VERB_PAST_PARTICIPLE);
-        	}else if(pos.equals("VBP")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.VERB_NON_3RD_PERSON_SINGULAR_PRESENT);
-        	}else if(pos.equals("VBZ")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.VERB_3RD_PERSON_SINGULAR_PRESENT);
-        	}else if(pos.equals("WDT")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.WH_DETERMINER);
-        	}else if(pos.equals("WP")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.WH_PRONOUN);
-        	}else if(pos.equals("WRB")){
-        		this.setPartOfSpeech(PartOfSpeechTypes.WH_ADVERB);
-        	}else {
-        		this.setPartOfSpeech(null);
-        	}**/
-        }
+	}
 	
 	/*  stem(String toStem)
 	 *  method to get the lemma of a single Word using the CoreNLP Lemmatizer.

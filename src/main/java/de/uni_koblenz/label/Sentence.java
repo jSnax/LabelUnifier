@@ -64,13 +64,12 @@ public class Sentence {
 
 
 	/*
-	 * method to convert a String into a Word-array
+	 * method to create wordsarray from CoreSentence
 	 */ 
 	public void createWordsArray() throws JWNLException{
 		// create words
 		List<CoreLabel> tokens = asCoreSentence.tokens();
 		for (CoreLabel token:tokens) {
-			//create words and put them in a temporary list (easier to work with index)
 			wordsarray.add(new Word(token));
 			
 		}
