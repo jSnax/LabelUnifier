@@ -2,6 +2,7 @@ package de.uni_koblenz.label;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import de.uni_koblenz.cluster.GrammaticalRelationBetweenWords;
 import de.uni_koblenz.enums.PartOfSpeechTypes;
@@ -19,7 +20,7 @@ public class Word {
 	private CoreLabel token;
 	
 	private PartOfSpeechTypes partOfSpeech;
-	private ArrayList<GrammaticalRelationBetweenWords> grammaticalRelations=new ArrayList<GrammaticalRelationBetweenWords>();
+	private List<GrammaticalRelationBetweenWords> grammaticalRelations=new ArrayList<GrammaticalRelationBetweenWords>();
 	private String baseform;
 	private String originalForm;
 	private RoleLeopold role;
@@ -56,12 +57,14 @@ public class Word {
 		this.partOfSpeech = partOfSpeech;
 	}
 	
-	public ArrayList<GrammaticalRelationBetweenWords> getGrammaticalRelations() {
+	public List<GrammaticalRelationBetweenWords> getGrammaticalRelations() {
 		return grammaticalRelations;
 	}
-	
-	public ArrayList<GrammaticalRelationBetweenWords> getGrammaticalRelationsByName(RelationName relationName) {
-		ArrayList<GrammaticalRelationBetweenWords> grammaticalRelationsSimplified=new ArrayList<GrammaticalRelationBetweenWords>();
+	/*
+	 *  Get all relations of this word with a specific RelatioNname
+	 */
+	public List<GrammaticalRelationBetweenWords> getGrammaticalRelationsByName(RelationName relationName) {
+		List<GrammaticalRelationBetweenWords> grammaticalRelationsSimplified=new ArrayList<GrammaticalRelationBetweenWords>();
 		for(GrammaticalRelationBetweenWords grammaticalRelation:grammaticalRelations) {
 			if(grammaticalRelation.getGrammaticalRelationName()==relationName) {
 				grammaticalRelationsSimplified.add(grammaticalRelation);
@@ -70,7 +73,7 @@ public class Word {
 		return grammaticalRelationsSimplified;
 	}
 	
-	public void setGrammaticalRelations(ArrayList<GrammaticalRelationBetweenWords> grammaticalRelations) {
+	public void setGrammaticalRelations(List<GrammaticalRelationBetweenWords> grammaticalRelations) {
 		this.grammaticalRelations = grammaticalRelations;
 	}
 	
