@@ -73,7 +73,9 @@ public class Sentence {
 			wordsarray.add(new Word(token));
 			
 		}
-		//create grammatical relations and add them
+		/*
+		 * create grammatical relations and add them
+		 */
 		SemanticGraph graph=asCoreSentence.dependencyParse();
 		//go through all grammatical relations of the current sentence
 	    for(SemanticGraphEdge edge:graph.edgeIterable()) {
@@ -95,11 +97,12 @@ public class Sentence {
 	    	sourceWord.getGrammaticalRelations().add(grammaticalRelationTemp);
 	    	targetWord.getGrammaticalRelations().add(grammaticalRelationTemp);
 	    }
-	    //define Role
-	    // check if OpenIE triple got created
+	    /*
+	     * define Role
+	     */
+
 	    
 	    // get information from dependency tree root
-	    //if(asCoreSentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).isEmpty()) {
     	// get root as Word
 		Word root=wordsarray.get(asCoreSentence.dependencyParse().getFirstRoot().index()-1);
 
@@ -147,7 +150,7 @@ public class Sentence {
 					wordsarray.get(tripletoken.index()-1).setRole(RoleLeopold.BUSINESS_OBJECT);
 				}
 		    	for(CoreLabel tripletoken : asCoreSentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).iterator().next().subject) {
-					wordsarray.get(tripletoken.index()-1).setRole(null);
+					wordsarray.get(tripletoken.index()-1).setRole(RoleLeopold.SUBJECT);
 		    	}
     		}else {
     			consoleoutput+=" #ALTERNATIVE METHOD FAILED#";
