@@ -22,6 +22,7 @@ import net.sf.extjwnl.JWNLException;
 
 public class MainPP {
 	public static void main (String args[]) throws JWNLException, ClassNotFoundException, IOException {
+		
 		System.out.println("Started.");
 		Dictionary dictionary = Dictionary.getDefaultResourceInstance();
 		Word CHECK = new Word();
@@ -48,8 +49,8 @@ public class MainPP {
 		list2.add(VERIFY);
 		list2.add(BILL);
 		// Create lists over words
-		label1.setWordsarray(list1);
-		label2.setWordsarray(list2);
+		label1.getSentenceArray().get(0).setWordsarray(list1);
+		label2.getSentenceArray().get(0).setWordsarray(list2);
 		// Fill Labels with word arrays
 		LabelList testList = new LabelList();
 		List<Label> labellist1 = new ArrayList<Label>();
@@ -60,18 +61,22 @@ public class MainPP {
 		// Set Input Labels to previously created Label list
 		System.out.println("Printing Labels:");
 		for (int i = 0; i < testList.getInputLabels().size(); i++){
-			for (int j = 0; j < testList.getInputLabels().get(i).getWordsarray().size(); j++){
-				System.out.println(testList.getInputLabels().get(i).getWordsarray().get(j).getBaseform());
-			}	
+			for (int k = 0; k < testList.getInputLabels().get(i).getSentenceArray().size(); k++) {
+				for (int j = 0; j < testList.getInputLabels().get(i).getSentenceArray().get(k).getWordsarray().size(); j++){
+					System.out.println(testList.getInputLabels().get(i).getSentenceArray().get(k).getWordsarray().get(j).getBaseform());
+				}
+			}
 		}
 		// Simply print the two labels
 		testList.findSynsets(testList);
 		// Fill Synonym lists for each word
 		System.out.println("Printing Synonyms:");
 		for (int i = 0; i < testList.getInputLabels().size(); i++){
-			for (int j = 0; j < testList.getInputLabels().get(i).getWordsarray().size(); j++){
-				System.out.println(testList.getInputLabels().get(i).getWordsarray().get(j).getSynonyms());
-			}	
+			for (int k = 0; k < testList.getInputLabels().get(i).getSentenceArray().size(); k++) {
+				for (int j = 0; j < testList.getInputLabels().get(i).getSentenceArray().get(k).getWordsarray().size(); j++){
+					System.out.println(testList.getInputLabels().get(i).getSentenceArray().get(k).getWordsarray().get(j).getSynonyms());
+				}
+			}
 		}
 		// Print synonym lists
 		System.out.println("Printing Wordclusters");
@@ -99,8 +104,8 @@ public class MainPP {
 		list2.add(VERIFY);
 		list2.add(BILL);
 		// Create lists over words
-		label1.setWordsarray(list1);
-		label2.setWordsarray(list2);
+		label1.getSentenceArray().get(0).setWordsarray(list1);;
+		label2.getSentenceArray().get(0).setWordsarray(list2);
 		// Fill Labels with word arrays
 		labellist1.add(label1);
 		labellist1.add(label2);
@@ -118,11 +123,13 @@ public class MainPP {
 			System.out.println("Cluster " +i);
 			for (int j = 0; j < AllLabelClusters.get(i).matchingLabels.size(); j++){
 				System.out.println("Label " +j);
-				for (int z = 0; z < AllLabelClusters.get(i).matchingLabels.get(j).getWordsarray().size(); z++){
-					System.out.println(AllLabelClusters.get(i).matchingLabels.get(j).getWordsarray().get(z).getBaseform());
+				for (int z = 0; z < AllLabelClusters.get(i).matchingLabels.get(j).getSentenceArray().size(); z++){
+					for(int k = 0; k < AllLabelClusters.get(i).matchingLabels.get(j).getSentenceArray().get(z).getWordsarray().size(); k ++)
+					System.out.println(AllLabelClusters.get(i).matchingLabels.get(j).getSentenceArray().get(k).getWordsarray().get(k).getBaseform());
 				}
 			}
 		}
+		
 		String[] test=new String[] {"checking invoice","This is a short sentence","This is a sentence."};
 		System.out.println("Algorithm started");
 

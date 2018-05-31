@@ -64,9 +64,11 @@ public class LabelList {
 	}
 
 	public void createAllWordsArray() {
-		for(int labelZaehler = 0; labelZaehler < this.inputLabels.size(); labelZaehler++) {		//Iteration over Labels
-			for(int wordZaehler = 0; wordZaehler < this.inputLabels.get(labelZaehler).getWordsarray().size(); wordZaehler++) {	//Iteration over Words
-				this.allWords.add(this.inputLabels.get(labelZaehler).getWordsarray().get(wordZaehler));		//add Word to allWords[]
+		for(int labelZaehler = 0; labelZaehler < this.inputLabels.size(); labelZaehler++) {	//Iteration over Labels
+			for (int satzZaehler = 0; satzZaehler < this.inputLabels.get(labelZaehler).getSentenceArray().size(); satzZaehler++) {
+				for(int wordZaehler = 0; wordZaehler < this.inputLabels.get(labelZaehler).getSentenceArray().get(satzZaehler).getWordsarray().size(); wordZaehler++) {//Iteration over Words
+					this.allWords.add(this.inputLabels.get(labelZaehler).getSentenceArray().get(satzZaehler).getWordsarray().get(wordZaehler));		//add Word to allWords[]
+				}
 			}
 		}
 	}

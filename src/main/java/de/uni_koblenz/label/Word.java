@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.uni_koblenz.cluster.*;
+
 import de.uni_koblenz.cluster.GrammaticalRelationBetweenWords;
 import de.uni_koblenz.enums.PartOfSpeechTypes;
+import de.uni_koblenz.enums.RelationName;
 import de.uni_koblenz.enums.RoleLeopold;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.patterns.surface.Token;
@@ -19,7 +21,7 @@ import net.sf.extjwnl.data.POS;
 import net.sf.extjwnl.dictionary.Dictionary;
 
 public class Word {
-	// new variable #############
+	
 	private CoreLabel token;
 	
 	private PartOfSpeechTypes partOfSpeech;
@@ -68,13 +70,26 @@ public class Word {
 		this.partOfSpeech = partOfSpeech;
 	}
 	
-	public ArrayList<GrammaticalRelationBetweenWords> getGrammaticalRelations() {
+	public List<GrammaticalRelationBetweenWords> getGrammaticalRelations() {
 		return grammaticalRelations;
 	}
 	
 	public void setGrammaticalRelations(ArrayList<GrammaticalRelationBetweenWords> grammaticalRelations) {
 		this.grammaticalRelations = grammaticalRelations;
 	}
+	/*
+	 *  Get all relations of this word with a specific RelatioNname
+	 */
+	public List<GrammaticalRelationBetweenWords> getGrammaticalRelationsByName(RelationName relationName) {
+		List<GrammaticalRelationBetweenWords> grammaticalRelationsSimplified=new ArrayList<GrammaticalRelationBetweenWords>();
+		for(GrammaticalRelationBetweenWords grammaticalRelation:grammaticalRelations) {
+			if(grammaticalRelation.getGrammaticalRelationName()==relationName) {
+				grammaticalRelationsSimplified.add(grammaticalRelation);
+			}
+		}
+		return grammaticalRelationsSimplified;
+	}
+	
 	
 	public String getBaseform() {
 		return baseform;
@@ -292,10 +307,17 @@ public class Word {
 	public String toString() {
 		String grammaticalRelationAsString=" Grammatical relations: ";
 		for(GrammaticalRelationBetweenWords grammaticalRelation:grammaticalRelations) {
-			grammaticalRelationAsString+=grammaticalRelation.getGrammaticalRelationName()+"; ";
+			grammaticalRelationAsString+=grammaticalRelation.getGrammaticalRelationName();
+			if(grammaticalRelation.getTargetWord()==this) {
+				grammaticalRelationAsString+=" <- "+grammaticalRelation.getSourceWord().getOriginalForm();
+			}else {
+				grammaticalRelationAsString+=" -> "+grammaticalRelation.getTargetWord().getOriginalForm();
+			}
+			grammaticalRelationAsString+="; ";
 		}
 		
-		return "Word: "+ originalForm +" Base: " + baseform + " POS: " + partOfSpeech + " Role: " + role + grammaticalRelationAsString;
+		return String.format("%-8s%-20s%-8s%-20s%-7s%-38s%-8s%-30s%-1s","Word: ", originalForm ," Base: " , baseform , " POS: " , partOfSpeech , " Role: " , role , grammaticalRelationAsString);
+
 	}
 
 
