@@ -178,7 +178,6 @@ public class Word {
 		for(GrammaticalRelationBetweenWords grammaticalRelation:grammaticalRelations) {
 			grammaticalRelationAsString+=grammaticalRelation.getGrammaticalRelationName()+"; ";
 		}
-		
-		return "Word: "+ originalForm +" Base: " + baseform + " POS: " + partOfSpeech + " Role: " + role + grammaticalRelationAsString;
+		return String.format("%-8s%-20s%-8s%-20s%-7s%-38s%-8s%-30s%-1s","Word: ", originalForm ," Base: " , baseform , " POS: " , partOfSpeech , " Role: " , role , grammaticalRelationAsString);
 	}
 }
