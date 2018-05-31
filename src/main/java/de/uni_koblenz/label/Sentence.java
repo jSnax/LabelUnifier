@@ -99,44 +99,60 @@ public class Sentence {
 	    // check if OpenIE triple got created
 	    
 	    // get information from dependency tree root
-	    if(asCoreSentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).isEmpty()) {
-	    	// get root as Word
-    		Word root=wordsarray.get(asCoreSentence.dependencyParse().getFirstRoot().index()-1);
+	    //if(asCoreSentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).isEmpty()) {
+    	// get root as Word
+		Word root=wordsarray.get(asCoreSentence.dependencyParse().getFirstRoot().index()-1);
 
 
-	        // check if root of dependency tree is a verb
-	    	if(root.getPartOfSpeech().getJwnlType()==POS.VERB) {
-	    		// set root word as Action
-	    		root.setRole(RoleLeopold.ACTION);
-	    		// set business object and subject
-	    		RelationName[] subjects= {RelationName.SUBJECT,RelationName.NOMINAL_SUBJECT};
-	    		RelationName[] objects= {RelationName.DIRECT_OBJECT,RelationName.OBJECT};
-	    		for(GrammaticalRelationBetweenWords relation:root.getGrammaticalRelations()) {
-	    			//set business object
-	    			if(Arrays.asList(objects).contains(relation.getGrammaticalRelationName())) {
-	    				relation.getTargetWord().setRole(RoleLeopold.BUSINESS_OBJECT);
-	    			}
-	    			//set subject
-	    			if(Arrays.asList(subjects).contains(relation.getGrammaticalRelationName())) {
-	    				relation.getTargetWord().setRole(null);
-	    			}
-	    		}
-	    		
-	    	// if root is no verb	
-	    	}else {
-	    		System.out.println("ROLE: NO VERB AT ROOT for: " + asCoreSentence.text());
-	    	}
+        // check if root of dependency tree is a verb
+    	if(root.getPartOfSpeech().getJwnlType()==POS.VERB) {
+    		// set root word as Action
+    		root.setRole(RoleLeopold.ACTION);
+    		
+    		RelationName[] subjects= {RelationName.SUBJECT,RelationName.NOMINAL_SUBJECT};
+    		RelationName[] objects= {RelationName.DIRECT_OBJECT,RelationName.OBJECT};
+
+    		for(GrammaticalRelationBetweenWords relation:root.getGrammaticalRelations()) {
+    			// set PHRASAL_VERB_PARTICLE also as action e.g. "go down"
+    			if(relation.getGrammaticalRelationName()==RelationName.PHRASAL_VERB_PARTICLE) {
+    				relation.getTargetWord().setRole(RoleLeopold.ACTION);
+    			}
+    			//set business object
+    			else if(Arrays.asList(objects).contains(relation.getGrammaticalRelationName())) {
+    				relation.getTargetWord().setRole(RoleLeopold.BUSINESS_OBJECT);
+    				// set compounds of the main object also as object
+    				for(GrammaticalRelationBetweenWords relation2:relation.getTargetWord().getGrammaticalRelationsByName(RelationName.COMPOUND_MODIFIER)) {
+        				relation2.getTargetWord().setRole(RoleLeopold.BUSINESS_OBJECT);				
+    				}
+    			}
+    			//set subject
+    			else if(Arrays.asList(subjects).contains(relation.getGrammaticalRelationName())) {
+    				relation.getTargetWord().setRole(RoleLeopold.SUBJECT);
+    				// set compounds of the main subject also as subject
+    				for(GrammaticalRelationBetweenWords relation2:relation.getTargetWord().getGrammaticalRelationsByName(RelationName.COMPOUND_MODIFIER)) {
+    					relation2.getTargetWord().setRole(RoleLeopold.SUBJECT);
+    				}
+    			}
+    		}
+    		
+	    // if root is no verb	
 	    // get information from OpenIE triple
 	    }else {
-	    	for(CoreLabel tripletoken : asCoreSentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).iterator().next().relation) {
-				wordsarray.get(tripletoken.index()-1).setRole(RoleLeopold.ACTION);
-			}
-	    	for(CoreLabel tripletoken : asCoreSentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).iterator().next().object) {
-				wordsarray.get(tripletoken.index()-1).setRole(RoleLeopold.BUSINESS_OBJECT);
-			}
-	    	for(CoreLabel tripletoken : asCoreSentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).iterator().next().subject) {
-				wordsarray.get(tripletoken.index()-1).setRole(null);
-			}
+    		String consoleoutput="ROLE: NO VERB AT ROOT for: " + asCoreSentence.text();
+    		if(!(asCoreSentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).isEmpty())) {
+		    	for(CoreLabel tripletoken : asCoreSentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).iterator().next().relation) {
+					wordsarray.get(tripletoken.index()-1).setRole(RoleLeopold.ACTION);
+				}
+		    	for(CoreLabel tripletoken : asCoreSentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).iterator().next().object) {
+					wordsarray.get(tripletoken.index()-1).setRole(RoleLeopold.BUSINESS_OBJECT);
+				}
+		    	for(CoreLabel tripletoken : asCoreSentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).iterator().next().subject) {
+					wordsarray.get(tripletoken.index()-1).setRole(null);
+		    	}
+    		}else {
+    			consoleoutput+=" #ALTERNATIVE METHOD FAILED#";
+    		}
+    		System.out.println(consoleoutput);
 
 	    }
 			

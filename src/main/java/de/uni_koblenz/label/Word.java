@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import de.uni_koblenz.cluster.GrammaticalRelationBetweenWords;
 import de.uni_koblenz.enums.PartOfSpeechTypes;
+import de.uni_koblenz.enums.RelationName;
 import de.uni_koblenz.enums.RoleLeopold;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.patterns.surface.Token;
@@ -57,6 +58,16 @@ public class Word {
 	
 	public ArrayList<GrammaticalRelationBetweenWords> getGrammaticalRelations() {
 		return grammaticalRelations;
+	}
+	
+	public ArrayList<GrammaticalRelationBetweenWords> getGrammaticalRelationsByName(RelationName relationName) {
+		ArrayList<GrammaticalRelationBetweenWords> grammaticalRelationsSimplified=new ArrayList<GrammaticalRelationBetweenWords>();
+		for(GrammaticalRelationBetweenWords grammaticalRelation:grammaticalRelations) {
+			if(grammaticalRelation.getGrammaticalRelationName()==relationName) {
+				grammaticalRelationsSimplified.add(grammaticalRelation);
+			}
+		}
+		return grammaticalRelationsSimplified;
 	}
 	
 	public void setGrammaticalRelations(ArrayList<GrammaticalRelationBetweenWords> grammaticalRelations) {
