@@ -179,7 +179,13 @@ public class Word {
 	public String toString() {
 		String grammaticalRelationAsString=" Grammatical relations: ";
 		for(GrammaticalRelationBetweenWords grammaticalRelation:grammaticalRelations) {
-			grammaticalRelationAsString+=grammaticalRelation.getGrammaticalRelationName()+"; ";
+			grammaticalRelationAsString+=grammaticalRelation.getGrammaticalRelationName();
+			if(grammaticalRelation.getTargetWord()==this) {
+				grammaticalRelationAsString+=" <- "+grammaticalRelation.getSourceWord().getOriginalForm();
+			}else {
+				grammaticalRelationAsString+=" -> "+grammaticalRelation.getTargetWord().getOriginalForm();
+			}
+			grammaticalRelationAsString+="; ";
 		}
 		return String.format("%-8s%-20s%-8s%-20s%-7s%-38s%-8s%-30s%-1s","Word: ", originalForm ," Base: " , baseform , " POS: " , partOfSpeech , " Role: " , role , grammaticalRelationAsString);
 	}
