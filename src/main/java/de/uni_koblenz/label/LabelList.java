@@ -92,76 +92,83 @@ public class LabelList {
 		PointerTargetNodeList nodelist = null;
 		for (int i=0; i < allLabels.getInputLabels().size(); i++){
 			// Iterate over all Labels, i refers to the current Label
-			for (int j = 0; j < allLabels.getInputLabels().get(i).getWordsarray().size(); j++){
-				// Iterate over all Words in a certain Label, j refers to the current Word
-				tempWord = dictionary.getIndexWord(allLabels.getInputLabels().get(i).getWordsarray().get(j).getPartOfSpeech().getJwnlType(), allLabels.getInputLabels().get(i).getWordsarray().get(j).getBaseform());
-				// Transform baseform of Word j in Label i into an indexWord so extjwnl can use it
-				tempSyn = tempWord.getSenses();
-				// Synset for Word j
-				allLabels.getInputLabels().get(i).getWordsarray().get(j).setSynonyms(new ArrayList<String>());
-				// pre-create the Synonym list for Word j
-				// CAUTION: This will override any pre-existing synonym list, so this method may only be called once
-				for (int z=0; z < tempSyn.size(); z++){
-					// Iterate over all meanings in the synset, z refers to the current meaning
-					if (allLabels.getInputLabels().get(i).getWordsarray().get(j).getPartOfSpeech().getJwnlType() != POS.ADJECTIVE){
-						nodelist=PointerUtils.getCoordinateTerms(tempSyn.get(z));
-						for(PointerTargetNode node:nodelist) {
-							for(net.sf.extjwnl.data.Word word:node.getSynset().getWords()) {
-								if (!allLabels.getInputLabels().get(i).getWordsarray().get(j).getSynonyms().contains(word.getLemma()))
-								allLabels.getInputLabels().get(i).getWordsarray().get(j).addSynonym(word.getLemma());
-								// Go through the synonym list and add each synonym to synonym list for word j, unless it's already in there 
+				for (int t = 0; t < allLabels.getInputLabels().get(i).getSentenceArray().size(); t++){
+					// Iterate over all Sentences in a certain Label, t refers to the current Sentence
+					for (int j = 0; j < allLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().size(); j++){
+						// Iterate over all Words in a certain Sentence, j refers to the current Word
+						tempWord = dictionary.getIndexWord(allLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().get(j).getPartOfSpeech().getJwnlType(), allLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().get(j).getBaseform());
+						// Transform baseform of Word j in Label i into an indexWord so extjwnl can use it
+						tempSyn = tempWord.getSenses();
+						// Synset for Word j
+						allLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().get(j).setSynonyms(new ArrayList<String>());
+						// pre-create the Synonym list for Word j
+						// CAUTION: This will override any pre-existing synonym list, so this method may only be called once
+						for (int z=0; z < tempSyn.size(); z++){
+							// Iterate over all meanings in the synset, z refers to the current meaning
+							if (allLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().get(j).getPartOfSpeech().getJwnlType() != POS.ADJECTIVE){
+								nodelist=PointerUtils.getCoordinateTerms(tempSyn.get(z));
+								for(PointerTargetNode node:nodelist) {
+									for(net.sf.extjwnl.data.Word word:node.getSynset().getWords()) {
+										if (!allLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().get(j).getSynonyms().contains(word.getLemma()))
+											allLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().get(j).addSynonym(word.getLemma());
+										// Go through the synonym list and add each synonym to synonym list for word j, unless it's already in there 
+									}
+								}
+								nodelist=PointerUtils.getDirectHypernyms(tempSyn.get(z));
+							}
+							else {
+								nodelist=PointerUtils.getSynonyms(tempSyn.get(z));
+							}
+							// Copy all synonyms to nodelist.
+							// For nouns and verbs, a combination of getDirectHypernyms and getCoordinateTerms has to be used since getSynonyms only works on adjectives
+							for(PointerTargetNode node:nodelist) {
+								for(net.sf.extjwnl.data.Word word:node.getSynset().getWords()) {
+									if (!allLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().get(j).getSynonyms().contains(word.getLemma()))
+										allLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().get(j).addSynonym(word.getLemma());
+									// Go through the synonym list and add each synonym to synonym list for word j, unless it's already in there 
+								}
 							}
 						}
-						nodelist=PointerUtils.getDirectHypernyms(tempSyn.get(z));
 					}
-					else {
-						nodelist=PointerUtils.getSynonyms(tempSyn.get(z));
-					}
-					// Copy all synonyms to nodelist.
-					// For nouns and verbs, a combination of getDirectHypernyms and getCoordinateTerms has to be used since getSynonyms only works on adjectives
-					for(PointerTargetNode node:nodelist) {
-						for(net.sf.extjwnl.data.Word word:node.getSynset().getWords()) {
-							if (!allLabels.getInputLabels().get(i).getWordsarray().get(j).getSynonyms().contains(word.getLemma()))
-							allLabels.getInputLabels().get(i).getWordsarray().get(j).addSynonym(word.getLemma());
-							// Go through the synonym list and add each synonym to synonym list for word j, unless it's already in there 
-						}
-					}
-				}
 			}
 		}
 	}
 	
 	public LabelList matchSynonyms(LabelList RemainingLabels, WordCluster Cluster, Integer ClusterPosition) {
 		List<Integer> tempIntList = new ArrayList<Integer>();
-		Word DefiningWord = RemainingLabels.getInputLabels().get(0).getWordsarray().get(0);
-		RemainingLabels.getInputLabels().get(0).getWordsarray().get(0).setClusterPosition(ClusterPosition);
-		RemainingLabels.getInputLabels().get(0).getWordsarray().remove(0);
+		Word DefiningWord = RemainingLabels.getInputLabels().get(0).getSentenceArray().get(0).getWordsarray().get(0);
+		RemainingLabels.getInputLabels().get(0).getSentenceArray().get(0).getWordsarray().get(0).setClusterPosition(ClusterPosition);
+		RemainingLabels.getInputLabels().get(0).getSentenceArray().get(0).getWordsarray().remove(0);
 		// Removing first entry of RemainingLabels since it is the 
 		for (int i = 0; i < RemainingLabels.getInputLabels().size(); i++){
-			for (int j = 0; j < RemainingLabels.getInputLabels().get(i).getWordsarray().size(); j++){
-				if (DefiningWord.getPartOfSpeech() == RemainingLabels.getInputLabels().get(i).getWordsarray().get(j).getPartOfSpeech()){
-					if (DefiningWord.getSynonyms().contains(RemainingLabels.getInputLabels().get(i).getWordsarray().get(j).getBaseform()) || RemainingLabels.getInputLabels().get(i).getWordsarray().get(j).getSynonyms().contains(DefiningWord.getBaseform())){
-						Cluster.matchingWords.add(RemainingLabels.getInputLabels().get(i).getWordsarray().get(j));
-						RemainingLabels.getInputLabels().get(i).getWordsarray().get(j).setClusterPosition(ClusterPosition);
-						tempIntList.add(j);
-						// Most basic form of matching. If POS match and one word is a synonym of the other, they have the same meaning
+			for (int t = 0; t < RemainingLabels.getInputLabels().get(i).getSentenceArray().size(); t++){
+				for (int j = 0; j < RemainingLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().size(); j++){
+					if (DefiningWord.getPartOfSpeech() == RemainingLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().get(j).getPartOfSpeech()){
+						if (DefiningWord.getSynonyms().contains(RemainingLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().get(j).getBaseform()) || RemainingLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().get(j).getSynonyms().contains(DefiningWord.getBaseform())){
+							Cluster.matchingWords.add(RemainingLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().get(j));
+							RemainingLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().get(j).setClusterPosition(ClusterPosition);
+							tempIntList.add(j);
+							// Most basic form of matching. If POS match and one word is a synonym of the other, they have the same meaning
+							}
 						}
 					}
+				for (int j = tempIntList.size() - 1; j >= 0; j--){
+					int z = tempIntList.get(j);
+					RemainingLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().remove(z);
+					tempIntList.remove(j);
+					// Removing all words in current label that found a match
+					// This has to be called after the previous for-loop in order to not mess around with the list size while iterating over it
+					}
 				}
-			for (int j = tempIntList.size() - 1; j >= 0; j--){
-				int z = tempIntList.get(j);
-				RemainingLabels.getInputLabels().get(i).getWordsarray().remove(z);
-				tempIntList.remove(j);
-				// Removing all words in current label that found a match
-				// This has to be called after the previous for-loop in order to not mess around with the list size while iterating over it
-			}
 			}
 		for (int i = RemainingLabels.getInputLabels().size() - 1; i >= 0; i--){
-			if (RemainingLabels.getInputLabels().get(i).getWordsarray().isEmpty()){
-				RemainingLabels.getInputLabels().remove(i);
-				// Removing all labels that contain no more unmatched words
-				// This has to be called after the previous for-loop in order to not mess around with the list size while iterating over it
-			}
+			for (int t = RemainingLabels.getInputLabels().get(i).getSentenceArray().size() - 1; t >= 0; t++){
+				if (RemainingLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().isEmpty()){
+					RemainingLabels.getInputLabels().remove(i);
+					// Removing all labels that contain no more unmatched words
+					// This has to be called after the previous for-loop in order to not mess around with the list size while iterating over it
+				}
+		}
 		}
 		return(RemainingLabels);
 	}
