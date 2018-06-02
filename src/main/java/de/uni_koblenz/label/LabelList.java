@@ -162,7 +162,7 @@ public class LabelList {
 				}
 			}
 		for (int i = RemainingLabels.getInputLabels().size() - 1; i >= 0; i--){
-			for (int t = RemainingLabels.getInputLabels().get(i).getSentenceArray().size() - 1; t >= 0; t++){
+			for (int t = RemainingLabels.getInputLabels().get(i).getSentenceArray().size() - 1; t >= 0; t--){
 				if (RemainingLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().isEmpty()){
 					RemainingLabels.getInputLabels().remove(i);
 					// Removing all labels that contain no more unmatched words
@@ -180,8 +180,8 @@ public class LabelList {
 		List<Integer> tempIntList = new ArrayList<Integer>();
 		for (int i = 0; i < RemainingLabels.getInputLabels().size(); i++){
 			int j = 0;
-			while (Equals && j < RemainingLabels.getInputLabels().get(i).getWordsarray().size()){
-				if (RemainingLabels.getInputLabels().get(i).getWordsarray().get(j).getClusterPosition() != DefiningLabel.getWordsarray().get(j).getClusterPosition()){
+			while (Equals && j < RemainingLabels.getInputLabels().get(i).getSentenceArray().get(0).getWordsarray().size()){
+				if (RemainingLabels.getInputLabels().get(i).getSentenceArray().get(0).getWordsarray().get(j).getClusterPosition() != DefiningLabel.getSentenceArray().get(0).getWordsarray().get(j).getClusterPosition()){
 					Equals = false;
 				}
 				j++;
