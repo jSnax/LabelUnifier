@@ -49,6 +49,10 @@ public enum PartOfSpeechTypes {
 	private double weightedValues;
 	
 
+	private PartOfSpeechTypes(double weightedValues) {
+		this.weightedValues = weightedValues;
+	}
+
 	private PartOfSpeechTypes() {
 		
 	}
