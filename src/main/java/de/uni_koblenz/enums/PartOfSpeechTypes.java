@@ -9,49 +9,56 @@ public enum PartOfSpeechTypes {
 	EXISTENTIAL_THERE("EX"), 
 	FOREIGN_WORD("FW"), 
 	PREPOSITION_SUBORDINATING_CONJUNCTION("IN"), 
-	ADJECTIVE("JJ",POS.ADJECTIVE),
-	ADJECTIVE_COMPARATIVE("JJR",POS.ADJECTIVE), 
-	ADJECTIVE_SUPERLATIVE("JJS",POS.ADJECTIVE), 
+	ADJECTIVE("JJ",POS.ADJECTIVE, 0.8),
+	ADJECTIVE_COMPARATIVE("JJR",POS.ADJECTIVE, 0.7), 
+	ADJECTIVE_SUPERLATIVE("JJS",POS.ADJECTIVE, 0.6), 
 	LIST_ITEM_MARKER, 
 	MODAL, 
-	NOUN_SINGULAR_MASS("NN",POS.NOUN), 
-	NOUN_PLURAL("NNS",POS.NOUN), 
-	PROPER_NOUN_SINGULAR("NNP",POS.NOUN),
-	PROPER_NOUN_PLURAL("NNPS",POS.NOUN), 
+	NOUN_SINGULAR_MASS("NN",POS.NOUN, 1.0), 
+	NOUN_PLURAL("NNS",POS.NOUN, 1.0), 
+	PROPER_NOUN_SINGULAR("NNP",POS.NOUN, 1.0),
+	PROPER_NOUN_PLURAL("NNPS",POS.NOUN, 1.0), 
 	PREDETERMINER("PDT"), 
 	POSSESSIVE_ENDING, 
 	PERSONAL_PRONOUN("PRP"), 
 	POSSESSIVE_PRONOUN(), 
-	ADVERB("RB",POS.ADVERB), 
-	ADVERB_COMPARATIVE("RBR",POS.ADVERB), 
-	ADVERB_SUPERLATIVE("RBS",POS.ADVERB),
+	ADVERB("RB",POS.ADVERB, 0.5), 
+	ADVERB_COMPARATIVE("RBR",POS.ADVERB, 0.5), 
+	ADVERB_SUPERLATIVE("RBS",POS.ADVERB, 0.5),
 	PARTICLE("RP"), 
 	SYMBOL("SYM"), 
 	TO("TO"), 
 	INTERJECTION("UH"), 
-	VERB_BASE("VB",POS.VERB), 
-	VERB_PAST("VBD",POS.VERB), 
-	VERB_GERUND_OR_PRESENT_PARTICIPLE("VBG",POS.VERB), 
-	VERB_PAST_PARTICIPLE("VBN",POS.VERB),
-	VERB_NON_3RD_PERSON_SINGULAR_PRESENT("VBP",POS.VERB), 
-	VERB_3RD_PERSON_SINGULAR_PRESENT("VBZ",POS.VERB), 
+	VERB_BASE("VB",POS.VERB, 1.0), 
+	VERB_PAST("VBD",POS.VERB, 0.7), 
+	VERB_GERUND_OR_PRESENT_PARTICIPLE("VBG",POS.VERB, 0.9), 
+	VERB_PAST_PARTICIPLE("VBN",POS.VERB, 0.8),
+	VERB_NON_3RD_PERSON_SINGULAR_PRESENT("VBP",POS.VERB, 0.7), 
+	VERB_3RD_PERSON_SINGULAR_PRESENT("VBZ",POS.VERB, 0.9), 
 	WH_DETERMINER("WDT"), 
 	WH_PRONOUN("WP"), 
 	POSSESSIVE_WH_PRONOUN,
 	WH_ADVERB("WRB"),
-	NOUN_PHRASE("NP",POS.NOUN), 
+	NOUN_PHRASE("NP",POS.NOUN, 1.0), 
 	PREPOSITIONAL_PHRASE("PP"), 
-	VERB_PHRASE("VP",POS.VERB);
+	VERB_PHRASE("VP",POS.VERB, 1.0);
 	
+	/*
+	 * Neuer Konstruktor vom Typ (String, double) für enums ohne jwnlType?
+	 * private PartOfSpeechTypes(String shortType, double weightedValues){
+	 * this.shortType = shortType;
+	 * this.weightedValue;
+	 * }
+	 */
+	
+	/*
+	 * Welcher Konstruktor für Typen wie POSSESSIVE_PRONOUN oder MODAL?
+	 */
 	
 	private String shortType;
 	private POS jwnlType;
-	private double weightedValues;
-	
+	private double weightedValue;
 
-	private PartOfSpeechTypes(double weightedValues) {
-		this.weightedValues = weightedValues;
-	}
 
 	private PartOfSpeechTypes() {
 		
@@ -60,9 +67,10 @@ public enum PartOfSpeechTypes {
 	private PartOfSpeechTypes(String shortType) {
 		this.shortType = shortType;
 	}
-	private PartOfSpeechTypes(String shortType, POS jwnlType) {
+	private PartOfSpeechTypes(String shortType, POS jwnlType, double weightedValue) {
 		this.shortType = shortType;
 		this.jwnlType = jwnlType;
+		this.weightedValue = weightedValue;
 	}
 
 	
@@ -78,12 +86,17 @@ public enum PartOfSpeechTypes {
 		this.jwnlType = jwnlType;
 	}
 	
-	public double getWeightedValues() {
-		return weightedValues;
+	public double getWeightedValue() {
+		return weightedValue;
 	}
 
-	public void setWeightedValues(double weightedValues) {
-		this.weightedValues = weightedValues;
+	public void setWeightedValue(double weightedValue) {
+		this.weightedValue = weightedValue;
 	}
+	
+	/* Gewichtung für PartOfSpeechTypes
+	 * Höchste Gewichtungen: Noun (Singular and Plural), Verb (vorallem Base-Form), Adjektiv bei bestimmten Fällen (i.e. Farbe etc.)
+	 * Geringste Gewichtungen: To, ??
+	 */
 }
 
