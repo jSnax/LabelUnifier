@@ -97,9 +97,9 @@ public class MainPP {
 		safetyList.findSynsets(safetyList);
 		// TEST DOESN'T WORK AS EXPECTED RIGHT NOW
 		// testList references same object as safetyList, so both Lists are empty at this point
-		List<LabelCluster> AllLabelClusters = new ArrayList<LabelCluster>();
+		/*List<PhraseCluster> AllLabelClusters = new ArrayList<PhraseCluster>();
 		while (safetyList.getInputLabels().size() != 0){
-			LabelCluster tempLCluster = new LabelCluster(safetyList);
+			PhraseCluster tempLCluster = new PhraseCluster(safetyList);
 			safetyList = safetyList.matchLabels(safetyList, AllClusters, tempLCluster);
 			AllLabelClusters.add(tempLCluster);
 		}
@@ -116,7 +116,7 @@ public class MainPP {
 		System.out.print(testList);
 		
 
-		//print all words and variables
+		//print all words and variables*/
 		System.out.println(input);
 
 	/*	List<String> l1;
