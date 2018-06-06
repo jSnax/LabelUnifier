@@ -39,7 +39,6 @@ import de.uni_koblenz.similarity.CosinePhraseSim;
 
 public class MainPP {
 	public static void main (String args[]) throws JWNLException, ClassNotFoundException, IOException {
-		
 		System.out.println("Started.");
 		Dictionary dictionary = Dictionary.getDefaultResourceInstance();
 		
@@ -97,12 +96,12 @@ public class MainPP {
 		safetyList.findSynsets(safetyList);
 		// TEST DOESN'T WORK AS EXPECTED RIGHT NOW
 		// testList references same object as safetyList, so both Lists are empty at this point
-		List<LabelCluster> AllLabelClusters = new ArrayList<LabelCluster>();
+		/*	List<LabelCluster> AllLabelClusters = new ArrayList<LabelCluster>();
 		while (safetyList.getInputLabels().size() != 0){
 			LabelCluster tempLCluster = new LabelCluster(safetyList);
 			safetyList = safetyList.matchLabels(safetyList, AllClusters, tempLCluster);
 			AllLabelClusters.add(tempLCluster);
-		}
+		} 
 		for (int i = 0; i < AllLabelClusters.size(); i++){
 			System.out.println("Cluster " +i);
 			for (int j = 0; j < AllLabelClusters.get(i).matchingLabels.size(); j++){
@@ -116,7 +115,7 @@ public class MainPP {
 		System.out.print(testList);
 		
 
-		//print all words and variables
+		//print all words and variables*/
 		System.out.println(input);
 
 	/*	List<String> l1;

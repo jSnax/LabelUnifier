@@ -3,8 +3,10 @@ package de.uni_koblenz.label;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.uni_koblenz.cluster.LabelCluster;
+import de.uni_koblenz.cluster.PhraseCluster;
 import de.uni_koblenz.cluster.WordCluster;
+import de.uni_koblenz.phrase.Phrase;
+import de.uni_koblenz.phrase.PhraseStructure;
 import net.sf.extjwnl.JWNLException;
 import net.sf.extjwnl.data.POS;
 import net.sf.extjwnl.data.PointerUtils;
@@ -173,7 +175,7 @@ public class LabelList {
 		return(RemainingLabels);
 	}
 	
-	public LabelList matchLabels(LabelList RemainingLabels, List<WordCluster> ClusterList, LabelCluster Cluster){
+	/*public LabelList matchLabels(LabelList RemainingLabels, List<WordCluster> ClusterList, LabelCluster Cluster){
 		Label DefiningLabel = RemainingLabels.getInputLabels().get(0);
 		RemainingLabels.getInputLabels().remove(0);
 		boolean Equals = true;
@@ -187,7 +189,7 @@ public class LabelList {
 				j++;
 			}
 			/* Iterates over all Words in all Labels. If within a certain label each word at position i lies in the same WordCluster as
-			   the word at position i in DefiningLabel, they are considered equal. Else Equals will be set false.*/
+			   the word at position i in DefiningLabel, they are considered equal. Else Equals will be set false.
 			if (Equals){
 				Cluster.matchingLabels.add(RemainingLabels.getInputLabels().get(i));
 				tempIntList.add(i);
@@ -203,5 +205,15 @@ public class LabelList {
 		// Removes matched Labels from the LabelList
 		return (RemainingLabels);
 	}
-	// It's important to call this method using a LabelCluster that was just created from RemainingLabels 
+	// It's important to call this method using a LabelCluster that was just created from RemainingLabels */ 
+	
+	public List<Phrase> generatePhraseList(LabelList RemainingLabels, PhraseStructure Structure){
+		List<Phrase> ReturnList = new ArrayList<Phrase>();
+		for (int i = 0; i < RemainingLabels.getInputLabels().size(); i++){
+			for (int j = 0; j < RemainingLabels.getInputLabels().get(i).getSentenceArray().size(); j++){
+				ReturnList.add(RemainingLabels.getInputLabels().get(i).getSentenceArray().get(j).toPhrase);
+			}
+		}
+		return(ReturnList);
+	}
 }

@@ -5,8 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.uni_koblenz.cluster.GrammaticalRelationBetweenWords;
+import de.uni_koblenz.enums.PartOfSpeechTypes;
 import de.uni_koblenz.enums.RelationName;
 import de.uni_koblenz.enums.RoleLeopold;
+import de.uni_koblenz.phrase.Phrase;
+import de.uni_koblenz.phrase.PhraseStructure;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.naturalli.NaturalLogicAnnotations;
 import edu.stanford.nlp.pipeline.CoreSentence;
@@ -14,12 +17,16 @@ import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.semgraph.SemanticGraphEdge;
 import net.sf.extjwnl.JWNLException;
 import net.sf.extjwnl.data.POS;
+import simplenlg.framework.NLGFactory;
+import simplenlg.phrasespec.SPhraseSpec;
+import simplenlg.realiser.english.Realiser;
 
 public class Sentence {
 	
 	private List<Word> wordsarray = new ArrayList<Word>();
 	private CoreSentence asCoreSentence;
 	private String contentAsString;
+	public Phrase toPhrase;
 	
 	public Sentence(CoreSentence sentence) throws JWNLException {
 		contentAsString=sentence.text();
@@ -160,6 +167,14 @@ public class Sentence {
 	    }
 			
 		
+	}
+	// HAS TO BE CHANGED TO PHRASE STRUCTURE INSTEAD OF STRUCTLIST ULTIMATELY
+	public Phrase toPhrase(List<PartOfSpeechTypes> StructList, Realiser realiser, SPhraseSpec p, NLGFactory nlgFactory){
+		Phrase result = new Phrase();
+		for (int i = 0; i < StructList.size(); i++){
+			
+		}
+		return(null);
 	}
 	
 	@Override
