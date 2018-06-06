@@ -4,6 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import de.uni_koblenz.enums.PartOfSpeechTypes;
+
 import java.io.IOException;
 import java.nio.file.*;;
 
@@ -11,6 +14,8 @@ public class PhraseStructure {
 
 	String phraseElements;
 	Phrase[] generatedPhrase;
+	// TEMPORARY ADDITION OF STRUCTLIST BELOW, NO LONGER NEEDED ONCE THIS CLASS IS COMPLETED
+	List<PartOfSpeechTypes> StructList;
 	
 	public PhraseStructure() {
 		
@@ -68,6 +73,15 @@ public class PhraseStructure {
 	
 	public void setGeneratedPhrase(Phrase[] generatedPhrase) {
 		this.generatedPhrase = generatedPhrase;
+	}
+	
+	// TEMPORARY METHODS FOR STRUCTLIST BELOW
+	public List<PartOfSpeechTypes> getStructList() {
+		return StructList;
+	}
+	
+	public void setStructList(List<PartOfSpeechTypes> StructList) {
+		this.StructList = StructList;
 	}
 	
 
