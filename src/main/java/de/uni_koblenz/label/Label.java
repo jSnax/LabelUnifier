@@ -4,7 +4,6 @@ import de.uni_koblenz.cluster.GrammaticalRelationBetweenWords;
 import de.uni_koblenz.enums.PartOfSpeechTypes;
 import de.uni_koblenz.enums.RelationName;
 import de.uni_koblenz.enums.RoleLeopold;
-import de.uni_koblenz.phrase.Phrase;
 
 import java.io.IOException;
 import java.util.ArrayList;
