@@ -46,7 +46,9 @@ public enum PartOfSpeechTypes {
 	
 	private String shortType;
 	private POS jwnlType;
+	private double weightedValues;
 	
+
 	private PartOfSpeechTypes() {
 		
 	}
@@ -70,6 +72,14 @@ public enum PartOfSpeechTypes {
 
 	public void setJwnlType(POS jwnlType) {
 		this.jwnlType = jwnlType;
+	}
+	
+	public double getWeightedValues() {
+		return weightedValues;
+	}
+
+	public void setWeightedValues(double weightedValues) {
+		this.weightedValues = weightedValues;
 	}
 }
 
