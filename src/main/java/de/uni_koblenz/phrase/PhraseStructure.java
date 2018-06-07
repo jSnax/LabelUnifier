@@ -23,11 +23,7 @@ public class PhraseStructure {
 	public PhraseStructure() {
 		
 	}
-	
-	
 
-	
-	
 	public void setPhraseElements(String phraseElements) {
 		this.phraseElements = phraseElements;
 	}

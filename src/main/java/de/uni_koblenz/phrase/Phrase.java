@@ -259,3 +259,109 @@ public class Phrase {
 		}
 }
 
+/*
+ * List<String> l1;
+		List<String> l1 = new ArrayList<String>();
+		l1.add("Check");
+		l1.add("if"); 
+		l1.add("Bachelor");
+		l1.add("is");
+		l1.add("within"); 
+				
+		List<String> l2;
+		List<String> l2 = new ArrayList<String>();
+		l2.add("Check");
+		l2.add("if");
+		l2.add("Bachelor");
+		l2.add("sufficient");
+		
+		Vector<String> l1l2spac = new Vector<String>();
+		l1l2spac = phraseSpace(l1, l2);
+		l1l2spac = CosinePhraseSim.phraseSpace(l1, l2);
+//		for(int i = 0; i < l1l2spac.size(); i++){
+//			System.out.println(l1l2spac.get(i));
+//		}
+		
+		Vector<String> v1 = new Vector<String>();
+		v1 = phraseToVec(l1, l1l2spac);
+		v1 = CosinePhraseSim.phraseToVec(l1, l1l2spac);
+//		for(int i = 0; i < l1l2spac.size(); i++){
+//			System.out.println(v1.get(i));
+//		}
+		
+		Vector<String> v2 = new Vector<String>();
+		v2 = phraseToVec(l2, l1l2spac);
+		v2 = CosinePhraseSim.phraseToVec(l2, l1l2spac);
+//		for(int i = 0; i < l1l2spac.size(); i++){
+//			System.out.println(v2.get(i));
+//		}
+		
+		String input1 = "";
+		input1 = new String(Files.readAllBytes(Paths.get("/FUB.txt")));
+		String[] items = input1.split(",");
+		try
+		{
+			input1 = new String(Files.readAllBytes(Paths.get("/Users/Monika/Project/SemanticProcessModeling/src/main/java/de/uni_koblenz/ppbks18/FUB.txt")));
+		}
+		catch (IOException ex1)
+		{
+			System.out.println("Could not find file " + "FUB");
+		}
+		
+		String[] items = input1.split("\\s*(=>|,|\\s)\\s*");
+	    List<String> fulllabellist1 = new ArrayList<String>(Arrays.asList(items));
+	      
+//	      for(int i = 0; i < fulllabellist1.size(); i++ ){
+//	    	  	System.out.println(fulllabellist1.get(i));
+//	      }
+	      
+		String input2 = "";
+		input1 = new String(Files.readAllBytes(Paths.get("/TUM.txt")));
+		String[] item = input2.split(",");
+		try{
+		input2 = new String(Files.readAllBytes(Paths.get("/Users/Monika/Project/SemanticProcessModeling/src/main/java/de/uni_koblenz/ppbks18/TUM.txt")));
+		}
+		catch(IOException ex2){
+			System.out.println("Could not find file " + "TUM");
+		}
+		String[] item = input2.split("\\s*(=>|,|\\s)\\s*");
+	    List<String> fulllabellist2 = new ArrayList<String>(Arrays.asList(item));
+		
+	    List<List<String>> ultimate;
+//	    for(int i = 0; i < fulllabellist2.size(); i++ ){
+//    	  		System.out.println(fulllabellist2.get(i));
+//	    }
+	    List<List<String>> ultimate = new ArrayList<List<String>>();
+	    ultimate.add(fulllabellist1);
+	    ultimate.add(fulllabellist2);
+		double[] d1 = applyTFIDFinVector(ultimate, fulllabellist1, v1);
+		double[] d2 = applyTFIDFinVector(ultimate, fulllabellist2, v2);
+		
+//	    for(int i = 0; i < ultimate.size(); i++ ){
+//	    	System.out.println(ultimate.get(i));
+//	    }
+	    
+	    double first = CosinePhraseSim.calcTF(fulllabellist1, "check");
+	    System.out.println(first);
+	    double result = CosinePhraseSim.calcIDF(ultimate, v2.get(1));
+	    System.out.println(result);
+	    double res = CosinePhraseSim.calcTFIFD(fulllabellist1,ultimate,v2.get(1));
+	    System.out.println(res);
+	  		
+		double[] d1 = CosinePhraseSim.applyTFIDFinVector(fulllabellist1, ultimate, v1);
+		for(int i = 0; i < d1.length; i++){
+			System.out.println(d1[i]);
+		}
+		double[] d2 = CosinePhraseSim.applyTFIDFinVector(fulllabellist1, ultimate, v2);
+		for(int i = 0; i < d2.length; i++){
+			System.out.println(d2[i]);
+		}
+		double simres; 
+		simres = calcVecSim(d1, d2);
+		
+		simres = CosinePhraseSim.calcVecSim(d1, d2);
+		System.out.println(simres);
+		
+		
+ */
+
