@@ -1,14 +1,16 @@
 package de.uni_koblenz.phrase;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
+//<<<<<<< Updated upstream
+//=======
 import java.util.regex.Pattern;
+//>>>>>>> Stashed changes
+import java.util.regex.Matcher;
 
 import de.uni_koblenz.enums.PartOfSpeechTypes;
 
 import java.io.IOException;
-import java.nio.file.*;;
 
 public class PhraseStructure {
 
@@ -22,47 +24,59 @@ public class PhraseStructure {
 		
 	}
 	
-	public List<String> extrPatternTypes() throws IOException {
-		String input = "";
-		input = new String(Files.readAllBytes(Paths.get("/examplePhraseStructure.txt")));
+	public List<List<String>> extrPatternTypes(String input) throws IOException {
+//		String input = "";
+//		input = new String(Files.readAllBytes(Paths.get("/Users/Monika/Project/SemanticProcessModeling/src/main/java/de/uni_koblenz/ppbks18/examplePhraseStructure.txt")));
 		
-		//the pattern for the first groups (activity, state)
-		Pattern type = Pattern.compile("\\{(.*?)\\}");
-		Matcher m1 = type.matcher(input);
-		
-		String t1 = "";
-		String t2 = "";
-
-		if(m1.find()){
-			t1=m1.group(1);
-			t2=m1.group(2);
+		//the pattern for the first groups (activity, state) is left out, focus on it maybe later
+		Pattern type = Pattern.compile("(<.*>)[,|\n]");
+		List<String> tempPS = new ArrayList<String>();
+		Matcher PS = type.matcher(input);
+		while(PS.find()){
+			int i = 0;
+			tempPS.add(PS.group(i));
+			i++;
 		}
-		List<String> types = new LinkedList<String>();
-		types.add(t1);
-		types.add(t2);
-		return types;
-	}
+//		for(int i = 0; i < tempPS.size(); i++){
+//			System.out.println(tempPS.get(i));
+//			}
+		
+		Pattern parts = Pattern.compile("(<.*?>)");
+		List<List<String>> activityPSs = new ArrayList<List<String>>();
+		
+		for(int i = 0; i < tempPS.size(); i++){
+			Matcher pp = parts.matcher(tempPS.get(i));
+			List<String> oneAPS = new ArrayList<String>();
+			while(pp.find()){
+				int j = 0;
+				oneAPS.add(pp.group(j));
+				j++;
+				}
+			activityPSs.add(oneAPS);
+			}
+//		for(int i = 0; i < activityPSs.size(); i++){
+//			for(int j = 0; j < (activityPSs.get(i)).size(); j++){
+//				System.out.println((activityPSs.get(i)).get(j));
+//				}
+//			System.out.println("");
+//			}
+//		}
+		
+		List<List<String>> finalPSs = new ArrayList<List<String>>();
+		for(int i = 0; i < 4; i++){
+			finalPSs.add(activityPSs.get(i));
+			}
+		
+		for(int i = 0; i < finalPSs.size(); i++){
+			for(int j = 0; j < (finalPSs.get(i)).size(); j++){
+				System.out.println((finalPSs.get(i)).get(j));
+				}
+			System.out.println("");
+			}
+		return finalPSs;
+		}
 	
-	public List<String> getPhraseElements(String g) {
-
-		//the pattern within the typegroupp (commas)
-		Pattern phraseTypes = Pattern.compile(	",		# Match a comma\n" +
-												"(?!	# only if it's not followed by...\n" +
-												" [^<]*	#any number of characters except opening parens\n" +
-												" \\>	#followed by a closing parens\n" +
-												")		# End of lookahead" );
-		
-		Matcher commas = phraseTypes.matcher(g);
-		
-		List<String> phraseElementsGroup = new LinkedList<String>();
-		int count = 0;
-		while(commas.find()){
-			count++;
-			phraseElementsGroup.add(commas.group(count));
-		}
-		
-		return phraseElementsGroup;
-	}
+	
 	
 	public void setPhraseElements(String phraseElements) {
 		this.phraseElements = phraseElements;
@@ -83,8 +97,4 @@ public class PhraseStructure {
 	public void setStructList(List<PartOfSpeechTypes> StructList) {
 		this.StructList = StructList;
 	}
-
-	
-
-	
 }
