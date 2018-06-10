@@ -23,7 +23,10 @@ public class testPreProcessing {
 				
 				// problems with to be
 				"This is a short sentence",
-				"This is a sentence."
+				"This is a sentence.",
+				
+				// testing numbers and symbols
+				"Number 46 # on 4th May 2018 4:30."
 				
 				};
 		System.out.println("Algorithm started");

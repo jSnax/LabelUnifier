@@ -149,6 +149,16 @@ public class Word {
         		this.setPartOfSpeech(type);
         		break;
         	}
+        	
+        }
+        // handle if no matching pos was found
+        if(partOfSpeech==null) {
+        	// set Symbol POS
+        	if(pos.length()==1 && !pos.matches("[a-zA-Z0-9]")) {
+        		this.setPartOfSpeech(PartOfSpeechTypes.SYMBOL);
+        	}else {
+        		System.out.println("No POS enum found for: " + baseform + ":" + pos);
+        	}
         }
         
         
