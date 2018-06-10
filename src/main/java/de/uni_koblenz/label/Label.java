@@ -36,6 +36,20 @@ public class Label {
 	}
 	
 	public Label(String labelAsString) throws JWNLException {
+		
+		// ##################### TO-DO ######################
+		// TEST IF THIS PART HAS NEGATIVE INFLUENCE ON POS TAGING
+		// ##################################################
+		
+		// e.g. check invoice -> noun noun BUT: Check invoice. -> verb noun
+		
+		// manipulating POS-taging from Corenlp by transforming label into sentence
+		if (labelAsString.substring(labelAsString.length()-1).matches("[a-zA-Z0-9]")){
+			// set punctuation
+			labelAsString+=".";
+			// capitalize first letter
+			labelAsString=labelAsString.substring(0, 1).toUpperCase()+labelAsString.substring(1);
+		}
 		//store label as string
 		this.labelAsString=labelAsString;	
 		// annotate label
