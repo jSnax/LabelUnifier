@@ -11,21 +11,24 @@ import de.uni_koblenz.enums.*;
 
 public class Phrase {
 
-	private String content;
+	private List<String> content;
 	private Word[] wordsArray;
 
 	public Phrase() {
 		
 	}
 	
-	public String getContent() {
+	
+	public List<String> getContent() {
 		return content;
 	}
-	
-	public void setContent(String content) {
+
+
+	public void setContent(List<String> content) {
 		this.content = content;
 	}
-	
+
+
 	public Word[] getWordsArray() {
 		return wordsArray;
 	}
