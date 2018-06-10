@@ -9,12 +9,17 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 import de.uni_koblenz.enums.PartOfSpeechTypes;
+import de.uni_koblenz.enums.PhraseStructureTypes;
 
 import java.io.IOException;
 
 public class PhraseStructure {
 
 	String phraseElements;
+	List<PhraseStructureTypes> elements = new ArrayList<PhraseStructureTypes>();
+	
+	
+	
 	Phrase[] generatedPhrase;
 	// TEMPORARY ADDITION OF STRUCTLIST BELOW, NO LONGER NEEDED ONCE THIS CLASS IS COMPLETED
 	List<PartOfSpeechTypes> StructList;
