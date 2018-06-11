@@ -221,6 +221,7 @@ public class Sentence {
 			NPPhraseSpec subject = new NPPhraseSpec(nlgFactory);
 			VPPhraseSpec verb = new VPPhraseSpec(nlgFactory);
 			for (int i = 0; i < Structure.getElements().size(); i++){
+				j = 0;
 				tempType = Structure.getElements().get(i);
 				switch(tempType){
 				case DETERMINER_DEFINITEARTICLE:
@@ -240,7 +241,6 @@ public class Sentence {
 					}
 					break;
 				case NOUN_PLULAR_OBJECT:
-					tempString = "";
 					while (tempString == "" && j < tempSentence.getWordsarray().size()){
 						if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "BUSINESS_OBJECT"){
 							tempString = tempSentence.getWordsarray().get(j).getBaseform();
@@ -253,7 +253,6 @@ public class Sentence {
 					tempString = "";
 					break;
 				case NOUN_PLULAR_SUBJECT:
-					tempString = "";
 					while (tempString == "" && j < tempSentence.getWordsarray().size()){
 						if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "SUBJECT"){
 							tempString = tempSentence.getWordsarray().get(j).getBaseform();
@@ -266,7 +265,6 @@ public class Sentence {
 					tempString = "";
 					break;
 				case NOUN_SINGULAR_OBJECT:
-					tempString = "";
 					while (tempString == "" && j < tempSentence.getWordsarray().size()){
 						if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "BUSINESS_OBJECT"){
 							tempString = tempSentence.getWordsarray().get(j).getBaseform();
@@ -278,7 +276,6 @@ public class Sentence {
 					tempString = "";
 					break;
 				case NOUN_SINGULAR_SUBJECT:
-					tempString = "";
 					while (tempString == "" && j < tempSentence.getWordsarray().size()){
 						if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "SUBJECT"){
 							tempString = tempSentence.getWordsarray().get(j).getBaseform();
@@ -296,7 +293,6 @@ public class Sentence {
 				case PUNCTUATION_QUESTIONMARK:
 					break;
 				case VERB_BASE:
-					tempString = "";
 					while (tempString == "" && j < tempSentence.getWordsarray().size()){
 						if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
 							tempString = tempSentence.getWordsarray().get(j).getBaseform();
@@ -308,7 +304,6 @@ public class Sentence {
 					tempString = "";
 					break;
 				case VERB_IMPERATIVE:
-					tempString = "";
 					while (tempString == "" && j < tempSentence.getWordsarray().size()){
 						if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
 							tempString = tempSentence.getWordsarray().get(j).getBaseform();
@@ -321,7 +316,6 @@ public class Sentence {
 					tempString = "";
 					break;
 				case VERB_PRESENT_PARTICIPLE:
-					tempString = "";
 					while (tempString == "" && j < tempSentence.getWordsarray().size()){
 						if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
 							tempString = tempSentence.getWordsarray().get(j).getBaseform();
@@ -334,7 +328,6 @@ public class Sentence {
 					tempString = "";
 					break;
 				case VERB_PASSIVE:
-					tempString = "";
 					while (tempString == "" && j < tempSentence.getWordsarray().size()){
 						if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
 							tempString = tempSentence.getWordsarray().get(j).getBaseform();
