@@ -31,21 +31,19 @@ public class LabelList {
 		
 	}
 
-	// NEW METHOD ########################################
-	
+	/*
+	 *  Constructor
+	 */
 	public LabelList(String[] input) throws JWNLException {
 		// Setup CORENLP Pipeline
 		Properties props = new Properties();
-		props.setProperty("annotators", "tokenize, ssplit, pos, lemma, depparse, natlog, openie");//, ner");
+		props.setProperty("annotators", "tokenize, ssplit, pos, lemma, depparse, natlog");//, openie");//, ner");
 		pipeline = new StanfordCoreNLP(props);
 		
 		// add Label objects for each string of the input array.
 		for (String stringLabel:input) {
 			inputLabels.add(new Label(stringLabel));
 		}
-		
-		// transform arraylist into array and store it in LabeList.
-
 		
 	}
 

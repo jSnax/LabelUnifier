@@ -112,15 +112,16 @@ public class Sentence {
 	    // get information from dependency tree root
     	// get root as Word
 		Word root=wordsarray.get(asCoreSentence.dependencyParse().getFirstRoot().index()-1);
-
+		
+		RelationName[] subjects= {RelationName.SUBJECT,RelationName.NOMINAL_SUBJECT};
+		RelationName[] objects= {RelationName.DIRECT_OBJECT,RelationName.OBJECT};
 
         // check if root of dependency tree is a verb
     	if(root.getPartOfSpeech().getJwnlType()==POS.VERB) {
     		// set root word as Action
     		root.setRole(RoleLeopold.ACTION);
     		
-    		RelationName[] subjects= {RelationName.SUBJECT,RelationName.NOMINAL_SUBJECT};
-    		RelationName[] objects= {RelationName.DIRECT_OBJECT,RelationName.OBJECT};
+
 
     		for(GrammaticalRelationBetweenWords relation:root.getGrammaticalRelations()) {
     			// set PHRASAL_VERB_PARTICLE also as action e.g. "go down"
@@ -146,25 +147,41 @@ public class Sentence {
     		}
     		
 	    // if root is no verb	
-	    // get information from OpenIE triple
-	    }else {
-    		String consoleoutput="ROLE: NO VERB AT ROOT for: " + asCoreSentence.text();
-    		if(!(asCoreSentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).isEmpty())) {
-		    	for(CoreLabel tripletoken : asCoreSentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).iterator().next().relation) {
-					wordsarray.get(tripletoken.index()-1).setRole(RoleLeopold.ACTION);
-				}
-		    	for(CoreLabel tripletoken : asCoreSentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).iterator().next().object) {
-					wordsarray.get(tripletoken.index()-1).setRole(RoleLeopold.BUSINESS_OBJECT);
-				}
-		    	for(CoreLabel tripletoken : asCoreSentence.coreMap().get(NaturalLogicAnnotations.RelationTriplesAnnotation.class).iterator().next().subject) {
-					wordsarray.get(tripletoken.index()-1).setRole(RoleLeopold.SUBJECT);
-		    	}
-    		}else {
-    			consoleoutput+=" #ALTERNATIVE METHOD FAILED#";
-    		}
-    		System.out.println(consoleoutput);
-
-	    }
+    	/*
+    	 * HANDLE SENTENCES WITH TO BE (COPULA)
+    	 */
+    		
+	    }else if(!root.getGrammaticalRelationsByName(RelationName.COPULA).isEmpty()) {
+	    	// set business object
+	    	if(root.getPartOfSpeech().getJwnlType()==POS.NOUN) {
+	    		root.setRole(RoleLeopold.BUSINESS_OBJECT);
+	    	}
+	    	for(GrammaticalRelationBetweenWords relation:root.getGrammaticalRelations()) {
+	    		//set business object
+	    		if(relation.getGrammaticalRelationName()==RelationName.COMPOUND_MODIFIER&&root.getPartOfSpeech().getJwnlType()==POS.NOUN){
+    				relation.getTargetWord().setRole(RoleLeopold.BUSINESS_OBJECT);
+    			//set subject
+	    		} else if(Arrays.asList(subjects).contains(relation.getGrammaticalRelationName())) {
+    				relation.getTargetWord().setRole(RoleLeopold.SUBJECT);
+    				// set compounds of the main subject also as subject
+    				for(GrammaticalRelationBetweenWords relation2:relation.getTargetWord().getGrammaticalRelationsByName(RelationName.COMPOUND_MODIFIER)) {
+    					relation2.getTargetWord().setRole(RoleLeopold.SUBJECT);
+    				}
+    			//set action
+    			}else if(relation.getGrammaticalRelationName()==RelationName.COPULA){
+    				relation.getTargetWord().setRole(RoleLeopold.ACTION);
+    				for(GrammaticalRelationBetweenWords relation2:relation.getTargetWord().getGrammaticalRelationsByName(RelationName.PHRASAL_VERB_PARTICLE)) {
+    					relation2.getTargetWord().setRole(RoleLeopold.ACTION);
+    				}
+    			}
+	    	}
+	    	
+	    	
+	    	
+	    // Message, if no method worked
+    	}else {
+    		System.out.println("NO METHOD WORKED TO FIND ROLE for: " + asCoreSentence.text());
+    	}
 			
 		
 	}
