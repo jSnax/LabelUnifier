@@ -17,12 +17,7 @@ public class PhraseStructure {
 
 	String phraseElements;
 	List<PhraseStructureTypes> elements = new ArrayList<PhraseStructureTypes>();
-	
-	
-	
 	Phrase[] generatedPhrase;
-	// TEMPORARY ADDITION OF STRUCTLIST BELOW, NO LONGER NEEDED ONCE THIS CLASS IS COMPLETED
-	List<PartOfSpeechTypes> StructList;
 
 	
 	public PhraseStructure() {
@@ -40,12 +35,13 @@ public class PhraseStructure {
 	public void setGeneratedPhrase(Phrase[] generatedPhrase) {
 		this.generatedPhrase = generatedPhrase;
 	}
-	// TEMPORARY METHODS FOR STRUCTLIST BELOW
-	public List<PartOfSpeechTypes> getStructList() {
-		return StructList;
+	
+	public List<PhraseStructureTypes> getElements() {
+		return elements;
 	}
-		
-	public void setStructList(List<PartOfSpeechTypes> StructList) {
-		this.StructList = StructList;
+	
+	public void setElements(List<PhraseStructureTypes> elements) {
+		this.elements = elements;
 	}
+
 }
