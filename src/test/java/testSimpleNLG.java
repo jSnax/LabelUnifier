@@ -1,6 +1,4 @@
 import edu.stanford.nlp.coref.data.Dictionaries.Person;
-import simplenlg.features.Feature;
-import simplenlg.features.Tense;
 import simplenlg.framework.InflectedWordElement;
 import simplenlg.framework.LexicalCategory;
 import simplenlg.framework.WordElement;
@@ -30,19 +28,21 @@ public class testSimpleNLG {
 		  SPhraseSpec p = nlgFactory.createClause();
           Realiser realiser = new Realiser(lexicon);
           p.setObject("invoice");
-          p.setVerb("fight back");
-         // p.setFeature(Feature.FORM, Form.IMPERATIVE);
+          p.setVerb("checking");
+          p.setFeature(Feature.FORM, Form.IMPERATIVE);
           String output = realiser.realiseSentence(p);
           System.out.println(output);
-          NPPhraseSpec subject = nlgFactory.createNounPhrase("Official");
+         // NPPhraseSpec subject = nlgFactory.createNounPhrase("Official");
           NPPhraseSpec object = nlgFactory.createNounPhrase("bill");
           VPPhraseSpec verb = nlgFactory.createVerbPhrase("verify");
-          subject.addModifier("talented");
-          subject.setDeterminer("the");
+         // subject.addModifier("talented");
+         // subject.setDeterminer("the");
           object.setDeterminer("a");
-          p.setSubject(subject);
+		 // subject.setPlural(true);
+       //   p.setSubject(subject);
           p.setVerb(verb);
           p.setObject(object);
           System.out.println(realiser.realiseSentence(p));
+          System.out.println(realiser.realiseSentence(p).substring(0, realiser.realiseSentence(p).length()-1));
 	  }
 }
