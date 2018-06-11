@@ -130,10 +130,10 @@ public class MainPP {
 		l2.add("sufficient");
 		
 		Phrase p1 = new Phrase();
-		p1.setContent(l1);
+		p1.setseparatedContent(l1);
 		
 		Phrase p2 = new Phrase();
-		p2.setContent(l2);
+		p2.setseparatedContent(l2);
 		
 		
 		
