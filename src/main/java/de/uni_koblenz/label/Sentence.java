@@ -1,11 +1,13 @@
 package de.uni_koblenz.label;
 
+import java.text.Normalizer.Form;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import de.uni_koblenz.cluster.GrammaticalRelationBetweenWords;
 import de.uni_koblenz.enums.PartOfSpeechTypes;
+import de.uni_koblenz.enums.PhraseStructureTypes;
 import de.uni_koblenz.enums.RelationName;
 import de.uni_koblenz.enums.RoleLeopold;
 import de.uni_koblenz.phrase.Phrase;
@@ -17,9 +19,18 @@ import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.semgraph.SemanticGraphEdge;
 import net.sf.extjwnl.JWNLException;
 import net.sf.extjwnl.data.POS;
-import simplenlg.framework.NLGFactory;
+import edu.stanford.nlp.coref.data.Dictionaries.Person;
+import simplenlg.framework.InflectedWordElement;
+import simplenlg.framework.LexicalCategory;
+import simplenlg.framework.WordElement;
+import simplenlg.lexicon.Lexicon;
 import simplenlg.phrasespec.SPhraseSpec;
 import simplenlg.realiser.english.Realiser;
+import simplenlg.framework.*;
+import simplenlg.lexicon.*;
+import simplenlg.realiser.english.*;
+import simplenlg.phrasespec.*;
+import simplenlg.features.*;
 
 public class Sentence {
 	
@@ -34,6 +45,9 @@ public class Sentence {
 		createWordsArray();
 	}
 	
+	public Sentence() {
+	}
+
 	public List<Word> getWordsarray() {
 		return wordsarray;
 	}
@@ -196,13 +210,162 @@ public class Sentence {
 		return result;
 	}
 	
-	// HAS TO BE CHANGED TO PHRASE STRUCTURE INSTEAD OF STRUCTLIST ULTIMATELY
-		public Phrase toPhrase(List<PartOfSpeechTypes> StructList, Realiser realiser, SPhraseSpec p, NLGFactory nlgFactory){
+		public Phrase toPhrase(PhraseStructure Structure, Realiser realiser, SPhraseSpec p, NLGFactory nlgFactory){
+			Sentence tempSentence = new Sentence();
+			tempSentence.setWordsarray(this.getWordsarray());
 			Phrase result = new Phrase();
-			for (int i = 0; i < StructList.size(); i++){
-				
+			PhraseStructureTypes tempType;
+			String tempString = "";
+			int j = 0;
+			NPPhraseSpec object = new NPPhraseSpec(nlgFactory);
+			NPPhraseSpec subject = new NPPhraseSpec(nlgFactory);
+			VPPhraseSpec verb = new VPPhraseSpec(nlgFactory);
+			for (int i = 0; i < Structure.getElements().size(); i++){
+				tempType = Structure.getElements().get(i);
+				switch(tempType){
+				case DETERMINER_DEFINITEARTICLE:
+					if (Structure.getElements().get(j+1).getdeterminer()=="Object"){
+						object.setDeterminer("the");
+					}
+					if (Structure.getElements().get(j+1).getdeterminer()=="Subject"){
+						subject.setDeterminer("the");
+					}
+					break;
+				case DETERMINER_INDEFINITEARTICLE:
+					if (Structure.getElements().get(j+1).getdeterminer()=="Object"){
+						object.setDeterminer("a");
+					}
+					if (Structure.getElements().get(j+1).getdeterminer()=="Subject"){
+						subject.setDeterminer("a");
+					}
+					break;
+				case NOUN_PLULAR_OBJECT:
+					tempString = "";
+					while (tempString == "" && j < tempSentence.getWordsarray().size()){
+						if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "BUSINESS_OBJECT"){
+							tempString = tempSentence.getWordsarray().get(j).getBaseform();
+						}
+						j++;
+					}
+					object = nlgFactory.createNounPhrase(tempString);
+					object.setPlural(true);
+					p.setObject(object);
+					tempString = "";
+					break;
+				case NOUN_PLULAR_SUBJECT:
+					tempString = "";
+					while (tempString == "" && j < tempSentence.getWordsarray().size()){
+						if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "SUBJECT"){
+							tempString = tempSentence.getWordsarray().get(j).getBaseform();
+						}
+						j++;
+					}
+					subject = nlgFactory.createNounPhrase(tempString);
+					subject.setPlural(true);
+					p.setSubject(subject);
+					tempString = "";
+					break;
+				case NOUN_SINGULAR_OBJECT:
+					tempString = "";
+					while (tempString == "" && j < tempSentence.getWordsarray().size()){
+						if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "BUSINESS_OBJECT"){
+							tempString = tempSentence.getWordsarray().get(j).getBaseform();
+						}
+						j++;
+					}
+					object = nlgFactory.createNounPhrase(tempString);
+					p.setObject(object);
+					tempString = "";
+					break;
+				case NOUN_SINGULAR_SUBJECT:
+					tempString = "";
+					while (tempString == "" && j < tempSentence.getWordsarray().size()){
+						if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "SUBJECT"){
+							tempString = tempSentence.getWordsarray().get(j).getBaseform();
+						}
+						j++;
+					}
+					subject = nlgFactory.createNounPhrase(tempString);
+					p.setSubject(subject);
+					tempString = "";
+					break;
+				case PUNCTUATION_COMMA:
+					break;
+				case PUNCTUATION_PERIOD:
+					break;
+				case PUNCTUATION_QUESTIONMARK:
+					break;
+				case VERB_BASE:
+					tempString = "";
+					while (tempString == "" && j < tempSentence.getWordsarray().size()){
+						if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
+							tempString = tempSentence.getWordsarray().get(j).getBaseform();
+						}
+						j++;
+					}
+					verb = nlgFactory.createVerbPhrase(tempString);
+			        p.setVerb(verb);
+					tempString = "";
+					break;
+				case VERB_IMPERATIVE:
+					tempString = "";
+					while (tempString == "" && j < tempSentence.getWordsarray().size()){
+						if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
+							tempString = tempSentence.getWordsarray().get(j).getBaseform();
+						}
+						j++;
+					}
+					verb = nlgFactory.createVerbPhrase(tempString);
+					p.setVerb(verb);
+					p.setFeature(Feature.FORM, simplenlg.features.Form.IMPERATIVE);
+					tempString = "";
+					break;
+				case VERB_PRESENT_PARTICIPLE:
+					tempString = "";
+					while (tempString == "" && j < tempSentence.getWordsarray().size()){
+						if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
+							tempString = tempSentence.getWordsarray().get(j).getBaseform();
+						}
+						j++;
+					}
+					verb = nlgFactory.createVerbPhrase(tempString);
+					p.setVerb(verb);
+					p.setFeature(Feature.FORM, simplenlg.features.Form.PRESENT_PARTICIPLE);
+					tempString = "";
+					break;
+				case VERB_PASSIVE:
+					tempString = "";
+					while (tempString == "" && j < tempSentence.getWordsarray().size()){
+						if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
+							tempString = tempSentence.getWordsarray().get(j).getBaseform();
+						}
+						j++;
+					}
+					verb = nlgFactory.createVerbPhrase(tempString);
+					p.setVerb(verb);
+					p.setFeature(Feature.PASSIVE, true);
+					tempString = "";
+					break;
+				case VERB_INDICATIVE:
+					break;
+				case VERB_SIMPLEPAST:
+					break;
+				case VERB_SIMPLEPRESENT:
+					break;
+				default:
+					break;
+
+				}
 			}
-			return(null);
+			result.setFullContent(realiser.realiseSentence(p));
+			List<String> wordList = new ArrayList<String>(Arrays.asList(result.getFullContent().split(" ")));
+			for (int i = 0; i < wordList.size(); i++){
+				if (wordList.get(i).contains(",") || wordList.get(i).contains(".")){
+					wordList.set(i, wordList.get(i).substring(0, wordList.get(i).length()-1));
+				}
+			}
+			result.setseparatedContent(wordList);
+			return(result);
 		}
 
 	
