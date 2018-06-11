@@ -11,7 +11,8 @@ import de.uni_koblenz.enums.*;
 
 public class Phrase {
 
-	private List<String> content;
+	private List<String> separatedContent;
+	private String fullContent;
 	private Word[] wordsArray;
 
 	public Phrase() {
@@ -19,13 +20,13 @@ public class Phrase {
 	}
 	
 	
-	public List<String> getContent() {
-		return content;
+	public List<String> getseparatedContent() {
+		return separatedContent;
 	}
 
 
-	public void setContent(List<String> content) {
-		this.content = content;
+	public void setseparatedContent(List<String> separatedContent) {
+		this.separatedContent = separatedContent;
 	}
 
 
@@ -259,6 +260,16 @@ public class Phrase {
 	            System.out.println ("Can't divide a number by 0");
 	            }
 			return result;
+		}
+
+
+		public String getFullContent() {
+			return fullContent;
+		}
+
+
+		public void setFullContent(String fullContent) {
+			this.fullContent = fullContent;
 		}
 }
 
