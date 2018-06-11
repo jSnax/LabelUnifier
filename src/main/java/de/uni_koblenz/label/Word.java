@@ -226,14 +226,25 @@ public class Word {
 	
 	public void calculateDominance(List<Word> allWords) {
 		int dominanceCalculator = 0;
-		for (int zaehler = 0; zaehler < allWords.size(); zaehler++) {
+		
+		// shorter version of the loop below ########################
+		for (Word w : allWords) {
+			if (w.baseform.equals(this.baseform)) {
+				dominanceCalculator++;
+			} else {
+				continue;
+			}
+		
+		}
+		
+		/**for (int zaehler = 0; zaehler < allWords.size(); zaehler++) {
 			if (allWords.get(zaehler).baseform.equals(this.baseform)) {
 				dominanceCalculator++;
 			} else {
 				continue;
 			}
 			
-		}
+		}**/
 		this.dominance = dominanceCalculator;
 		
 	}
