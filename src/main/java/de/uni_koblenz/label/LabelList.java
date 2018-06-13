@@ -219,7 +219,52 @@ public class LabelList {
 		}
 		}
 		return(RemainingLabels);
+		
+		/*	
+		// Methoden zu matchSynonyms
+
+	public int getInputLabelsSizeOfRemainingLabels(){
+	return( RemainingLabels.getInputLabels().size());
 	}
+	  
+	public int getSentenceArraySizeOfRemainingLabels (int i){
+	return( RemainingLabels.getInputLabels().get(i).getSentenceArray().size());
+	}
+	                                                              
+	public int getWordsarraySizeOfRemainingLabels (int i, int t){
+	return(RemainingLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().size());
+	}
+	 
+	public POS getJwnlTypeOfDefiningWord(){
+	return( DefiningWord.getPartOfSpeech().getJwnlType() );
+	}
+	                                  
+	public POS getJwnlTypeOfRemainingLabels (int i, int t, int j){
+	return(RemainingLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().get(j).getPartOfSpeech().getJwnlType();
+	}
+
+	public String getBaseformOfDefiningWord (int i, int t, int j){
+	return(DefiningWord.getSynonyms().contains(RemainingLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().get(j).getBaseform());
+	}
+
+	public String getBaseformOfDefiningWordFromRemainingLabels (int i, int t, int j){
+	return(RemainingLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().get(j).getSynonyms().contains(DefiningWord.getBaseform()));
+	}
+
+	public int getInputLabelsSizeOfRemaininglabelsShortened(){
+	return( RemainingLabels.getInputLabels().size() - 1 );
+	}
+	 
+	public int getSentenceArraySizeOfRemainingLabelsShortened (int i){
+	return( RemainingLabels.getInputLabels().get(i).getSentenceArray().size() - 1);
+	}
+
+	public boolean getWordsarrayIsEmptyOfRemainingLabels (int i, int t){
+	return( RemainingLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().isEmpty()));
+	}
+	*/
+	}
+
 	
 	/*public LabelList matchLabels(LabelList RemainingLabels, List<WordCluster> ClusterList, PhraseCluster Cluster){
 		Label DefiningLabel = RemainingLabels.getInputLabels().get(0);
@@ -261,6 +306,19 @@ public class LabelList {
 			}
 		}
 		return(ReturnList);
+		
+		/*
+		//Methode generatePhrase
+
+		public int getSentenceSizeofRemainingLabels(int i){
+		    return(RemainingLabels.getInputLabels().get(i).getSentenceArray().size());
+		    }
+
+		public String PhraseRemainingLabels(int i){
+		    return(RemainingLabels.getInputLabels().get(i).getSentenceArray().get(j).toPhrase));
+			}
+			
+		*/
 	}
 
 }
