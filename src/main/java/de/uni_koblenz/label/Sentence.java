@@ -393,6 +393,5 @@ public String RoleOfTempWord(int i){
 public String BaseOfTempWord(int i){
     return(this.getWordsarray().get(i).getBaseform());
          }		
-
 	
 }
