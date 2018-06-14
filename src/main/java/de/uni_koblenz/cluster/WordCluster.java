@@ -26,16 +26,21 @@ public class WordCluster {
 		this.matchingWords = matchingWords;
 	}
 	
-	public void generalizeWords() {
-        //List<Word> temp = new ArrayList<Word>(matchingWords);
-        for(int i = 0; i < matchingWords.size(); i++) {
-            String k = matchingWords.get(i).getBaseform();
-            matchingWords.get(i).setBaseform(k);
-            Integer a = matchingWords.size();
-            matchingWords.get(i).setDominance(a);
-        }
-    }
-
 	
-	
+	/*
+	public void generalizeWords(){
+		int current = 0; 
+		String k=null; // k inizialisieren ?
+		for (int i = 0; i<this.matchingWords.size(); i++){ 	
+			if (current < this.matchingWords.get(i).getDominance()){ 		
+				current = this.matchingWords.get(i).getDominance(); 		
+				k = this.matchingWords.get(i).getBaseform(); 	
+				} 	
+		this.matchingWords.get(i).setDominance(this.matchingWords.size()); 	// Index size + 1?
+		} 
+		for (int i = 0; i<this.matchingWords.size(); i++){ 	
+			this.matchingWords.get(i).setBaseform(k); 
+		}
+	}
+	*/
 }

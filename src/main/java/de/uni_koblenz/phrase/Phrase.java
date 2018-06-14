@@ -14,9 +14,16 @@ public class Phrase {
 	private List<String> separatedContent;
 	private String fullContent;
 	private Word[] wordsArray;
+	private Vector<String> personalVector;
+	private double[] vectorNumeration;
 
 	public Phrase() {
 		
+	}
+	
+	public Phrase(Vector<String> vectorSpace, List<List<String>> ultimate, List<Phrase> phrases) {
+		this.personalVector = phraseToVec(this.separatedContent, vectorSpace);
+		this.vectorNumeration = applyTFIDFinVector(this.separatedContent, ultimate, this.personalVector);	
 	}
 	
 	
@@ -144,27 +151,6 @@ public class Phrase {
 		}
 		return correct;
 	}	
-	
-	// Calculate the dimension of the Vector for the two labels 
-		public static Vector<String> phraseSpace (List<String> p1, List<String> p2){
-			
-			//initialize the vectors
-			Vector<String> space = new Vector<String>();
-
-			//add all the elements in the first list into the vector
-			for(int i = 0; i < p1.size(); i++){
-				space.add(p1.get(i));
-			}
-			
-			//check if the vector already contains the elements that are iterated over, if not add them
-			for(int i = 0; i < p2.size(); i++){
-				if(space.contains(p2.get(i)) == false){
-					space.add(p2.get(i));
-				}
-			}
-			return space;
-		}
-		
 		
 		public static Vector<String> phraseToVec(List<String> phrase, Vector<String> space){
 			//initialize the Phrase Vector
@@ -193,6 +179,7 @@ public class Phrase {
 			return result / LabelListFinal.size();
 		}
 		
+		
 		//Calculate the Inverse Document Frequency (if the word common or rare across the document -> how much information does it contain)
 		public static double calcIDF (List<List<String>> docs, String word){
 			double res = 0;
@@ -209,8 +196,7 @@ public class Phrase {
 
 		//whole formula for tfifd
 		public static double calcTFIFD(List<String> doc, List<List<String>> docs, String word){
-			return calcTF(doc, word) ;
-					//* calcIDF(docs, word);
+			return calcTF(doc, word) * calcIDF(docs, word);
 		}
 		
 		public static double[] applyTFIDFinVector(List<String> fullLabelList , List<List<String>> docs, Vector<String> v1){
