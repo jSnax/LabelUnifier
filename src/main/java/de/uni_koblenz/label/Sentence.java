@@ -211,6 +211,8 @@ public class Sentence {
 	}
 	
 		public Phrase toPhrase(PhraseStructure Structure, Realiser realiser, SPhraseSpec p, NLGFactory nlgFactory){
+			
+			
 			Sentence tempSentence = new Sentence();
 			tempSentence.setWordsarray(this.getWordsarray());
 			Phrase result = new Phrase();
@@ -242,8 +244,10 @@ public class Sentence {
 					break;
 				case NOUN_PLULAR_OBJECT:
 					while (tempString == "" && j < tempSentence.getWordsarray().size()){
-						if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "BUSINESS_OBJECT"){
-							tempString = tempSentence.getWordsarray().get(j).getBaseform();
+						//old: if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "BUSINESS_OBJECT"){
+						if (this.JWNLTypeOfTempSentenceWord(tempSentence, j) == POS.NOUN && this.RoleOfTempSentenceWord(tempSentence,j) == "BUSINESS_OBJECT"){
+							//old: tempString = tempSentence.getWordsarray().get(j).getBaseform();
+							tempString = this.BaseformOfTempSentenceWord(tempSentence,j);
 						}
 						j++;
 					}
@@ -254,8 +258,10 @@ public class Sentence {
 					break;
 				case NOUN_PLULAR_SUBJECT:
 					while (tempString == "" && j < tempSentence.getWordsarray().size()){
-						if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "SUBJECT"){
-							tempString = tempSentence.getWordsarray().get(j).getBaseform();
+						//old:	if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "SUBJECT"){
+						if (this.JWNLTypeOfTempSentenceWord(tempSentence, j) == POS.NOUN && this.RoleOfTempSentenceWord(tempSentence,j) == "SUBJECT"){
+							//old: tempString = tempSentence.getWordsarray().get(j).getBaseform();
+							tempString = this.BaseformOfTempSentenceWord(tempSentence,j);
 						}
 						j++;
 					}
@@ -360,6 +366,19 @@ public class Sentence {
 			result.setseparatedContent(wordList);
 			return(result);
 		}
+		
+//new methods for shortening
+public POS JWNLTypeOfTempSentenceWord(Sentence s, int i){
+    return(s.getWordsarray().get(i).getPartOfSpeech().getJwnlType());
+         }
+
+public String RoleOfTempSentenceWord(Sentence s, int i){
+    return(s.getWordsarray().get(i).getRole().name());
+         }
+
+public String BaseformOfTempSentenceWord(Sentence s, int i){
+    return(s.getWordsarray().get(i).getBaseform());
+         }		
 
 	
 }
