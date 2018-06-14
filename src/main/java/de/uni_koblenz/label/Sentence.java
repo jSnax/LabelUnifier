@@ -240,7 +240,9 @@ public class Sentence {
 						subject.setDeterminer("a");
 					}
 					break;
-				case NOUN_PLULAR_OBJECT:
+					// Incomplete: What about adjectives in front of Object / Subject? Needs better solution
+					// Probably just a while loop until either subject or object is found
+				case NOUN_PLURAL_OBJECT:
 					while (tempString == "" && j < tempSentence.getWordsarray().size()){
 						if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "BUSINESS_OBJECT"){
 							tempString = tempSentence.getWordsarray().get(j).getBaseform();
@@ -252,7 +254,7 @@ public class Sentence {
 					p.setObject(object);
 					tempString = "";
 					break;
-				case NOUN_PLULAR_SUBJECT:
+				case NOUN_PLURAL_SUBJECT:
 					while (tempString == "" && j < tempSentence.getWordsarray().size()){
 						if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "SUBJECT"){
 							tempString = tempSentence.getWordsarray().get(j).getBaseform();
@@ -311,8 +313,8 @@ public class Sentence {
 						j++;
 					}
 					verb = nlgFactory.createVerbPhrase(tempString);
+					verb.setFeature(Feature.FORM,simplenlg.features.Form.IMPERATIVE);;
 					p.setVerb(verb);
-					p.setFeature(Feature.FORM, simplenlg.features.Form.IMPERATIVE);
 					tempString = "";
 					break;
 				case VERB_PRESENT_PARTICIPLE:
@@ -323,8 +325,8 @@ public class Sentence {
 						j++;
 					}
 					verb = nlgFactory.createVerbPhrase(tempString);
+					verb.setFeature(Feature.FORM, simplenlg.features.Form.PRESENT_PARTICIPLE);
 					p.setVerb(verb);
-					p.setFeature(Feature.FORM, simplenlg.features.Form.PRESENT_PARTICIPLE);
 					tempString = "";
 					break;
 				case VERB_PASSIVE:
@@ -335,8 +337,8 @@ public class Sentence {
 						j++;
 					}
 					verb = nlgFactory.createVerbPhrase(tempString);
+					verb.setFeature(Feature.PASSIVE, true);
 					p.setVerb(verb);
-					p.setFeature(Feature.PASSIVE, true);
 					tempString = "";
 					break;
 				case VERB_INDICATIVE:
