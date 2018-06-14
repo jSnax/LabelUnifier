@@ -114,8 +114,9 @@ public class MainPP {
 		
 */
 		
-		
+	
 	//Phrase calculations test class
+		/* revert
 		List<String> l1 = new ArrayList<String>();
 		l1.add("Check");
 		l1.add("if"); 
@@ -135,7 +136,7 @@ public class MainPP {
 		Phrase p2 = new Phrase();
 		p2.setseparatedContent(l2);
 		
-		
+		/*
 		
 		Vector<String> l1l2spac = new Vector<String>();
 		l1l2spac = p1.phraseSpace(l1, l2);
@@ -190,14 +191,14 @@ public class MainPP {
 			System.out.println(d1[i]);
 		}
 		*/
-		
+		/*revert
 		double[] d2 = p2.applyTFIDFinVector(fulllabellist2, ultimate, v2);
 		/*
 		for(int i = 0; i < d2.length; i++){
 			System.out.println(d2[i]);
 		}
 		*/
-	    
+	    /* revert
 	    double first = p1.calcTF(fulllabellist1, "check");
 	    System.out.println("First Phrase TF value for \"check\": " + first);
 	    
@@ -210,6 +211,8 @@ public class MainPP {
 		double simres;
 		simres = p1.calcVecSim(d1, d2);
 		System.out.println("Vector Similarity between phrase 1 and phrase 2" + simres);
-
+		
+		*/
+		
 	}	
 }
