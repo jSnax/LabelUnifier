@@ -7,6 +7,7 @@ import de.uni_koblenz.cluster.*;
 import de.uni_koblenz.enums.*;
 import de.uni_koblenz.label.*;
 import de.uni_koblenz.phrase.*;
+import de.uni_koblenz.phrase.PhraseStructure;
 import net.sf.extjwnl.JWNLException;
 import net.sf.extjwnl.data.POS;
 import net.sf.extjwnl.data.PointerUtils;
@@ -70,8 +71,8 @@ public class timTest {
 	// Simply print the two labels
 	PhraseStructure Structure = new PhraseStructure();
 	List<PhraseStructureTypes> tempList = new ArrayList<PhraseStructureTypes>();
-	tempList.add(PhraseStructureTypes.VERB_BASE);
-	tempList.add(PhraseStructureTypes.NOUN_SINGULAR_OBJECT);
+	tempList.add(PhraseStructureTypes.VERB_IMPERATIVE);
+	tempList.add(PhraseStructureTypes.NOUN_PLURAL_OBJECT);
 	Structure.setElements(tempList);
 	Phrase p1 = testList.getInputLabels().get(0).getSentenceArray().get(0).toPhrase(Structure,realiser, p, nlgFactory);
 	System.out.println("Full Phrase:");
