@@ -16,14 +16,10 @@ public class Phrase {
 	private Word[] wordsArray;
 	private Vector<String> personalVector;
 	private double[] vectorNumeration;
+	private Vector<String> personalVectorSpace;
 
 	public Phrase() {
 		
-	}
-	
-	public Phrase(Vector<String> vectorSpace, List<List<String>> ultimate, List<Phrase> phrases) {
-		this.personalVector = phraseToVec(this.separatedContent, vectorSpace);
-		this.vectorNumeration = applyTFIDFinVector(this.separatedContent, ultimate, this.personalVector);	
 	}
 	
 	
@@ -44,7 +40,31 @@ public class Phrase {
 	public void setWordsArray(Word[] wordsArray) {
 		this.wordsArray = wordsArray;
 	}
-	
+
+	public Vector<String> getPersonalVector() {
+		return personalVector;
+	}
+
+	public void setPersonalVector(Vector<String> personalVector) {
+		this.personalVector = personalVector;
+	}
+
+	public double[] getVectorNumeration() {
+		return vectorNumeration;
+	}
+
+	public void setVectorNumeration(double[] vectorNumeration) {
+		this.vectorNumeration = vectorNumeration;
+	}
+
+	public Vector<String> getPersonalVectorSpace() {
+		return personalVectorSpace;
+	}
+
+	public void setPersonalVectorSpace(Vector<String> personalVectorSpace) {
+		this.personalVectorSpace = personalVectorSpace;
+	}
+
 	// returns a list of Phrase Structure
 		// a Phrase Structure e. g. <verb, imperative> <noun, singular> would be a list of String itself, where "verb, imperative" is one list element
 	public List<List<String>> extractPhraseStructure (String Namingconventions){
@@ -199,55 +219,21 @@ public class Phrase {
 			return calcTF(doc, word) * calcIDF(docs, word);
 		}
 		
-		public static double[] applyTFIDFinVector(List<String> fullLabelList , List<List<String>> docs, Vector<String> v1){
-			double result[] = new double[v1.size()];
-			for(int i=0; i < v1.size(); i++){
+		public void applyTFIDFinVector(List<String> fullLabelList , List<List<String>> docs, Vector<String> v1){
+			Vector<String> vector = v1;
+			double result[] = new double[vector.size()];
+			for(int i=0; i < vector.size(); i++){
 				//if the string is x, then the Value is 0 in this Vector
 				if(v1.get(i) == "nill"){
 					result[i] = 0;
 				} else {
 				// else calculate the TD-IDF and sava the Value in the Vector
-				double t = calcTFIFD(fullLabelList, docs, v1.get(i));
+				double t = calcTFIFD(fullLabelList, docs, vector.get(i));
 				result[i] = t;
 				}
 			}
-			return result;
+			this.vectorNumeration = result;
 		}
-		
-		//Calculate the length of a vector
-		public static double metrics (double [] a){
-			double result = 0;
-			double sumsq = 0;
-			for(int i = 0; i < a.length; i++){
-				sumsq += a[i]*a[i];
-			}
-			result = Math.sqrt(sumsq);
-			return result;
-		}
-		
-		//calculate the dot product of two Vectors
-		public static double dot(double[] a, double[] b) {
-		    double sum = 0;
-		    for (int i = 0; i < a.length; i++) {
-		      sum += a[i] * b[i];
-		    }
-		    return sum;
-		  }
-		
-		// use the formula for vector similatiry: dot(vec1, vec2) / met(vec1)*met(vec2)
-		public static double calcVecSim (double [] v1, double[] v2){
-			double result = 0;
-			double denm = metrics(v1)*metrics(v2);
-			//try this division
-	        try{
-	        	result = (double) (dot(v1, v2)) / (double) denm; 
-	        //if denm == 0, throw exception
-	        }catch (ArithmeticException e) {
-	            System.out.println ("Can't divide a number by 0");
-	            }
-			return result;
-		}
-
 
 		public String getFullContent() {
 			return fullContent;
