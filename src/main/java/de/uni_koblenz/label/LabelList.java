@@ -113,22 +113,24 @@ public class LabelList {
 			for (Sentence s : l.getSentenceArray()) {
 				// iteration over all words in sentence
 				for (Word w : s.getWordsarray()) {
-					tempWord = dictionary.getIndexWord(w.getPartOfSpeech().getJwnlType(), w.getBaseform());
-					// Transform baseform of Word j in Label i into an indexWord so extjwnl can use it
-					tempSyn = tempWord.getSenses();
-					// Sysnte for Word j
-					w.setSynonyms(new ArrayList<String>());
-					// pre-create the Synonym list for Word j
-					// CAUTION: This will override any pre-existing synonym list, so this method may only be called once
-					for (net.sf.extjwnl.data.Synset syn : tempSyn) {
-						// Iterate over all meanings in the synset, z refers to the current meaning
-						if (w.getPartOfSpeech().getJwnlType() != POS.ADJECTIVE) {
-							nodelist=PointerUtils.getCoordinateTerms(syn);
-							for(PointerTargetNode node:nodelist) {
-								for(net.sf.extjwnl.data.Word word:node.getSynset().getWords()) {
-									if (!w.getSynonyms().contains(word.getLemma()))
-										w.addSynonym(word.getLemma());
-										// Go through the synonym list and add each synonym to synonym list for word j, unless it's already in there 
+					if (w.getPartOfSpeech().getJwnlType() != null){
+						tempWord = dictionary.getIndexWord(w.getPartOfSpeech().getJwnlType(), w.getBaseform());
+						// Transform baseform of Word j in Label i into an indexWord so extjwnl can use it
+						tempSyn = tempWord.getSenses();
+						// Sysnte for Word j
+						w.setSynonyms(new ArrayList<String>());
+						// pre-create the Synonym list for Word j
+						// CAUTION: This will override any pre-existing synonym list, so this method may only be called once
+						for (net.sf.extjwnl.data.Synset syn : tempSyn) {
+							// Iterate over all meanings in the synset, z refers to the current meaning
+							if (w.getPartOfSpeech().getJwnlType() != POS.ADJECTIVE) {
+								nodelist=PointerUtils.getCoordinateTerms(syn);
+								for(PointerTargetNode node:nodelist) {
+									for(net.sf.extjwnl.data.Word word:node.getSynset().getWords()) {
+										if (!w.getSynonyms().contains(word.getLemma()))
+											w.addSynonym(word.getLemma());
+											// Go through the synonym list and add each synonym to synonym list for word j, unless it's already in there 
+									}
 								}
 							}
 						}
@@ -137,8 +139,8 @@ public class LabelList {
 			}
 		}
 		
-		/**
-		for (int i=0; i < allLabels.getInputLabels().size(); i++){
+		
+		/*for (int i=0; i < allLabels.getInputLabels().size(); i++){
 			// Iterate over all Labels, i refers to the current Label
 				for (int t = 0; t < allLabels.getInputLabels().get(i).getSentenceArray().size(); t++){
 					// Iterate over all Sentences in a certain Label, t refers to the current Sentence
@@ -179,8 +181,8 @@ public class LabelList {
 						}
 					}
 			}
-		}
-		**/
+		}*/
+		
 	}
 	
 	/* Alte nicht optimierte matchSynonyms Methode
