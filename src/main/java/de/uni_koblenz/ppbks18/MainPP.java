@@ -116,7 +116,7 @@ public class MainPP {
 		
 	
 	//Phrase calculations test class
-		/* revert
+/*
 		List<String> l1 = new ArrayList<String>();
 		l1.add("Check");
 		l1.add("if"); 
@@ -136,25 +136,14 @@ public class MainPP {
 		Phrase p2 = new Phrase();
 		p2.setseparatedContent(l2);
 		
-		/*
-		
-		Vector<String> l1l2spac = new Vector<String>();
-		l1l2spac = p1.phraseSpace(l1, l2);
-//		for(int i = 0; i < l1l2spac.size(); i++){
-//			System.out.println(l1l2spac.get(i));
-//		}
-		
-		Vector<String> v1 = new Vector<String>();
-		v1 = p1.phraseToVec(l1, l1l2spac);
-//		for(int i = 0; i < l1l2spac.size(); i++){
-//			System.out.println(v1.get(i));
-//		}
-		
-		Vector<String> v2 = new Vector<String>();
-		v2 = p2.phraseToVec(l2, l1l2spac);
-//		for(int i = 0; i < l1l2spac.size(); i++){
-//			System.out.println(v2.get(i));
-//		}
+		List<Phrase> phraseKram = new ArrayList<Phrase>();
+		phraseKram.add(p1);
+		phraseKram.add(p2);
+		PhraseList phraseList = new PhraseList();
+		phraseList.setPhrases(phraseKram);
+		phraseList.phraseSpace();
+		System.out.println("Kram" + phraseList.getPhrases().get(0).getPersonalVectorSpace());
+		System.out.println(phraseList.getPhrases().get(1).getPersonalVectorSpace());
 		
 		String input1 ="Complete application, Fill out application form, Add certificate of Bachelor degree, Add certificate of German language, Send application, \n" + 
 				"Take Interview, Receive Rejection, Receive acceptance, Immatriculate, \n" + 
@@ -176,43 +165,20 @@ public class MainPP {
 		
 		String[] items2 = input2.split("\\s*(=>|,|\\s)\\s*");
 	    List<String> fulllabellist2 = new ArrayList<String>(Arrays.asList(items2));
-
-		
-//	    for(int i = 0; i < fulllabellist2.size(); i++ ){
-//    	  		System.out.println(fulllabellist2.get(i));
-//	    }
-	    List<List<String>> ultimate = new ArrayList<List<String>>();
-	    ultimate.add(fulllabellist1);
-	    ultimate.add(fulllabellist2);
+	    List<List<String>> wholeInput = new ArrayList<List<String>>();
+	    wholeInput.add(fulllabellist1);
+	    wholeInput.add(fulllabellist2);
 	    
-		double[] d1 = p1.applyTFIDFinVector(fulllabellist1, ultimate, v1);
-		/*
-		for(int i = 0; i < d1.length; i++){
-			System.out.println(d1[i]);
-		}
-		*/
-		/*revert
-		double[] d2 = p2.applyTFIDFinVector(fulllabellist2, ultimate, v2);
-		/*
-		for(int i = 0; i < d2.length; i++){
-			System.out.println(d2[i]);
-		}
-		*/
-	    /* revert
-	    double first = p1.calcTF(fulllabellist1, "check");
-	    System.out.println("First Phrase TF value for \"check\": " + first);
-	    
-	    double result = p2.calcIDF(ultimate, v2.get(1));
-	    System.out.println("IDF for \"if\" in the whole input (labellist1 + labellist2): " + result);
-	    
-	    double res = p1.calcTFIFD(fulllabellist1,ultimate,v2.get(1));
-	    System.out.println("TFIDF for \"if\" in the whole labellist " + res);
+	    phraseList.setWholeInput(wholeInput);
+	    phraseList.calculatePersonalVectors();
+	    System.out.println(phraseList.getPhrases().get(0).getPersonalVector());
+	    phraseList.tfIDFApplier();
 	  		
 		double simres;
-		simres = p1.calcVecSim(d1, d2);
+		simres =phraseList.calcVecSim(phraseList.getPhrases().get(0).getVectorNumeration(), phraseList.getPhrases().get(1).getVectorNumeration());
 		System.out.println("Vector Similarity between phrase 1 and phrase 2" + simres);
-		
 		*/
+
 		
 	}	
 }
