@@ -196,6 +196,30 @@ public class Sentence {
     	}else {
     		System.out.println("NO METHOD WORKED TO FIND ROLE for: " + asCoreSentence.text());
     	}
+    	/*
+    	 *  REMOVING PUNCTUATION
+    	 */
+    	// iterate over words in sentence
+    	List<Word> toRemove = new ArrayList<Word>();
+    	for(Word w:wordsarray) {
+    		// check if its a symbol and has a relation PUNCTUATION
+    		if(w.getPartOfSpeech()==PartOfSpeechTypes.SYMBOL) {
+    			if(!w.getGrammaticalRelationsByName(RelationName.PUNCTUATION).isEmpty()) {
+    				// removes grammatical Relation from targets and sources
+    				for(GrammaticalRelationBetweenWords relation:w.getGrammaticalRelations()) {
+    					if(relation.getSourceWord()==w) {
+    						relation.getTargetWord().getGrammaticalRelations().remove(relation);
+    					}else {
+       						relation.getSourceWord().getGrammaticalRelations().remove(relation);
+    					}
+    				}
+    				// removes punctuation of wordsarray
+    				toRemove.add(w);
+    			}
+    		}
+    	}
+    	wordsarray.removeAll(toRemove);
+    	
 			
 		
 	}
