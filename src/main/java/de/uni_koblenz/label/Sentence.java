@@ -94,6 +94,8 @@ public class Sentence {
 			wordsarray.add(new Word(token));
 			
 		}
+		// stores Words that have to be removed like symbols or compounds
+    	List<Word> toRemove = new ArrayList<Word>();
 		/*
 		 * create grammatical relations and add them
 		 */
@@ -112,13 +114,35 @@ public class Sentence {
 	    	}finally {
 	    		
 	    	}
-	    	//create GrammaticalRelation
-	    	GrammaticalRelationBetweenWords grammaticalRelationTemp= new GrammaticalRelationBetweenWords(sourceWord,targetWord,relationName);
-	    	//store grammatical Relation in both words
-	    	sourceWord.getGrammaticalRelations().add(grammaticalRelationTemp);
-	    	targetWord.getGrammaticalRelations().add(grammaticalRelationTemp);
+	    	/*
+	    	 *  COMBINES COMPOUND WORDS TO ONE WORD
+	    	 */
+	    	if(relationName==RelationName.COMPOUND_MODIFIER||relationName==RelationName.PHRASAL_VERB_PARTICLE) {
+	    		toRemove.add(targetWord);
+	    		if(edge.getSource().index()>edge.getTarget().index()) {
+	    			sourceWord.setBaseform(targetWord.getBaseform()+" "+sourceWord.getBaseform());
+	    			sourceWord.setOriginalForm(targetWord.getOriginalForm()+" "+sourceWord.getOriginalForm());
+	    		}else {
+	    			sourceWord.setBaseform(sourceWord.getBaseform()+" "+targetWord.getBaseform());
+	    			sourceWord.setOriginalForm(sourceWord.getOriginalForm()+" "+targetWord.getOriginalForm());
+	    		}
+	    	/*
+	    	 *  Removing Punctuation
+	    	 */
+	    	}else if(relationName==RelationName.PUNCTUATION) {
+	    		toRemove.add(targetWord);
+	    		
+	    	}else {
+		    	//create GrammaticalRelation
+		    	GrammaticalRelationBetweenWords grammaticalRelationTemp= new GrammaticalRelationBetweenWords(sourceWord,targetWord,relationName);
+		    	//store grammatical Relation in both words
+		    	sourceWord.getGrammaticalRelations().add(grammaticalRelationTemp);
+		    	targetWord.getGrammaticalRelations().add(grammaticalRelationTemp);
+		    }
 	    }
-	    /*
+    	
+    	
+    	/*
 	     * define Role
 	     */
 
@@ -134,29 +158,16 @@ public class Sentence {
     	if(root.getPartOfSpeech().getJwnlType()==POS.VERB) {
     		// set root word as Action
     		root.setRole(RoleLeopold.ACTION);
-    		
-
 
     		for(GrammaticalRelationBetweenWords relation:root.getGrammaticalRelations()) {
-    			// set PHRASAL_VERB_PARTICLE also as action e.g. "go down"
-    			if(relation.getGrammaticalRelationName()==RelationName.PHRASAL_VERB_PARTICLE) {
-    				relation.getTargetWord().setRole(RoleLeopold.ACTION);
-    			}
+    			
     			//set business object
-    			else if(Arrays.asList(objects).contains(relation.getGrammaticalRelationName())) {
+    			if(Arrays.asList(objects).contains(relation.getGrammaticalRelationName())) {
     				relation.getTargetWord().setRole(RoleLeopold.BUSINESS_OBJECT);
-    				// set compounds of the main object also as object
-    				for(GrammaticalRelationBetweenWords relation2:relation.getTargetWord().getGrammaticalRelationsByName(RelationName.COMPOUND_MODIFIER)) {
-        				relation2.getTargetWord().setRole(RoleLeopold.BUSINESS_OBJECT);				
-    				}
     			}
     			//set subject
     			else if(Arrays.asList(subjects).contains(relation.getGrammaticalRelationName())) {
     				relation.getTargetWord().setRole(RoleLeopold.SUBJECT);
-    				// set compounds of the main subject also as subject
-    				for(GrammaticalRelationBetweenWords relation2:relation.getTargetWord().getGrammaticalRelationsByName(RelationName.COMPOUND_MODIFIER)) {
-    					relation2.getTargetWord().setRole(RoleLeopold.SUBJECT);
-    				}
     			}
     		}
     		
@@ -171,22 +182,12 @@ public class Sentence {
 	    		root.setRole(RoleLeopold.BUSINESS_OBJECT);
 	    	}
 	    	for(GrammaticalRelationBetweenWords relation:root.getGrammaticalRelations()) {
-	    		//set business object
-	    		if(relation.getGrammaticalRelationName()==RelationName.COMPOUND_MODIFIER&&root.getPartOfSpeech().getJwnlType()==POS.NOUN){
-    				relation.getTargetWord().setRole(RoleLeopold.BUSINESS_OBJECT);
     			//set subject
-	    		} else if(Arrays.asList(subjects).contains(relation.getGrammaticalRelationName())) {
+	    		if(Arrays.asList(subjects).contains(relation.getGrammaticalRelationName())) {
     				relation.getTargetWord().setRole(RoleLeopold.SUBJECT);
-    				// set compounds of the main subject also as subject
-    				for(GrammaticalRelationBetweenWords relation2:relation.getTargetWord().getGrammaticalRelationsByName(RelationName.COMPOUND_MODIFIER)) {
-    					relation2.getTargetWord().setRole(RoleLeopold.SUBJECT);
-    				}
     			//set action
     			}else if(relation.getGrammaticalRelationName()==RelationName.COPULA){
     				relation.getTargetWord().setRole(RoleLeopold.ACTION);
-    				for(GrammaticalRelationBetweenWords relation2:relation.getTargetWord().getGrammaticalRelationsByName(RelationName.PHRASAL_VERB_PARTICLE)) {
-    					relation2.getTargetWord().setRole(RoleLeopold.ACTION);
-    				}
     			}
 	    	}
 	    	
@@ -196,31 +197,15 @@ public class Sentence {
     	}else {
     		System.out.println("NO METHOD WORKED TO FIND ROLE for: " + asCoreSentence.text());
     	}
-    	/*
-    	 *  REMOVING PUNCTUATION
-    	 */
-    	// iterate over words in sentence
-    	List<Word> toRemove = new ArrayList<Word>();
-    	for(Word w:wordsarray) {
-    		// check if its a symbol and has a relation PUNCTUATION
-    		if(w.getPartOfSpeech()==PartOfSpeechTypes.SYMBOL) {
-    			if(!w.getGrammaticalRelationsByName(RelationName.PUNCTUATION).isEmpty()) {
-    				// removes grammatical Relation from targets and sources
-    				for(GrammaticalRelationBetweenWords relation:w.getGrammaticalRelations()) {
-    					if(relation.getSourceWord()==w) {
-    						relation.getTargetWord().getGrammaticalRelations().remove(relation);
-    					}else {
-       						relation.getSourceWord().getGrammaticalRelations().remove(relation);
-    					}
-    				}
-    				// removes punctuation of wordsarray
-    				toRemove.add(w);
-    			}
-    		}
-    	}
-    	wordsarray.removeAll(toRemove);
     	
-			
+    	
+    	/*
+    	 *  IMPORTANT THIS HAS TO BE ON THE END OF THE CONSTRUCTOR (PreProcessing)
+    	 */
+	    // removing all unused WORDs from wordsarray like punctuation and compound words
+    	// at this point because other methods rely on the fact that the index of corenlpsentence equals wordsarray 
+	    wordsarray.removeAll(toRemove);
+    		
 		
 	}
 	
