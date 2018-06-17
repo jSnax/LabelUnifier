@@ -51,7 +51,7 @@ public class timTest {
 	Dictionary dictionary = Dictionary.getDefaultResourceInstance();
 	
 	String[] input=new String[] {
-			"checking invoice",
+			"checking invoice quickly",
 			"verifying bill"
 	};
 	
@@ -71,9 +71,11 @@ public class timTest {
 	// Simply print the two labels
 	PhraseStructure Structure = new PhraseStructure();
 	List<PhraseStructureTypes> tempList = new ArrayList<PhraseStructureTypes>();
-	tempList.add(PhraseStructureTypes.VERB_IMPERATIVE);
 	tempList.add(PhraseStructureTypes.NOUN_PLURAL_OBJECT);
+	tempList.add(PhraseStructureTypes.VERB_SIMPLEFUTURE);
+	tempList.add(PhraseStructureTypes.ADVERB);
 	Structure.setElements(tempList);
+	System.out.println(Structure.getElements());
 	Phrase p1 = testList.getInputLabels().get(0).getSentenceArray().get(0).toPhrase(Structure,realiser, p, nlgFactory);
 	System.out.println("Full Phrase:");
 	System.out.println(p1.getFullContent());
