@@ -24,9 +24,7 @@ public class LabelList {
 
 	private List<Word> allWords = new ArrayList<Word>();
 	private List<Label> inputLabels = new ArrayList<Label>();
-	private LabelList remainingLabels;
 	// new variable #####################################
-	private Word definingWord;
 	
 	public static StanfordCoreNLP pipeline;
 	public LabelList() {
@@ -234,11 +232,11 @@ public LabelList matchSynonyms(LabelList remainingLabels, WordCluster Cluster, I
                 // Removing first entry of remainingLabels since it is the 
                 
        
-                	for (int i = 0; i < this.getInputLabelsSizeOfremainingLabels(); i++){
-                            for (int t = 0; t < this.getSentenceArraySizeOfremainingLabels(i); t++){
-                                    for (int j = 0; j < this.getWordsarraySizeOfremainingLabels(i, t); j++)
-                                             if (definingWord.getPartOfSpeech().getJwnlType() == this.getJwnlTypeOfremainingLabels(i, t, j)){
-                                         if (this.getBaseformOfdefiningWord(i, t, j) || this.getBaseformOfdefiningWordFromremainingLabels(i,t,j)){
+                	for (int i = 0; i < remainingLabels.getInputLabelsSize(); i++){
+                            for (int t = 0; t < remainingLabels.getSentenceArraySize(i); t++){
+                                    for (int j = 0; j < remainingLabels.getWordsarraySize(i, t); j++)
+                                             if (getJwnlTypeOfdefiningWord(definingWord) == remainingLabels.getJwnlType(i, t, j)){
+                                         if (remainingLabels.getBaseformOfdefiningWord(i, t, j, definingWord) || remainingLabels.getHasSynonym(i,t,j, definingWord)){
                                         	 			Cluster.matchingWords.add(remainingLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().get(j));
                                                         remainingLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().get(j).setClusterPosition(ClusterPosition);
                                                         tempIntList.add(j);
@@ -254,9 +252,9 @@ public LabelList matchSynonyms(LabelList remainingLabels, WordCluster Cluster, I
                                         // This has to be called after the previous for-loop in order to not mess around with the list size while iterating over it
                                 }}
  } 
-                  for (int i = this.getInputLabelsSizeOfremainingLabelsShortened(); i >= 0; i--){
-                          for (int t = this.getSentenceArraySizeOfremainingLabelsShortened(i); t >= 0; t--){
-                                       if (this.getWordsarrayIsEmptyOfremainingLabels(i, t)){
+                  for (int i = this.getInputLabelsSizeShortened(); i >= 0; i--){
+                          for (int t = remainingLabels.getSentenceArraySizeShortened(i); t >= 0; t--){
+                                       if (remainingLabels.getWordsarrayIsEmpty(i, t)){
                                    remainingLabels.getInputLabels().remove(i);
                                         // Removing all labels that contain no more unmatched words
                                         // This has to be called after the previous for-loop in order to not mess around with the list size while iterating over it
@@ -269,44 +267,45 @@ public LabelList matchSynonyms(LabelList remainingLabels, WordCluster Cluster, I
 			
 		// Methoden zu matchSynonyms
 
-	public int getInputLabelsSizeOfremainingLabels(){
-	return( remainingLabels.getInputLabels().size());
+	public int getInputLabelsSize(){
+	return( this.getInputLabels().size() );
 	}
 	  
-	public int getSentenceArraySizeOfremainingLabels (int i){
-	return( remainingLabels.getInputLabels().get(i).getSentenceArray().size());
+	public int getSentenceArraySize (int i){
+	return( this.getInputLabels().get(i).getSentenceArray().size());
 	}
 	                                                              
-	public int getWordsarraySizeOfremainingLabels (int i, int t){
-	return(remainingLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().size());
+	public int getWordsarraySize (int i, int t){
+	return(this.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().size());
 	}
 	 
-	public POS getJwnlTypeOfdefiningWord(){
+	 public POS getJwnlTypeOfdefiningWord(Word definingWord){
 	return( definingWord.getPartOfSpeech().getJwnlType() );
 	}
+	
 	                                  
-	public POS getJwnlTypeOfremainingLabels (int i, int t, int j){
-	return(remainingLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().get(j).getPartOfSpeech().getJwnlType());
+	public POS getJwnlType (int i, int t, int j){
+	return(this.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().get(j).getPartOfSpeech().getJwnlType());
 	}
 
-	public boolean getBaseformOfdefiningWord (int i, int t, int j){
-	return(definingWord.getSynonyms().contains(remainingLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().get(j).getBaseform()));
+	public boolean getBaseformOfdefiningWord (int i, int t, int j, Word definingWord){
+	return(definingWord.getSynonyms().contains(this.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().get(j).getBaseform()));
 	}
 
-	public boolean getBaseformOfdefiningWordFromremainingLabels (int i, int t, int j){
-	return(remainingLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().get(j).getSynonyms().contains(definingWord.getBaseform()));
+	public boolean getHasSynonym (int i, int t, int j, Word definingWord){
+	return(this.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().get(j).getSynonyms().contains(definingWord.getBaseform()));
 	}
 
-	public int getInputLabelsSizeOfremainingLabelsShortened(){
-	return( remainingLabels.getInputLabels().size() - 1 );
+	public int getInputLabelsSizeShortened(){
+	return( this.getInputLabels().size() - 1 );
 	}
 	 
-	public int getSentenceArraySizeOfremainingLabelsShortened (int i){
-	return( remainingLabels.getInputLabels().get(i).getSentenceArray().size() - 1);
+	public int getSentenceArraySizeShortened (int i){
+	return( this.getInputLabels().get(i).getSentenceArray().size() - 1);
 	}
 
-	public boolean getWordsarrayIsEmptyOfremainingLabels (int i, int t){
-	return( remainingLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().isEmpty());
+	public boolean getWordsarrayIsEmpty (int i, int t){
+	return( this.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().isEmpty());
 	}
 	
 	
@@ -368,11 +367,11 @@ public LabelList matchSynonyms(LabelList remainingLabels, WordCluster Cluster, I
 		//Methode generatePhrase
 
 		public int getSentenceSizeofremainingLabels(int i){
-		    return(remainingLabels.getInputLabels().get(i).getSentenceArray().size());
+		    return(this.getInputLabels().get(i).getSentenceArray().size());
 		    }
 
 		public Phrase PhraseremainingLabels(int i, int j){
-		    return(remainingLabels.getInputLabels().get(i).getSentenceArray().get(j).toPhrase);
+		    return(this.getInputLabels().get(i).getSentenceArray().get(j).toPhrase);
 			}
 			
 		
