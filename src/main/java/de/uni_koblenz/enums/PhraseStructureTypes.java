@@ -5,9 +5,8 @@ public enum PhraseStructureTypes {
 	VERB_BASE("Verb"),
 	VERB_PASSIVE("Verb"),
 	VERB_PRESENT_PARTICIPLE("Verb"),
-	VERB_INDICATIVE("Verb"),
-	VERB_SIMPLEPRESENT("Verb"),
 	VERB_SIMPLEPAST("Verb"),
+	VERB_SIMPLEFUTURE("VERB"),
 	NOUN_SINGULAR_OBJECT("Object"),
 	NOUN_SINGULAR_SUBJECT("Subject"),
 	NOUN_PLURAL_OBJECT("Object"),
@@ -15,8 +14,10 @@ public enum PhraseStructureTypes {
 	DETERMINER_DEFINITEARTICLE("Determiner"),
 	DETERMINER_INDEFINITEARTICLE("Determiner"),
 	PUNCTUATION_PERIOD("Punctuation"),
-	PUNCTUATION_COMMA("Punctuation"),
-	PUNCTUATION_QUESTIONMARK("Punctuation");
+	PUNCTUATION_QUESTIONMARK("Punctuation"),
+	ADJECTIVE_FOR_OBJECT("Addition"),
+	ADJECTIVE_FOR_SUBJECT("Addition"),
+	ADVERB("Addition");
 	
 	private String determiner;
 	
