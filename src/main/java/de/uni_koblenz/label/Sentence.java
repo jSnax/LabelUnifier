@@ -221,7 +221,8 @@ public class Sentence {
 	
 		public Phrase toPhrase(PhraseStructure Structure, Realiser realiser, SPhraseSpec p, NLGFactory nlgFactory){
 			
-			
+			// TODO: Check whether a given word from the Sentence was already used to avoid using same object twice
+			// Probably needs some if-cases as well, e.g. "if object != empty add to current object else new object"
 			Sentence tempSentence = new Sentence();
 			tempSentence.setWordsarray(this.getWordsarray());
 			Phrase result = new Phrase();
