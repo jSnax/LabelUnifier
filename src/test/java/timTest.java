@@ -51,7 +51,7 @@ public class timTest {
 	Dictionary dictionary = Dictionary.getDefaultResourceInstance();
 	
 	String[] input=new String[] {
-			"checking invoice quickly",
+			"Employee checked invoice",
 			"verifying bill"
 	};
 	
@@ -70,16 +70,30 @@ public class timTest {
 	}
 	// Simply print the two labels
 	PhraseStructure Structure = new PhraseStructure();
+	PhraseStructure Structure2 = new PhraseStructure();
+	List<PhraseStructure> allStructures = new ArrayList<PhraseStructure>(); 
 	List<PhraseStructureTypes> tempList = new ArrayList<PhraseStructureTypes>();
-	tempList.add(PhraseStructureTypes.NOUN_PLURAL_OBJECT);
+	List<PhraseStructureTypes> tempList2 = new ArrayList<PhraseStructureTypes>();
+	tempList.add(PhraseStructureTypes.NOUN_SINGULAR_SUBJECT);
 	tempList.add(PhraseStructureTypes.VERB_SIMPLEFUTURE);
-	tempList.add(PhraseStructureTypes.ADVERB);
+	tempList.add(PhraseStructureTypes.NOUN_SINGULAR_OBJECT);
 	Structure.setElements(tempList);
+	tempList2.add(PhraseStructureTypes.NOUN_SINGULAR_SUBJECT);
+	tempList2.add(PhraseStructureTypes.VERB_SIMPLEPAST);
+	tempList2.add(PhraseStructureTypes.NOUN_SINGULAR_OBJECT);
+	Structure2.setElements(tempList2);
+	allStructures.add(Structure);
+	allStructures.add(Structure2);
 	System.out.println(Structure.getElements());
-	Phrase p1 = testList.getInputLabels().get(0).getSentenceArray().get(0).toPhrase(Structure,realiser, p, nlgFactory);
-	System.out.println("Full Phrase:");
-	System.out.println(p1.getFullContent());
-	System.out.println("Separated Phrase:");
-	System.out.println(p1.getseparatedContent());
+	System.out.println(Structure2.getElements());
+	List<Phrase> p1 = testList.getInputLabels().get(0).getSentenceArray().get(0).toPhrase(allStructures,realiser, p, nlgFactory);
+	System.out.println("Full Phrases:");
+	for (int i = 0; i < p1.size(); i++){
+		System.out.println(p1.get(i).getFullContent());
+	}
+	System.out.println("Separated Phrases:");
+	for (int i = 0; i < p1.size(); i++){
+		System.out.println(p1.get(i).getseparatedContent());
+	}
 	}
 }

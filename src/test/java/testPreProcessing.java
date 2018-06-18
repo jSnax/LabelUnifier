@@ -12,8 +12,8 @@ public class testPreProcessing {
 		String[] test=new String[] {
 				
 				// label as sentence vs label as label as is
-				"Check invoice.",
-				"check invoice",
+				"He checks the invoice.",
+				"verifying bill",
 				
 				// example for multiple ACTION SUBJECT and OBJECT.
 				"The fire fighter drives the fire truck.",
