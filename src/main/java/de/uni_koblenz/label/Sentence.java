@@ -288,7 +288,6 @@ public class Sentence {
 						object.setPlural(true);
 						p.setObject(object);
 						if (tempString == "") error = true;
-						tempString = "";
 						break;
 					case NOUN_PLURAL_SUBJECT:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
@@ -303,7 +302,6 @@ public class Sentence {
 						subject.setPlural(true);
 						p.setSubject(subject);
 						if (tempString == "") error = true;
-						tempString = "";
 						break;
 					case NOUN_SINGULAR_OBJECT:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
@@ -317,7 +315,6 @@ public class Sentence {
 						object = nlgFactory.createNounPhrase(tempString);
 						p.setObject(object);
 						if (tempString == "") error = true;
-						tempString = "";
 						break;
 					case NOUN_SINGULAR_SUBJECT:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
@@ -331,7 +328,6 @@ public class Sentence {
 						subject = nlgFactory.createNounPhrase(tempString);
 						p.setSubject(subject);
 						if (tempString == "") error = true;
-						tempString = "";
 						break;
 					case PUNCTUATION_PERIOD:
 						break;
@@ -349,7 +345,6 @@ public class Sentence {
 						verb = nlgFactory.createVerbPhrase(tempString);
 				        p.setVerb(verb);
 				        if (tempString == "") error = true;
-						tempString = "";
 						break;
 					case VERB_IMPERATIVE:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
@@ -364,7 +359,6 @@ public class Sentence {
 						verb.setFeature(Feature.FORM,simplenlg.features.Form.IMPERATIVE);
 						p.setVerb(verb);
 						if (tempString == "") error = true;
-						tempString = "";
 						break;
 					case VERB_PRESENT_PARTICIPLE:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
@@ -380,7 +374,6 @@ public class Sentence {
 						p.setFeature(Feature.FORM, simplenlg.features.Form.PRESENT_PARTICIPLE);
 						p.setVerb(verb);
 						if (tempString == "") error = true;
-						tempString = "";
 						break;
 					case VERB_PASSIVE:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
@@ -395,7 +388,6 @@ public class Sentence {
 						p.setFeature(Feature.PASSIVE, true);
 						p.setVerb(verb);
 						if (tempString == "") error = true;
-						tempString = "";
 						passive = true;
 						break;
 					case VERB_SIMPLEPAST:
@@ -411,7 +403,6 @@ public class Sentence {
 						p.setVerb(verb);
 						p.setFeature(Feature.TENSE, Tense.PAST);
 						if (tempString == "") error = true;
-						tempString = "";
 						break;
 					case VERB_SIMPLEFUTURE:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
@@ -424,7 +415,6 @@ public class Sentence {
 						// Unlike other cases since future only works like this, else you get "will will"
 						p.setFeature(Feature.TENSE, Tense.FUTURE);
 						if (tempString == "") error = true;
-						tempString = "";
 						break;
 					case ADJECTIVE_FOR_OBJECT:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
@@ -435,7 +425,6 @@ public class Sentence {
 						}
 						object.addModifier(tempString);
 						if (tempString == "") error = true;
-						tempString = "";
 						break;
 					case ADJECTIVE_FOR_SUBJECT:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
@@ -446,7 +435,6 @@ public class Sentence {
 						}
 						subject.addModifier(tempString);
 						if (tempString == "") error = true;
-						tempString = "";
 						break;
 					case ADVERB:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
@@ -457,12 +445,12 @@ public class Sentence {
 						}
 						p.addModifier(tempString);
 						if (tempString == "") error = true;
-						tempString = "";
 						break;
 					default:
 						break;
 	
 					}
+					tempString = "";
 					i++;
 				}
 				if (!error){
