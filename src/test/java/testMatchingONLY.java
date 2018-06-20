@@ -55,7 +55,8 @@ public class testMatchingONLY {
 			ois.close();
 			System.out.print(testList);
 		}
-		
+		// make copy of original testList
+		LabelList safetyList=testList;
 		/*
 		 *  ORIGINAL CODE FROM MAIN 
 		 */
@@ -74,8 +75,7 @@ public class testMatchingONLY {
 		// Print synonym lists
 		System.out.println("Printing Wordclusters");
 		List<WordCluster> AllClusters = new ArrayList<WordCluster>();
-		LabelList safetyList = new LabelList(input);
-
+		
 		safetyList.findSynsets(safetyList);
 		int Position = 0;
 		while (safetyList.getInputLabels().size() != 0){
