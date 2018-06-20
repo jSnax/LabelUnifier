@@ -17,7 +17,7 @@ import java.util.List;
 
 public class testMatchingONLY {
 	public static void main (String args[]) throws JWNLException, ClassNotFoundException, IOException {
-		
+		Dictionary dictionary = Dictionary.getDefaultResourceInstance();
 		/*
 		 *  IF YOU CHANGE INPUT LABELS:
 		 */
