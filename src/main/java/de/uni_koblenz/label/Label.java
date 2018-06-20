@@ -23,12 +23,12 @@ import edu.stanford.nlp.pipeline.*;
 import edu.stanford.nlp.semgraph.*;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 import net.sf.extjwnl.data.POS;
-public class Label {
+public class Label implements java.io.Serializable{
 	
 
 	private List<Sentence> sentenceArray = new ArrayList<Sentence>();
 	private String labelAsString;
-	private SemanticGraph parsedLabel;
+	private transient SemanticGraph parsedLabel;
 	private boolean isFinal;
 	
 	public Label() {

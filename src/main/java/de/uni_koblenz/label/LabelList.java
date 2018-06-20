@@ -19,14 +19,14 @@ import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import net.sf.extjwnl.JWNLException;
 
 
-public class LabelList {
+public class LabelList implements java.io.Serializable{
 	
 
 	private List<Word> allWords = new ArrayList<Word>();
 	private List<Label> inputLabels = new ArrayList<Label>();
 	// new variable #####################################
 	
-	public static StanfordCoreNLP pipeline;
+	public transient static StanfordCoreNLP pipeline;
 	public LabelList() {
 		
 	}
