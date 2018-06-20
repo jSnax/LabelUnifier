@@ -53,6 +53,7 @@ public class testMatchingONLY {
 			
 			testList = (LabelList) ois.readObject();
 			ois.close();
+			System.out.print(testList);
 		}
 		
 		/*
