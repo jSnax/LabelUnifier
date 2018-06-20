@@ -28,7 +28,7 @@ public class testMatchingONLY {
 		};
 		
 		LabelList testList=new LabelList();
-	
+		LabelList safetyList=new LabelList();
 		// SOURCE:http://www.avajava.com/tutorials/lessons/how-do-i-write-an-object-to-a-file-and-read-it-back.html
 		try {
 			// read object from file
@@ -54,13 +54,18 @@ public class testMatchingONLY {
 			testList = (LabelList) ois.readObject();
 			ois.close();
 			System.out.print(testList);
+			fis.close();
+			FileInputStream fis2 = new FileInputStream("src/test/resources/labellist.txt");
+			ObjectInputStream ois2 = new ObjectInputStream(fis2);
+			
+			safetyList = (LabelList) ois2.readObject();
+			ois2.close();
 		}
 		// make copy of original testList
-		LabelList safetyList=testList;
+
 		/*
 		 *  ORIGINAL CODE FROM MAIN 
 		 */
-		
 		// Simply print the two labels
 		testList.findSynsets(testList);
 		// Fill Synonym lists for each word
