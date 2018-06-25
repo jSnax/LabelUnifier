@@ -172,7 +172,7 @@ public class Phrase {
 		return correct;
 	}	
 		
-		public static Vector<String> phraseToVec(List<String> phrase, Vector<String> space){
+		public void phraseToVec(List<String> phrase, Vector<String> space){
 			//initialize the Phrase Vector
 			Vector<String> phraseVec = new Vector<String>();
 			
@@ -186,23 +186,29 @@ public class Phrase {
 					phraseVec.add("nill");	
 				}
 			}
-			return phraseVec;
+			this.personalVector = phraseVec;
 		}
 		
 		//Calculate the Term frequency of the word (how often does this word occur in the document)
-		public static double calcTF (List<String> LabelListFinal, String word){
+		public double calcTF (List<String> LabelListFinal, String word){
+			//System.out.println("Beginne TF Berechnung");
 			double result = 0;
+			//System.out.println("Aktuelles Wort " + word);
 			for(String term : LabelListFinal){
 				if(word.equalsIgnoreCase(term))
 					result ++;
 			}	
+			//System.out.println("Das TF Ergebnis ist: " + result);
+			//System.out.println("Das TF bereinigte Ergebnis ist: " + result / LabelListFinal.size());
 			return result / LabelListFinal.size();
 		}
 		
 		
 		//Calculate the Inverse Document Frequency (if the word common or rare across the document -> how much information does it contain)
-		public static double calcIDF (List<List<String>> docs, String word){
+		public double calcIDF (List<List<String>> docs, String word){
+			//System.out.println("Beginne IDF Berechnung");
 			double res = 0;
+			//System.out.println("Aktuelles Wort " + word);
 			for(List<String> doc : docs){
 				for(String term : doc){
 					if (word.equalsIgnoreCase(term)){
@@ -211,12 +217,16 @@ public class Phrase {
 					}
 				}
 			}
+			//System.out.println("Das IDF Ergebnis ist: " + res);
+			//System.out.println("Das IDF bereinigte Ergebnis ist: " + Math.log(docs.size() / res));
+			//System.out.println("Die Dokumentgröße ist: " + docs.size());
 			return Math.log(docs.size() / res);
 		}
 
 		//whole formula for tfifd
-		public static double calcTFIFD(List<String> doc, List<List<String>> docs, String word){
-			return calcTF(doc, word) * calcIDF(docs, word);
+		public double calcTFIFD(List<String> doc, List<List<String>> docs, String word){
+			//System.out.println("Ergebnis TFIDF für: " + word + " ist " + (calcTF(doc,word) * calcIDF(docs,word)));
+			return calcTF(doc, word); /* calcIDF(docs, word);*/
 		}
 		
 		public void applyTFIDFinVector(List<String> fullLabelList , List<List<String>> docs, Vector<String> v1){
@@ -233,7 +243,7 @@ public class Phrase {
 				}
 			}
 			this.vectorNumeration = result;
-		}
+			}
 
 		public String getFullContent() {
 			return fullContent;

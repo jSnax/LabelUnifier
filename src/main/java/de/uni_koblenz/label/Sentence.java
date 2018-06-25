@@ -32,10 +32,10 @@ import simplenlg.realiser.english.*;
 import simplenlg.phrasespec.*;
 import simplenlg.features.*;
 
-public class Sentence {
+public class Sentence implements java.io.Serializable{
 	
 	private List<Word> wordsarray = new ArrayList<Word>();
-	private CoreSentence asCoreSentence;
+	private transient CoreSentence asCoreSentence;
 	private String contentAsString;
 	public Phrase toPhrase;
 	public List<Phrase> possiblePhrases ;

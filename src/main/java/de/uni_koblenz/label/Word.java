@@ -20,9 +20,9 @@ import net.sf.extjwnl.data.IndexWord;
 import net.sf.extjwnl.data.POS;
 import net.sf.extjwnl.dictionary.Dictionary;
 
-public class Word {
+public class Word implements java.io.Serializable{
 	
-	private CoreLabel token;
+	private transient CoreLabel token;
 	
 	private PartOfSpeechTypes partOfSpeech;
 	private ArrayList<GrammaticalRelationBetweenWords> grammaticalRelations=new ArrayList<GrammaticalRelationBetweenWords>();

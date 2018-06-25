@@ -3,7 +3,7 @@ package de.uni_koblenz.cluster;
 import de.uni_koblenz.label.*;
 import de.uni_koblenz.enums.*;
 
-public class GrammaticalRelationBetweenWords {
+public class GrammaticalRelationBetweenWords implements java.io.Serializable{
 
 	private Word sourceWord;
 	private Word targetWord;

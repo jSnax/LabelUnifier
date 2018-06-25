@@ -45,7 +45,6 @@ public class MainPP {
 				"verifying bill"
 		};
 		
-
 		// Fill Labels with word arrays
 		LabelList testList = new LabelList(input);
 
@@ -116,7 +115,7 @@ public class MainPP {
 		
 	
 	//Phrase calculations test class
-/*
+		System.out.println("Starting Phrase calculations");
 		List<String> l1 = new ArrayList<String>();
 		l1.add("Check");
 		l1.add("if"); 
@@ -136,19 +135,17 @@ public class MainPP {
 		Phrase p2 = new Phrase();
 		p2.setseparatedContent(l2);
 		
-		List<Phrase> phraseKram = new ArrayList<Phrase>();
-		phraseKram.add(p1);
-		phraseKram.add(p2);
+		List<Phrase> phraseDemo = new ArrayList<Phrase>();
+		phraseDemo.add(p1);
+		phraseDemo.add(p2);
 		PhraseList phraseList = new PhraseList();
-		phraseList.setPhrases(phraseKram);
+		phraseList.setPhrases(phraseDemo);
 		phraseList.phraseSpace();
-		System.out.println("Kram" + phraseList.getPhrases().get(0).getPersonalVectorSpace());
-		System.out.println(phraseList.getPhrases().get(1).getPersonalVectorSpace());
 		
 		String input1 ="Complete application, Fill out application form, Add certificate of Bachelor degree, Add certificate of German language, Send application, \n" + 
 				"Take Interview, Receive Rejection, Receive acceptance, Immatriculate, \n" + 
 				"Check application in time, Ckeck application complete, Hand application over to examining board, \n" + 
-				"Check if Bachelor is sufficient, Send additional requirements, Check if Bachelors Degree is within top 85%, \n" + 
+				"Check if Bachelor is, Send additional requirements, Check if Bachelors Degree is within top 85%, \n" + 
 				"Invite for talk, talk to applicant, Document, Rank with other applicants, \n" + 
 				"Send acceptance, Send rejection";
 		
@@ -159,25 +156,23 @@ public class MainPP {
 //	    	  	System.out.println(fulllabellist1.get(i));
 //	      }
 	      
-		String input2 = "Apply online, Send documents by post, Wait for results, Go to the Interview, \n" + 
-				"Check Bachelor's degree, Check documents, Forward Documents, \n" + 
+		String input2 = "Apply online, Check, Check, sufficient, Send documents by post, Wait for results, Go to the Interview, \n" + 
+				"Check Bachelor degree, Check documents, Forward Documents, \n" + 
 				"Evaluate, Send interview Invitation, Send letter of rejection, Send letter of acceptance, Conduct Interview, Send letter of rejection, Send letter of acceptance\n";
 		
 		String[] items2 = input2.split("\\s*(=>|,|\\s)\\s*");
 	    List<String> fulllabellist2 = new ArrayList<String>(Arrays.asList(items2));
+	    
 	    List<List<String>> wholeInput = new ArrayList<List<String>>();
 	    wholeInput.add(fulllabellist1);
 	    wholeInput.add(fulllabellist2);
-	    
 	    phraseList.setWholeInput(wholeInput);
 	    phraseList.calculatePersonalVectors();
-	    System.out.println(phraseList.getPhrases().get(0).getPersonalVector());
-	    phraseList.tfIDFApplier();
-	  		
+	    phraseList.tfIDFApplier(); // next problem
 		double simres;
 		simres =phraseList.calcVecSim(phraseList.getPhrases().get(0).getVectorNumeration(), phraseList.getPhrases().get(1).getVectorNumeration());
-		System.out.println("Vector Similarity between phrase 1 and phrase 2" + simres);
-		*/
+		System.out.println("Vector Similarity between phrase 1 and phrase 2 " + simres);
+		
 
 		
 	}	
