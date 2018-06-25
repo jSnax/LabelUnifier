@@ -133,7 +133,8 @@ public class LabelList implements java.io.Serializable{
             for (Sentence s : l.getSentenceArray()) {
                 // iteration over all words in sentence
                 for (Word w : s.getWordsarray()) {
-                    if (w.getPartOfSpeech().getJwnlType() != null && w.getBaseform() != "be" && w.getBaseform() != "have" && (w.getBaseform()!= "will" && w.getPartOfSpeech().getJwnlType() == POS.VERB)){
+                    if (w.getPartOfSpeech().getJwnlType() != null && w.getBaseform() != "be" && w.getBaseform() != "have"){
+                    	// TODO: Exception for "will" as a verb
                         tempWord = dictionary.getIndexWord(w.getPartOfSpeech().getJwnlType(), w.getBaseform());
                         // Transform baseform of Word j in Label i into an indexWord so extjwnl can use it
                         tempSyn = tempWord.getSenses();
