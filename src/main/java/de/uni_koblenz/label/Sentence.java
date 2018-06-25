@@ -220,13 +220,13 @@ public class Sentence implements java.io.Serializable{
 		return result;
 	}
 	
-		public List<Phrase> toPhrase(List<PhraseStructure> allStructures, Realiser realiser, SPhraseSpec p, NLGFactory nlgFactory){
+		public ArrayList<Phrase> toPhrase(List<PhraseStructure> allStructures, Realiser realiser, SPhraseSpec p, NLGFactory nlgFactory){
 			
 			// TODO: Check whether a given word from the Sentence was already used to avoid using same object twice
 			// Probably needs some if-cases as well, e.g. "if object != empty add to current object else new object"
 			Sentence tempSentence = new Sentence();
 			tempSentence.setWordsarray(this.getWordsarray());
-			List<Phrase> result = new ArrayList<Phrase>();
+			ArrayList<Phrase> result = new ArrayList<Phrase>();
 			PhraseStructureTypes tempType;
 			String tempString = "";
 			int j = 0;
