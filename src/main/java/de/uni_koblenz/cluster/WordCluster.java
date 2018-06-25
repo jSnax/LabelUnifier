@@ -26,6 +26,35 @@ public class WordCluster {
 		this.matchingWords = matchingWords;
 	}
 	
+	// TODO: Übergabe eines Domänenthesaurus, der Dominanz vorgibt zu einzelnen Worten
+	public void calculateDominance(){
+		for (int i = 0; i < this.matchingWords.size(); i++){
+			 Word tempWord = this.matchingWords.get(i);
+			 tempWord.setDominance(0);
+		}
+		// Sets dominance for all Words to 0 at first to avoid NullPointerException
+		for (int i = 0; i < this.matchingWords.size(); i++){
+			if (!(this.matchingWords.get(i).getDominance() > 0)){
+				 Word tempWord = this.matchingWords.get(i);
+			     List<Integer> tempIntList = new ArrayList<Integer>();
+			     int counter = 1;
+				 for (int j = i; j < this.matchingWords.size(); j++){
+					 if (this.matchingWords.get(j).getBaseform() == tempWord.getBaseform()){
+						 counter++;
+						 tempIntList.add(j);
+					 }
+				 }
+				 this.matchingWords.get(i).setDominance(counter);
+				 for (int j = tempIntList.size() - 1; j >= 0 ; j--){
+					 this.matchingWords.get(j).setDominance(counter);
+					 tempIntList.remove(j);
+				 }
+			}
+			// Calculates Dominance for each Word in the Cluster
+			else 
+				continue;
+		}
+	}
 	
 	
 	public void generalizeWords(){
