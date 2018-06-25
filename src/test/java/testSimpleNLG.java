@@ -38,7 +38,7 @@ public class testSimpleNLG {
 		  p.setFeature(Feature.PASSIVE, true);
       //    object.setPlural(true);
           subject.addModifier("beautiful");
-        //  p.addModifier("quickly");
+          p.addModifier("quickly");
          // subject.setDeterminer("the");
         //  object.setDeterminer("a");
 		//  subject.setPlural(true);
