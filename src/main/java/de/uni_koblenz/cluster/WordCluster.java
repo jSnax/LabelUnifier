@@ -27,7 +27,7 @@ public class WordCluster {
 	}
 	
 	
-	/*
+	
 	public void generalizeWords(){
 		int current = 0; 
 		String k=null; // k inizialisieren ?
@@ -42,5 +42,5 @@ public class WordCluster {
 			this.matchingWords.get(i).setBaseform(k); 
 		}
 	}
-	*/
+	
 }
