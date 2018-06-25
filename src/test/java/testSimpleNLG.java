@@ -32,11 +32,11 @@ public class testSimpleNLG {
         //  p.setFeature(Feature.FORM, Form.IMPERATIVE);
      //     String output = realiser.realiseSentence(p);
        //   System.out.println(output);
-          NPPhraseSpec subject = nlgFactory.createNounPhrase("official");
-          NPPhraseSpec object = nlgFactory.createNounPhrase("invoice");
-          VPPhraseSpec verb = nlgFactory.createVerbPhrase("check");
-          p.setFeature(Feature.TENSE, Tense.FUTURE);
-          object.setPlural(true);
+          NPPhraseSpec subject = nlgFactory.createNounPhrase("employee");
+          NPPhraseSpec object = nlgFactory.createNounPhrase("bill");
+          VPPhraseSpec verb = nlgFactory.createVerbPhrase("pay");
+		  p.setFeature(Feature.PASSIVE, true);
+      //    object.setPlural(true);
           subject.addModifier("beautiful");
         //  p.addModifier("quickly");
          // subject.setDeterminer("the");
@@ -44,7 +44,7 @@ public class testSimpleNLG {
 		//  subject.setPlural(true);
           p.setSubject(subject);
           p.setObject(object);
-          p.setVerb("check");
+          p.setVerb("pay");
           System.out.println(realiser.realiseSentence(p));
           System.out.println(realiser.realiseSentence(p).substring(0, realiser.realiseSentence(p).length()-1));
 	  }
