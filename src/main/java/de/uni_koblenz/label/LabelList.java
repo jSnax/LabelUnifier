@@ -96,8 +96,30 @@ public class LabelList implements java.io.Serializable{
         return result;
     }
    
+    public LabelList cloneList(){
+    	LabelList clone = new LabelList();
+    	List<Label> tempLabelList = new ArrayList<Label>();
+    	for (int i = 0; i < this.getInputLabels().size(); i++){
+    		Label tempLabel = new Label();
+    		List<Sentence> tempSentenceList = new ArrayList<Sentence>();
+    		for (int j = 0; j < this.getInputLabels().get(i).getSentenceArray().size(); j++){
+    			Sentence tempSentence = new Sentence();
+    			List<Word> tempWordList = new ArrayList<Word>();
+    			for (int k = 0; k < this.getInputLabels().get(i).getSentenceArray().get(j).getWordsarray().size(); k++){
+    				tempWordList.add(this.getInputLabels().get(i).getSentenceArray().get(j).getWordsarray().get(k).cloneWord());
+    			}
+    			tempSentence.setWordsarray(tempWordList);
+    			tempSentenceList.add(tempSentence);
+    		}
+    		tempLabel.setSentenceArray(tempSentenceList);
+    		tempLabelList.add(tempLabel);
+    	}
+    	clone.setInputLabels(tempLabelList);
+    	return(clone);
+    }
+    
    
-    public void findSynsets(LabelList allLabels) throws JWNLException{
+    public void findSynsets() throws JWNLException{
         Dictionary dictionary = Dictionary.getDefaultResourceInstance();
         net.sf.extjwnl.data.IndexWord tempWord;
         List<net.sf.extjwnl.data.Synset> tempSyn;
@@ -106,12 +128,12 @@ public class LabelList implements java.io.Serializable{
         //shorter version of the for loops below ##############################
        
         // iteration over all labels
-        for (Label l : allLabels.getInputLabels()) {
+        for (Label l : this.getInputLabels()) {
             // iteration over all sentences in label
             for (Sentence s : l.getSentenceArray()) {
                 // iteration over all words in sentence
                 for (Word w : s.getWordsarray()) {
-                    if (w.getPartOfSpeech().getJwnlType() != null){
+                    if (w.getPartOfSpeech().getJwnlType() != null && w.getBaseform() != "be" && w.getBaseform() != "have"){
                         tempWord = dictionary.getIndexWord(w.getPartOfSpeech().getJwnlType(), w.getBaseform());
                         // Transform baseform of Word j in Label i into an indexWord so extjwnl can use it
                         tempSyn = tempWord.getSenses();
@@ -129,6 +151,19 @@ public class LabelList implements java.io.Serializable{
                                             w.addSynonym(word.getLemma());
                                             // Go through the synonym list and add each synonym to synonym list for word j, unless it's already in there
                                     }
+                                }
+                                nodelist=PointerUtils.getDirectHypernyms(syn);
+                            }
+                            else {
+                                nodelist=PointerUtils.getSynonyms(syn);
+                            }
+                            // Copy all synonyms to nodelist.
+                            // For nouns and verbs, a combination of getDirectHypernyms and getCoordinateTerms has to be used since getSynonyms only works on adjectives
+                            for(PointerTargetNode node:nodelist) {
+                                for(net.sf.extjwnl.data.Word word:node.getSynset().getWords()) {
+                                    if (!w.getSynonyms().contains(word.getLemma()))
+                                        w.addSynonym(word.getLemma());
+                                        // Go through the synonym list and add each synonym to synonym list for word j, unless it's already in there
                                 }
                             }
                         }
@@ -183,8 +218,8 @@ public class LabelList implements java.io.Serializable{
        
     }
    
-    /* Alte nicht optimierte matchSynonyms Methode
-     * public LabelList matchSynonyms(LabelList remainingLabels, WordCluster Cluster, Integer ClusterPosition) {
+    // Alte matchSynonyms Methode, momentan in Verwendung
+      public LabelList matchSynonyms(LabelList remainingLabels, WordCluster Cluster, Integer ClusterPosition) {
         List<Integer> tempIntList = new ArrayList<Integer>();
         Word definingWord = remainingLabels.getInputLabels().get(0).getSentenceArray().get(0).getWordsarray().get(0);
         remainingLabels.getInputLabels().get(0).getSentenceArray().get(0).getWordsarray().get(0).setClusterPosition(ClusterPosition);
@@ -222,9 +257,11 @@ public class LabelList implements java.io.Serializable{
         }
         }
         return(remainingLabels);
-        */
+      }
  
-    public LabelList matchSynonyms(LabelList remainingLabels, WordCluster Cluster, Integer ClusterPosition) {
+        // Optimierte, aber inkorrekte matchSynonyms Methode
+        
+   /* public LabelList matchSynonyms(LabelList remainingLabels, WordCluster Cluster, Integer ClusterPosition) {
                 List<Integer> tempIntList = new ArrayList<Integer>();
                 Word definingWord = remainingLabels.getInputLabels().get(0).getSentenceArray().get(0).getWordsarray().get(0);
                 remainingLabels.getInputLabels().get(0).getSentenceArray().get(0).getWordsarray().get(0).setClusterPosition(ClusterPosition);
@@ -300,12 +337,12 @@ public class LabelList implements java.io.Serializable{
                                 }
                 }
                 }
-                **/
+                *
                
                 return(remainingLabels);
  
     }
-           
+           */
         // Methoden zu matchSynonyms
  
     public int getInputLabelsSize(){
