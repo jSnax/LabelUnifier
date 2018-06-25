@@ -81,6 +81,7 @@ public class timTest {
 	tempList2.add(PhraseStructureTypes.NOUN_SINGULAR_SUBJECT);
 	tempList2.add(PhraseStructureTypes.VERB_SIMPLEPAST);
 	tempList2.add(PhraseStructureTypes.NOUN_SINGULAR_OBJECT);
+	tempList2.add(PhraseStructureTypes.ADVERB);
 	Structure2.setElements(tempList2);
 	allStructures.add(Structure);
 	allStructures.add(Structure2);
