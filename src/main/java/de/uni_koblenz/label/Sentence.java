@@ -278,7 +278,7 @@ public class Sentence implements java.io.Serializable{
 					case NOUN_PLURAL_OBJECT:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							//old: if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "BUSINESS_OBJECT"){
-							if (this.POSofTempWord(j) == "NNS" && this.RoleOfTempWord(j) == "BUSINESS_OBJECT"){
+							if ((this.POSofTempWord(j) == "NNS" || this.POSofTempWord(j) == "NNPS") && this.RoleOfTempWord(j) == "BUSINESS_OBJECT"){
 								//old: tempString = tempSentence.getWordsarray().get(j).getBaseform();
 								tempString = this.BaseOfTempWord(j);
 							}
@@ -292,7 +292,7 @@ public class Sentence implements java.io.Serializable{
 					case NOUN_PLURAL_SUBJECT:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							//old:	if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "SUBJECT"){
-							if (this.POSofTempWord(j) == "NNS" && this.RoleOfTempWord(j) == "SUBJECT"){
+							if ((this.POSofTempWord(j) == "NNS" || this.POSofTempWord(j) == "NNPS") && this.RoleOfTempWord(j) == "SUBJECT"){
 								//old: tempString = tempSentence.getWordsarray().get(j).getBaseform();
 								tempString = this.BaseOfTempWord(j);
 							}
@@ -306,7 +306,7 @@ public class Sentence implements java.io.Serializable{
 					case NOUN_SINGULAR_OBJECT:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							//old: if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "BUSINESS_OBJECT"){
-							if (this.POSofTempWord(j) == "NN" && this.RoleOfTempWord(j) == "BUSINESS_OBJECT"){
+							if ((this.POSofTempWord(j) == "NN" || this.POSofTempWord(j) == "NNP") && this.RoleOfTempWord(j) == "BUSINESS_OBJECT"){
 							//old:	tempString = tempSentence.getWordsarray().get(j).getBaseform();
 								tempString = this.BaseOfTempWord(j);
 							}
@@ -319,7 +319,7 @@ public class Sentence implements java.io.Serializable{
 					case NOUN_SINGULAR_SUBJECT:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 						//old:	if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "SUBJECT"){
-							if (this.POSofTempWord(j) == "NN" && this.RoleOfTempWord(j) == "SUBJECT"){
+							if ((this.POSofTempWord(j) == "NN" || this.POSofTempWord(j) == "NNP") && this.RoleOfTempWord(j) == "SUBJECT"){
 							//old:	tempString = tempSentence.getWordsarray().get(j).getBaseform();
 							tempString = this.BaseOfTempWord(j);
 							}
