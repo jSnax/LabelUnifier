@@ -95,15 +95,7 @@ public class shortPresentation {
 	}
 	
 	System.out.println("Printing Wordclusters");
-	LabelList safetyList = testList.cloneList();
-	List<WordCluster> AllClusters = new ArrayList<WordCluster>();
-	int Position = 0;
-	while (safetyList.getInputLabels().size() != 0){
-		WordCluster tempCluster = new WordCluster(safetyList);
-		safetyList = safetyList.matchSynonyms(safetyList, tempCluster, Position);
-		AllClusters.add(tempCluster);
-		Position++;
-	}
+	List<WordCluster> AllClusters = testList.matchSynonyms();
 	for (int i = 0; i < AllClusters.size(); i++){
 		System.out.println("Start of Cluster " +i);
 		for (int j = 0; j < AllClusters.get(i).matchingWords.size(); j++){
@@ -129,7 +121,6 @@ public class shortPresentation {
 		}
 		System.out.println("End of Generalized Cluster " +i);
 	}
-	
 	PhraseStructure Structure = new PhraseStructure();
 	PhraseStructure Structure2 = new PhraseStructure();
 	List<PhraseStructure> allStructures = new ArrayList<PhraseStructure>(); 
