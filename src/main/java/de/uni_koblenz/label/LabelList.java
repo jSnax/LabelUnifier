@@ -321,10 +321,11 @@ public class LabelList implements java.io.Serializable{
 		        		//tempIndex = 0;
 		        		for (Word w : s.getWordsarray()) {   			   
 		        			if (definingWord.getPartOfSpeech().getJwnlType() == w.getPartOfSpeech().getJwnlType() && w.getClusterPosition() == null) {    				   
-		        				if (definingWord.getSynonyms().contains(w.getBaseform()) || w.getSynonyms().contains(definingWord.getBaseform())) {
+		        				if ((definingWord.getSynonyms().contains(w.getBaseform()) && w.getBaseform() != "be" && w.getBaseform()!= "have") || w.getSynonyms().contains(definingWord.getBaseform())) {
 		        					Cluster.matchingWords.add(w);
 		        					w.setClusterPosition(position);
 		        					// Most basic form of matching. If POS match and one word is a synonym of the other, they have the same meaning
+		        					//TODO: Add "will" as a verb to exceptions
 		        				}
 		        			}
 		        		}
