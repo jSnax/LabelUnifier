@@ -242,15 +242,14 @@ public class LabelList implements java.io.Serializable{
         }*/
        
     }
-    
-    //kürzere Version von matchSynonyms (alte Version)
+   /* Mittlerweile veraltete Version von matchSynonyms (kurz)
     public LabelList matchSynonyms(LabelList remainingLabels, WordCluster Cluster, Integer ClusterPosition) {
     	List<Integer> tempIntList = new ArrayList<Integer>();
         Word definingWord = remainingLabels.getInputLabels().get(0).getSentenceArray().get(0).getWordsarray().get(0);
         remainingLabels.getInputLabels().get(0).getSentenceArray().get(0).getWordsarray().get(0).setClusterPosition(ClusterPosition);
         remainingLabels.getInputLabels().get(0).getSentenceArray().get(0).getWordsarray().remove(0);
-        // Removing first entry of remainingLabels since it is the
-        
+        // Removing first entry of remainingLabels since it is the defining Word
+      
         int tempIndex;
         for (Label l : remainingLabels.getInputLabels()) {
         	for (Sentence s : l.getSentenceArray()) { 
@@ -287,8 +286,63 @@ public class LabelList implements java.io.Serializable{
             }
         return(remainingLabels);
     }
-   
-    // Alte matchSynonyms Methode, momentan in Verwendung
+   */
+    
+    // Aktuellste Version von matchSynonyms
+    public List<WordCluster> matchSynonyms (){
+    	boolean WordsLeft = true;
+    	int position = 0;
+    	List<WordCluster> AllClusters = new ArrayList<WordCluster>();
+    	while (WordsLeft){
+    		Word definingWord = new Word();
+    		WordCluster Cluster = new WordCluster();
+	    	boolean searching = true;
+	    	int counterLabels = 0;
+	    	int counterSentences = 0;
+	    	int counterWords = 0;
+	    	while (searching && counterLabels < this.getInputLabelsSize()){
+	    		while (searching && counterSentences < this.getSentenceArraySize(counterLabels)){
+	    			while (searching && counterWords < this.getWordsarraySize(counterLabels, counterSentences)){
+	    				if (this.getInputLabels().get(counterLabels).getSentenceArray().get(counterSentences).getWordsarray().get(counterWords).getClusterPosition() == null){
+	    					definingWord = this.getInputLabels().get(counterLabels).getSentenceArray().get(counterSentences).getWordsarray().get(counterWords);
+	    					definingWord.setClusterPosition(position);
+	    					Cluster.matchingWords.add(definingWord);
+	    					searching = false;
+	    				}
+	    				counterWords++;
+	    			}
+	    			counterSentences++;
+	    		}
+	    		counterLabels++;
+	    	}
+	    	if (definingWord.getBaseform() != null){
+		        for (Label l : this.getInputLabels()) {
+		        	for (Sentence s : l.getSentenceArray()) { 
+		        		//tempIndex = 0;
+		        		for (Word w : s.getWordsarray()) {   			   
+		        			if (definingWord.getPartOfSpeech().getJwnlType() == w.getPartOfSpeech().getJwnlType() && w.getClusterPosition() == null) {    				   
+		        				if (definingWord.getSynonyms().contains(w.getBaseform()) || w.getSynonyms().contains(definingWord.getBaseform())) {
+		        					Cluster.matchingWords.add(w);
+		        					w.setClusterPosition(position);
+		        					// Most basic form of matching. If POS match and one word is a synonym of the other, they have the same meaning
+		        				}
+		        			}
+		        		}
+		        	}
+		        }
+		        AllClusters.add(Cluster);
+	    	}
+	    	else WordsLeft = false;
+	    	position++;
+    	}
+    	return(AllClusters);
+    }
+    
+    
+    
+    
+    
+    // Alte matchSynonyms Methode
       /**public LabelList matchSynonyms(LabelList remainingLabels, WordCluster Cluster, Integer ClusterPosition) {
         List<Integer> tempIntList = new ArrayList<Integer>();
         Word definingWord = remainingLabels.getInputLabels().get(0).getSentenceArray().get(0).getWordsarray().get(0);
