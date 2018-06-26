@@ -95,8 +95,32 @@ public class LabelList implements java.io.Serializable{
         }
         return result;
     }
+    
+    //shorter version of cloneList
+    public LabelList cloneList() {
+    	LabelList clone = new LabelList();
+    	List<Label> tempLabelList = new ArrayList<Label>();
+    	
+    	for (Label l : this.getInputLabels()) {
+    		Label tempLabel = new Label();
+    		List<Sentence> tempSentenceList = new ArrayList<Sentence>();  
+    		for (Sentence s : l.getSentenceArray()) {
+    			Sentence tempSentence = new Sentence();
+    			List<Word> tempWordList = new ArrayList<Word>();
+    			for (Word w : s.getWordsarray()) {
+    				tempWordList.add(w.cloneWord());
+    			}
+    			tempSentence.setWordsarray(tempWordList);
+    			tempSentenceList.add(tempSentence);
+    		}	
+    		tempLabel.setSentenceArray(tempSentenceList);
+    		tempLabelList.add(tempLabel);
+    	}
+    	clone.setInputLabels(tempLabelList);
+    	return(clone);
+    }
    
-    public LabelList cloneList(){
+    /**public LabelList cloneList(){
     	LabelList clone = new LabelList();
     	List<Label> tempLabelList = new ArrayList<Label>();
     	for (int i = 0; i < this.getInputLabels().size(); i++){
@@ -116,7 +140,7 @@ public class LabelList implements java.io.Serializable{
     	}
     	clone.setInputLabels(tempLabelList);
     	return(clone);
-    }
+    }**/
     
    
     public void findSynsets() throws JWNLException{
@@ -218,9 +242,54 @@ public class LabelList implements java.io.Serializable{
         }*/
        
     }
+    
+    //kürzere Version von matchSynonyms (alte Version)
+    public LabelList matchSynonyms(LabelList remainingLabels, WordCluster Cluster, Integer ClusterPosition) {
+    	List<Integer> tempIntList = new ArrayList<Integer>();
+        Word definingWord = remainingLabels.getInputLabels().get(0).getSentenceArray().get(0).getWordsarray().get(0);
+        remainingLabels.getInputLabels().get(0).getSentenceArray().get(0).getWordsarray().get(0).setClusterPosition(ClusterPosition);
+        remainingLabels.getInputLabels().get(0).getSentenceArray().get(0).getWordsarray().remove(0);
+        // Removing first entry of remainingLabels since it is the
+        
+        int tempIndex;
+        for (Label l : remainingLabels.getInputLabels()) {
+        	for (Sentence s : l.getSentenceArray()) { 
+        		tempIndex = 0;
+        		for (Word w : s.getWordsarray()) {   			   
+        			if (definingWord.getPartOfSpeech().getJwnlType() == w.getPartOfSpeech().getJwnlType()) {    				   
+        				if (definingWord.getSynonyms().contains(w.getBaseform()) || w.getSynonyms().contains(definingWord.getBaseform())) {
+        					Cluster.matchingWords.add(w);
+        					w.setClusterPosition(ClusterPosition);
+        					tempIntList.add(tempIndex);
+        					tempIndex++;
+        					// Most basic form of matching. If POS match and one word is a synonym of the other, they have the same meaning
+        				}
+        			}
+        		}
+        		for (int j = tempIntList.size() - 1; j >= 0; j--){
+                    int z = tempIntList.get(j);
+                    s.getWordsarray().remove(z);
+                    tempIntList.remove(j);
+                    // Removing all words in current label that found a match
+                    // This has to be called after the previous for-loop in order to not mess around with the list size while iterating over it 
+        		}
+        	}
+        }
+        
+        for (int i = remainingLabels.getInputLabels().size() - 1; i >= 0; i--){
+            for (int t = remainingLabels.getInputLabels().get(i).getSentenceArray().size() - 1; t >= 0; t--){
+                if (remainingLabels.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().isEmpty()){
+                    remainingLabels.getInputLabels().remove(i);
+                    // Removing all labels that contain no more unmatched words
+                    // This has to be called after the previous for-loop in order to not mess around with the list size while iterating over it
+                    }
+                }
+            }
+        return(remainingLabels);
+    }
    
     // Alte matchSynonyms Methode, momentan in Verwendung
-      public LabelList matchSynonyms(LabelList remainingLabels, WordCluster Cluster, Integer ClusterPosition) {
+      /**public LabelList matchSynonyms(LabelList remainingLabels, WordCluster Cluster, Integer ClusterPosition) {
         List<Integer> tempIntList = new ArrayList<Integer>();
         Word definingWord = remainingLabels.getInputLabels().get(0).getSentenceArray().get(0).getWordsarray().get(0);
         remainingLabels.getInputLabels().get(0).getSentenceArray().get(0).getWordsarray().get(0).setClusterPosition(ClusterPosition);
@@ -258,7 +327,7 @@ public class LabelList implements java.io.Serializable{
         }
         }
         return(remainingLabels);
-      }
+      }**/
  
         // Optimierte, aber inkorrekte matchSynonyms Methode
         
@@ -431,7 +500,19 @@ public class LabelList implements java.io.Serializable{
         }
         return(ReturnList);
         */
+    
+    //kürzere Version von generatePhraseList
     public List<Phrase> generatePhraseList(LabelList remainingLabels, PhraseStructure Structure){
+        List<Phrase> ReturnList = new ArrayList<Phrase>();
+        for (Label l : remainingLabels.getInputLabels()) {
+        	for (Sentence s : l.getSentenceArray()) {
+        		ReturnList.add(s.toPhrase);
+        	}
+        }
+        return(ReturnList);
+    }
+    
+    /**public List<Phrase> generatePhraseList(LabelList remainingLabels, PhraseStructure Structure){
         List<Phrase> ReturnList = new ArrayList<Phrase>();
         for (int i = 0; i < remainingLabels.getInputLabels().size(); i++){
 //alt:   for (int j = 0; j < remainingLabels.getInputLabels().get(i).getSentenceArray().size(); j++){
@@ -441,7 +522,7 @@ public class LabelList implements java.io.Serializable{
                 }
         }
         return(ReturnList);
-}
+}**/
        
         //Methode generatePhrase
  
