@@ -70,17 +70,8 @@ public class MainPP {
 		}
 		// Print synonym lists
 		System.out.println("Printing Wordclusters");
-		List<WordCluster> AllClusters = new ArrayList<WordCluster>();
-		LabelList safetyList = new LabelList(input);
+		List<WordCluster> AllClusters = testList.matchSynonyms();
 
-		safetyList.findSynsets();
-		int Position = 0;
-		while (safetyList.getInputLabels().size() != 0){
-			WordCluster tempCluster = new WordCluster(safetyList);
-			safetyList = safetyList.matchSynonyms(safetyList, tempCluster, Position);
-			AllClusters.add(tempCluster);
-			Position++;
-		}
 		for (int i = 0; i < AllClusters.size(); i++){
 			System.out.println("Cluster " +i);
 			for (int j = 0; j < AllClusters.get(i).matchingWords.size(); j++){
@@ -90,9 +81,7 @@ public class MainPP {
 		// Prints Wordclusters
 		System.out.println("Printing LabelClusters");
 
-		safetyList.findSynsets();
-		// TEST DOESN'T WORK AS EXPECTED RIGHT NOW
-		// testList references same object as safetyList, so both Lists are empty at this point
+
 		/*List<PhraseCluster> AllLabelClusters = new ArrayList<PhraseCluster>();
 		while (safetyList.getInputLabels().size() != 0){
 			PhraseCluster tempLCluster = new PhraseCluster(safetyList);
