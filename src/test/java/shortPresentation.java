@@ -63,7 +63,10 @@ public class shortPresentation {
 
 	// Fill Labels with word arrays
 	LabelList testList = new LabelList(input);
-
+	
+	System.out.println("Printing Preprocessing results:");
+	System.out.println(testList);
+	
 	// Set Input Labels to previously created Label list
 	System.out.println("Printing Labels:");
 	for (int i = 0; i < testList.getInputLabels().size(); i++){
