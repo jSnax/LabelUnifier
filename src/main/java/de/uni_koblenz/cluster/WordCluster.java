@@ -33,8 +33,6 @@ public class WordCluster {
 	
 	// TODO: Übergabe eines Domänenthesaurus, der Dominanz vorgibt zu einzelnen Worten
 	public void calculateDominance(){
-		String s1;
-		String s2;
 		for (int i = 0; i < this.matchingWords.size(); i++){
 			 Word tempWord = this.matchingWords.get(i);
 			 tempWord.setDominance(0);
