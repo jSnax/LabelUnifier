@@ -220,7 +220,7 @@ public class Sentence implements java.io.Serializable{
 		return result;
 	}
 	
-		public ArrayList<Phrase> toPhrase(List<PhraseStructure> allStructures, Realiser realiser, SPhraseSpec p, NLGFactory nlgFactory){
+		public ArrayList<Phrase> toPhrase(List<PhraseStructure> allStructures, Realiser realiser, NLGFactory nlgFactory){
 			
 			// TODO: Check whether a given word from the Sentence was already used to avoid using same object twice
 			// Probably needs some if-cases as well, e.g. "if object != empty add to current object else new object"
@@ -237,6 +237,7 @@ public class Sentence implements java.io.Serializable{
 			boolean error;
 			int counter = 0;
 			while (counter < allStructures.size()){
+				SPhraseSpec p = nlgFactory.createClause();
 				PhraseStructure Structure = allStructures.get(counter);
 				int i = 0;
 				passive = false;
