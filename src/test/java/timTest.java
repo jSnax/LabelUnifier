@@ -87,7 +87,7 @@ public class timTest {
 	allStructures.add(Structure2);
 	System.out.println(Structure.getElements());
 	System.out.println(Structure2.getElements());
-	List<Phrase> p1 = testList.getInputLabels().get(0).getSentenceArray().get(0).toPhrase(allStructures,realiser, p, nlgFactory);
+	List<Phrase> p1 = testList.getInputLabels().get(0).getSentenceArray().get(0).toPhrase(allStructures,realiser, nlgFactory);
 	System.out.println("Full Phrases:");
 	for (int i = 0; i < p1.size(); i++){
 		System.out.println(p1.get(i).getFullContent());

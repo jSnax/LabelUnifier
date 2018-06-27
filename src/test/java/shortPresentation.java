@@ -126,9 +126,11 @@ public class shortPresentation {
 	}
 	PhraseStructure Structure = new PhraseStructure();
 	PhraseStructure Structure2 = new PhraseStructure();
+	PhraseStructure Structure3 = new PhraseStructure();
 	List<PhraseStructure> allStructures = new ArrayList<PhraseStructure>(); 
 	List<PhraseStructureTypes> tempList = new ArrayList<PhraseStructureTypes>();
 	List<PhraseStructureTypes> tempList2 = new ArrayList<PhraseStructureTypes>();
+	List<PhraseStructureTypes> tempList3 = new ArrayList<PhraseStructureTypes>();
 	tempList.add(PhraseStructureTypes.NOUN_SINGULAR_SUBJECT);
 	tempList.add(PhraseStructureTypes.VERB_SIMPLEFUTURE);
 	tempList.add(PhraseStructureTypes.NOUN_SINGULAR_OBJECT);
@@ -137,15 +139,19 @@ public class shortPresentation {
 	tempList2.add(PhraseStructureTypes.VERB_SIMPLEPAST);
 	tempList2.add(PhraseStructureTypes.NOUN_PLURAL_OBJECT);
 	Structure2.setElements(tempList2);
+	tempList3.add(PhraseStructureTypes.VERB_IMPERATIVE);
+	tempList3.add(PhraseStructureTypes.NOUN_SINGULAR_OBJECT);
+	Structure3.setElements(tempList3);
 	allStructures.add(Structure);
 	allStructures.add(Structure2);
+	allStructures.add(Structure3);
 	ArrayList<ArrayList<Phrase>> PhraseListList = new ArrayList<ArrayList<Phrase>>();
 
-	//testList.getInputLabels().get(4).getSentenceArray().get(0).getWordsarray().get(4).setRole(RoleLeopold.SUBJECT);
-	//testList.getInputLabels().get(4).getSentenceArray().get(0).getWordsarray().get(0).setRole(RoleLeopold.BUSINESS_OBJECT);
+	testList.getInputLabels().get(4).getSentenceArray().get(0).getWordsarray().get(4).setRole(RoleLeopold.SUBJECT);
+	testList.getInputLabels().get(4).getSentenceArray().get(0).getWordsarray().get(0).setRole(RoleLeopold.BUSINESS_OBJECT);
 	for (int i = 0; i < testList.getInputLabels().size(); i++){
 		for (int j = 0; j < testList.getInputLabels().get(i).getSentenceArray().size(); j++){
-			ArrayList<Phrase> tempPhrase = testList.getInputLabels().get(i).getSentenceArray().get(j).toPhrase(allStructures,realiser, p, nlgFactory);
+			ArrayList<Phrase> tempPhrase = testList.getInputLabels().get(i).getSentenceArray().get(j).toPhrase(allStructures, realiser, nlgFactory);
 			PhraseListList.add(tempPhrase);
 		}
 	}
