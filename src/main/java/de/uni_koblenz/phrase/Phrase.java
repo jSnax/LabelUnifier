@@ -17,6 +17,7 @@ public class Phrase {
 	private Vector<String> personalVector;
 	private double[] vectorNumeration;
 	private Vector<String> personalVectorSpace;
+	private int usedStructure;
 
 	public Phrase() {
 		
@@ -65,6 +66,15 @@ public class Phrase {
 		this.personalVectorSpace = personalVectorSpace;
 	}
 
+	public int getUsedStructure() {
+		return usedStructure;
+	}
+
+
+	public void setUsedStructure(int usedStructure) {
+		this.usedStructure = usedStructure;
+	}
+	
 	// returns a list of Phrase Structure
 		// a Phrase Structure e. g. <verb, imperative> <noun, singular> would be a list of String itself, where "verb, imperative" is one list element
 	public List<List<String>> extractPhraseStructure (String Namingconventions){
