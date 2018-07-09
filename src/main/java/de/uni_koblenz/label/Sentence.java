@@ -12,6 +12,7 @@ import de.uni_koblenz.enums.RelationName;
 import de.uni_koblenz.enums.RoleLeopold;
 import de.uni_koblenz.phrase.Phrase;
 import de.uni_koblenz.phrase.PhraseStructure;
+import de.uni_koblenz.phrase.PhraseStructureList;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.naturalli.NaturalLogicAnnotations;
 import edu.stanford.nlp.pipeline.CoreSentence;
@@ -220,7 +221,7 @@ public class Sentence implements java.io.Serializable{
 		return result;
 	}
 	
-		public ArrayList<Phrase> toPhrase(List<PhraseStructure> allStructures, Realiser realiser, NLGFactory nlgFactory){
+		public ArrayList<Phrase> toPhrase(PhraseStructureList StructureList, Realiser realiser, NLGFactory nlgFactory){
 			
 			// TODO: Check whether a given word from the Sentence was already used to avoid using same object twice
 			// Probably needs some if-cases as well, e.g. "if object != empty add to current object else new object"
@@ -228,6 +229,7 @@ public class Sentence implements java.io.Serializable{
 			tempSentence.setWordsarray(this.getWordsarray());
 			ArrayList<Phrase> result = new ArrayList<Phrase>();
 			PhraseStructureTypes tempType;
+			List<PhraseStructure> allStructures = StructureList.getAllStructures();
 			String tempString = "";
 			int j = 0;
 			NPPhraseSpec object = new NPPhraseSpec(nlgFactory);
@@ -470,6 +472,7 @@ public class Sentence implements java.io.Serializable{
 						}
 					}
 					currentPhrase.setseparatedContent(wordList);
+					currentPhrase.setUsedStructure(counter);
 					result.add(currentPhrase);
 				}
 				counter++;
