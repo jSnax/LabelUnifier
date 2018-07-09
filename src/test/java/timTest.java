@@ -69,6 +69,7 @@ public class timTest {
 		}
 	}
 	// Simply print the two labels
+	PhraseStructureList completeList = new PhraseStructureList();
 	PhraseStructure Structure = new PhraseStructure();
 	PhraseStructure Structure2 = new PhraseStructure();
 	List<PhraseStructure> allStructures = new ArrayList<PhraseStructure>(); 
@@ -85,9 +86,10 @@ public class timTest {
 	Structure2.setElements(tempList2);
 	allStructures.add(Structure);
 	allStructures.add(Structure2);
+	completeList.setAllStructures(allStructures);
 	System.out.println(Structure.getElements());
 	System.out.println(Structure2.getElements());
-	List<Phrase> p1 = testList.getInputLabels().get(0).getSentenceArray().get(0).toPhrase(allStructures,realiser, nlgFactory);
+	List<Phrase> p1 = testList.getInputLabels().get(0).getSentenceArray().get(0).toPhrase(completeList,realiser, nlgFactory);
 	System.out.println("Full Phrases:");
 	for (int i = 0; i < p1.size(); i++){
 		System.out.println(p1.get(i).getFullContent());

@@ -124,6 +124,7 @@ public class shortPresentation {
 		}
 		System.out.println("End of Generalized Cluster " +i);
 	}
+	PhraseStructureList completeList = new PhraseStructureList();
 	PhraseStructure Structure = new PhraseStructure();
 	PhraseStructure Structure2 = new PhraseStructure();
 	PhraseStructure Structure3 = new PhraseStructure();
@@ -145,13 +146,14 @@ public class shortPresentation {
 	allStructures.add(Structure);
 	allStructures.add(Structure2);
 	allStructures.add(Structure3);
+	completeList.setAllStructures(allStructures);
 	ArrayList<ArrayList<Phrase>> PhraseListList = new ArrayList<ArrayList<Phrase>>();
 
 	testList.getInputLabels().get(4).getSentenceArray().get(0).getWordsarray().get(4).setRole(RoleLeopold.SUBJECT);
 	testList.getInputLabels().get(4).getSentenceArray().get(0).getWordsarray().get(0).setRole(RoleLeopold.BUSINESS_OBJECT);
 	for (int i = 0; i < testList.getInputLabels().size(); i++){
 		for (int j = 0; j < testList.getInputLabels().get(i).getSentenceArray().size(); j++){
-			ArrayList<Phrase> tempPhrase = testList.getInputLabels().get(i).getSentenceArray().get(j).toPhrase(allStructures, realiser, nlgFactory);
+			ArrayList<Phrase> tempPhrase = testList.getInputLabels().get(i).getSentenceArray().get(j).toPhrase(completeList, realiser, nlgFactory);
 			PhraseListList.add(tempPhrase);
 		}
 	}
