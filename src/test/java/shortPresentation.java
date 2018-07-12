@@ -128,10 +128,12 @@ public class shortPresentation {
 	PhraseStructure Structure = new PhraseStructure();
 	PhraseStructure Structure2 = new PhraseStructure();
 	PhraseStructure Structure3 = new PhraseStructure();
+	PhraseStructure Structure4 = new PhraseStructure();
 	List<PhraseStructure> allStructures = new ArrayList<PhraseStructure>(); 
 	List<PhraseStructureTypes> tempList = new ArrayList<PhraseStructureTypes>();
 	List<PhraseStructureTypes> tempList2 = new ArrayList<PhraseStructureTypes>();
 	List<PhraseStructureTypes> tempList3 = new ArrayList<PhraseStructureTypes>();
+	List<PhraseStructureTypes> tempList4 = new ArrayList<PhraseStructureTypes>();
 	tempList.add(PhraseStructureTypes.NOUN_SINGULAR_SUBJECT);
 	tempList.add(PhraseStructureTypes.VERB_SIMPLEFUTURE);
 	tempList.add(PhraseStructureTypes.NOUN_SINGULAR_OBJECT);
@@ -143,12 +145,20 @@ public class shortPresentation {
 	tempList3.add(PhraseStructureTypes.VERB_IMPERATIVE);
 	tempList3.add(PhraseStructureTypes.NOUN_SINGULAR_OBJECT);
 	Structure3.setElements(tempList3);
+	tempList4.add(PhraseStructureTypes.NOUN_PLURAL_SUBJECT);
+	tempList4.add(PhraseStructureTypes.ADVERB);
+	tempList4.add(PhraseStructureTypes.VERB_SIMPLEFUTURE);
+	tempList4.add(PhraseStructureTypes.NOUN_PLURAL_OBJECT);
+	Structure4.setElements(tempList4);
 	allStructures.add(Structure);
 	allStructures.add(Structure2);
 	allStructures.add(Structure3);
+	allStructures.add(Structure4);
 	completeList.setAllStructures(allStructures);
 	ArrayList<ArrayList<Phrase>> PhraseListList = new ArrayList<ArrayList<Phrase>>();
 
+	completeList.sortStructures();
+	
 	testList.getInputLabels().get(4).getSentenceArray().get(0).getWordsarray().get(4).setRole(RoleLeopold.SUBJECT);
 	testList.getInputLabels().get(4).getSentenceArray().get(0).getWordsarray().get(0).setRole(RoleLeopold.BUSINESS_OBJECT);
 	for (int i = 0; i < testList.getInputLabels().size(); i++){
