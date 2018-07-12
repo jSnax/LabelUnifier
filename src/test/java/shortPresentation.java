@@ -129,11 +129,13 @@ public class shortPresentation {
 	PhraseStructure Structure2 = new PhraseStructure();
 	PhraseStructure Structure3 = new PhraseStructure();
 	PhraseStructure Structure4 = new PhraseStructure();
+	PhraseStructure Structure5 = new PhraseStructure();
 	List<PhraseStructure> allStructures = new ArrayList<PhraseStructure>(); 
 	List<PhraseStructureTypes> tempList = new ArrayList<PhraseStructureTypes>();
 	List<PhraseStructureTypes> tempList2 = new ArrayList<PhraseStructureTypes>();
 	List<PhraseStructureTypes> tempList3 = new ArrayList<PhraseStructureTypes>();
 	List<PhraseStructureTypes> tempList4 = new ArrayList<PhraseStructureTypes>();
+	List<PhraseStructureTypes> tempList5 = new ArrayList<PhraseStructureTypes>();
 	tempList.add(PhraseStructureTypes.NOUN_SINGULAR_SUBJECT);
 	tempList.add(PhraseStructureTypes.VERB_SIMPLEFUTURE);
 	tempList.add(PhraseStructureTypes.NOUN_SINGULAR_OBJECT);
@@ -150,10 +152,17 @@ public class shortPresentation {
 	tempList4.add(PhraseStructureTypes.VERB_SIMPLEFUTURE);
 	tempList4.add(PhraseStructureTypes.NOUN_PLURAL_OBJECT);
 	Structure4.setElements(tempList4);
+	tempList5.add(PhraseStructureTypes.NOUN_SINGULAR_SUBJECT);
+	tempList5.add(PhraseStructureTypes.VERB_SIMPLEFUTURE);
+	tempList5.add(PhraseStructureTypes.ADVERB);
+	tempList5.add(PhraseStructureTypes.ADJECTIVE_FOR_OBJECT);
+	tempList5.add(PhraseStructureTypes.NOUN_PLURAL_OBJECT);
+	Structure5.setElements(tempList5);
 	allStructures.add(Structure);
 	allStructures.add(Structure2);
 	allStructures.add(Structure3);
 	allStructures.add(Structure4);
+	allStructures.add(Structure5);
 	completeList.setAllStructures(allStructures);
 	ArrayList<ArrayList<Phrase>> PhraseListList = new ArrayList<ArrayList<Phrase>>();
 
