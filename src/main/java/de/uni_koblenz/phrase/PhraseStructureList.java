@@ -23,5 +23,7 @@ public class PhraseStructureList {
 	public void setAllStructures(List<PhraseStructure> allStructures) {
 		this.AllStructures = allStructures;
 	}
-
+	public void sortStructures (){
+		
+	}
 }
