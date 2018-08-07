@@ -79,16 +79,8 @@ public class testMatchingONLY {
 		}
 		// Print synonym lists
 		System.out.println("Printing Wordclusters");
-		List<WordCluster> AllClusters = new ArrayList<WordCluster>();
-		
-		safetyList.findSynsets();
-		int Position = 0;
-		while (safetyList.getInputLabels().size() != 0){
-			WordCluster tempCluster = new WordCluster(safetyList);
-			safetyList = safetyList.matchSynonyms(safetyList, tempCluster, Position);
-			AllClusters.add(tempCluster);
-			Position++;
-		}
+		List<WordCluster> AllClusters = testList.matchSynonyms();
+
 		for (int i = 0; i < AllClusters.size(); i++){
 			System.out.println("Cluster " +i);
 			for (int j = 0; j < AllClusters.get(i).matchingWords.size(); j++){

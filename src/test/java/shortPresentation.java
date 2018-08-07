@@ -63,7 +63,10 @@ public class shortPresentation {
 
 	// Fill Labels with word arrays
 	LabelList testList = new LabelList(input);
-
+	
+	System.out.println("Printing Preprocessing results:");
+	System.out.println(testList);
+	
 	// Set Input Labels to previously created Label list
 	System.out.println("Printing Labels:");
 	for (int i = 0; i < testList.getInputLabels().size(); i++){
@@ -95,15 +98,7 @@ public class shortPresentation {
 	}
 	
 	System.out.println("Printing Wordclusters");
-	LabelList safetyList = testList.cloneList();
-	List<WordCluster> AllClusters = new ArrayList<WordCluster>();
-	int Position = 0;
-	while (safetyList.getInputLabels().size() != 0){
-		WordCluster tempCluster = new WordCluster(safetyList);
-		safetyList = safetyList.matchSynonyms(safetyList, tempCluster, Position);
-		AllClusters.add(tempCluster);
-		Position++;
-	}
+	List<WordCluster> AllClusters = testList.matchSynonyms();
 	for (int i = 0; i < AllClusters.size(); i++){
 		System.out.println("Start of Cluster " +i);
 		for (int j = 0; j < AllClusters.get(i).matchingWords.size(); j++){
@@ -129,12 +124,18 @@ public class shortPresentation {
 		}
 		System.out.println("End of Generalized Cluster " +i);
 	}
-	
+	PhraseStructureList completeList = new PhraseStructureList();
 	PhraseStructure Structure = new PhraseStructure();
 	PhraseStructure Structure2 = new PhraseStructure();
+	PhraseStructure Structure3 = new PhraseStructure();
+	PhraseStructure Structure4 = new PhraseStructure();
+	PhraseStructure Structure5 = new PhraseStructure();
 	List<PhraseStructure> allStructures = new ArrayList<PhraseStructure>(); 
 	List<PhraseStructureTypes> tempList = new ArrayList<PhraseStructureTypes>();
 	List<PhraseStructureTypes> tempList2 = new ArrayList<PhraseStructureTypes>();
+	List<PhraseStructureTypes> tempList3 = new ArrayList<PhraseStructureTypes>();
+	List<PhraseStructureTypes> tempList4 = new ArrayList<PhraseStructureTypes>();
+	List<PhraseStructureTypes> tempList5 = new ArrayList<PhraseStructureTypes>();
 	tempList.add(PhraseStructureTypes.NOUN_SINGULAR_SUBJECT);
 	tempList.add(PhraseStructureTypes.VERB_SIMPLEFUTURE);
 	tempList.add(PhraseStructureTypes.NOUN_SINGULAR_OBJECT);
@@ -143,12 +144,35 @@ public class shortPresentation {
 	tempList2.add(PhraseStructureTypes.VERB_SIMPLEPAST);
 	tempList2.add(PhraseStructureTypes.NOUN_PLURAL_OBJECT);
 	Structure2.setElements(tempList2);
+	tempList3.add(PhraseStructureTypes.VERB_IMPERATIVE);
+	tempList3.add(PhraseStructureTypes.NOUN_SINGULAR_OBJECT);
+	Structure3.setElements(tempList3);
+	tempList4.add(PhraseStructureTypes.NOUN_PLURAL_SUBJECT);
+	tempList4.add(PhraseStructureTypes.ADVERB);
+	tempList4.add(PhraseStructureTypes.VERB_SIMPLEFUTURE);
+	tempList4.add(PhraseStructureTypes.NOUN_PLURAL_OBJECT);
+	Structure4.setElements(tempList4);
+	tempList5.add(PhraseStructureTypes.NOUN_SINGULAR_SUBJECT);
+	tempList5.add(PhraseStructureTypes.VERB_SIMPLEFUTURE);
+	tempList5.add(PhraseStructureTypes.ADVERB);
+	tempList5.add(PhraseStructureTypes.ADJECTIVE_FOR_OBJECT);
+	tempList5.add(PhraseStructureTypes.NOUN_PLURAL_OBJECT);
+	Structure5.setElements(tempList5);
 	allStructures.add(Structure);
 	allStructures.add(Structure2);
+	allStructures.add(Structure3);
+	allStructures.add(Structure4);
+	allStructures.add(Structure5);
+	completeList.setAllStructures(allStructures);
 	ArrayList<ArrayList<Phrase>> PhraseListList = new ArrayList<ArrayList<Phrase>>();
+
+	completeList.sortStructures();
+	
+	testList.getInputLabels().get(4).getSentenceArray().get(0).getWordsarray().get(4).setRole(RoleLeopold.SUBJECT);
+	testList.getInputLabels().get(4).getSentenceArray().get(0).getWordsarray().get(0).setRole(RoleLeopold.BUSINESS_OBJECT);
 	for (int i = 0; i < testList.getInputLabels().size(); i++){
 		for (int j = 0; j < testList.getInputLabels().get(i).getSentenceArray().size(); j++){
-			ArrayList<Phrase> tempPhrase = testList.getInputLabels().get(i).getSentenceArray().get(j).toPhrase(allStructures,realiser, p, nlgFactory);
+			ArrayList<Phrase> tempPhrase = testList.getInputLabels().get(i).getSentenceArray().get(j).toPhrase(completeList, realiser, nlgFactory);
 			PhraseListList.add(tempPhrase);
 		}
 	}

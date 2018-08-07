@@ -12,6 +12,7 @@ import de.uni_koblenz.enums.RelationName;
 import de.uni_koblenz.enums.RoleLeopold;
 import de.uni_koblenz.phrase.Phrase;
 import de.uni_koblenz.phrase.PhraseStructure;
+import de.uni_koblenz.phrase.PhraseStructureList;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.naturalli.NaturalLogicAnnotations;
 import edu.stanford.nlp.pipeline.CoreSentence;
@@ -220,7 +221,7 @@ public class Sentence implements java.io.Serializable{
 		return result;
 	}
 	
-		public ArrayList<Phrase> toPhrase(List<PhraseStructure> allStructures, Realiser realiser, SPhraseSpec p, NLGFactory nlgFactory){
+		public ArrayList<Phrase> toPhrase(PhraseStructureList StructureList, Realiser realiser, NLGFactory nlgFactory){
 			
 			// TODO: Check whether a given word from the Sentence was already used to avoid using same object twice
 			// Probably needs some if-cases as well, e.g. "if object != empty add to current object else new object"
@@ -228,6 +229,7 @@ public class Sentence implements java.io.Serializable{
 			tempSentence.setWordsarray(this.getWordsarray());
 			ArrayList<Phrase> result = new ArrayList<Phrase>();
 			PhraseStructureTypes tempType;
+			List<PhraseStructure> allStructures = StructureList.getAllStructures();
 			String tempString = "";
 			int j = 0;
 			NPPhraseSpec object = new NPPhraseSpec(nlgFactory);
@@ -237,6 +239,7 @@ public class Sentence implements java.io.Serializable{
 			boolean error;
 			int counter = 0;
 			while (counter < allStructures.size()){
+				SPhraseSpec p = nlgFactory.createClause();
 				PhraseStructure Structure = allStructures.get(counter);
 				int i = 0;
 				passive = false;
@@ -278,7 +281,7 @@ public class Sentence implements java.io.Serializable{
 					case NOUN_PLURAL_OBJECT:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							//old: if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "BUSINESS_OBJECT"){
-							if (this.POSofTempWord(j) == "NNS" && this.RoleOfTempWord(j) == "BUSINESS_OBJECT"){
+							if ((this.POSofTempWord(j) == "NNS" || this.POSofTempWord(j) == "NNPS") && this.RoleOfTempWord(j) == "BUSINESS_OBJECT"){
 								//old: tempString = tempSentence.getWordsarray().get(j).getBaseform();
 								tempString = this.BaseOfTempWord(j);
 							}
@@ -292,7 +295,7 @@ public class Sentence implements java.io.Serializable{
 					case NOUN_PLURAL_SUBJECT:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							//old:	if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "SUBJECT"){
-							if (this.POSofTempWord(j) == "NNS" && this.RoleOfTempWord(j) == "SUBJECT"){
+							if ((this.POSofTempWord(j) == "NNS" || this.POSofTempWord(j) == "NNPS") && this.RoleOfTempWord(j) == "SUBJECT"){
 								//old: tempString = tempSentence.getWordsarray().get(j).getBaseform();
 								tempString = this.BaseOfTempWord(j);
 							}
@@ -306,7 +309,7 @@ public class Sentence implements java.io.Serializable{
 					case NOUN_SINGULAR_OBJECT:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							//old: if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "BUSINESS_OBJECT"){
-							if (this.POSofTempWord(j) == "NN" && this.RoleOfTempWord(j) == "BUSINESS_OBJECT"){
+							if ((this.POSofTempWord(j) == "NN" || this.POSofTempWord(j) == "NNP") && this.RoleOfTempWord(j) == "BUSINESS_OBJECT"){
 							//old:	tempString = tempSentence.getWordsarray().get(j).getBaseform();
 								tempString = this.BaseOfTempWord(j);
 							}
@@ -319,7 +322,7 @@ public class Sentence implements java.io.Serializable{
 					case NOUN_SINGULAR_SUBJECT:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 						//old:	if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "SUBJECT"){
-							if (this.POSofTempWord(j) == "NN" && this.RoleOfTempWord(j) == "SUBJECT"){
+							if ((this.POSofTempWord(j) == "NN" || this.POSofTempWord(j) == "NNP") && this.RoleOfTempWord(j) == "SUBJECT"){
 							//old:	tempString = tempSentence.getWordsarray().get(j).getBaseform();
 							tempString = this.BaseOfTempWord(j);
 							}
@@ -469,6 +472,7 @@ public class Sentence implements java.io.Serializable{
 						}
 					}
 					currentPhrase.setseparatedContent(wordList);
+					currentPhrase.setUsedStructure(counter);
 					result.add(currentPhrase);
 				}
 				counter++;

@@ -9,13 +9,18 @@ public class WordCluster {
 
 	public List<Word> matchingWords;
 
-	public WordCluster(LabelList RemainingLabels) {
+	/* This constructor is no longer needed, replaced by constructor below
+	 * public WordCluster(LabelList RemainingLabels) {
 		this.matchingWords = new ArrayList<Word>(); 
 		Word DefiningWord = RemainingLabels.getInputLabels().get(0).getSentenceArray().get(0).getWordsarray().get(0); 
 		matchingWords.add(DefiningWord);
 		// Takes the first remaining word in the LabelList and creates a new WordCluster for it
 		//[CODE] RemainingLabels.matchSynonyms(RemainingLabels, this, Position); [CODE]
 		// Fill MatchingWords, has to be called in main since RemainingLabels will be changed by matchSynonyms
+	}*/
+	
+	public WordCluster(){
+		this.matchingWords = new ArrayList<Word>(); 
 	}
 	
 	public List<Word> getMatchingWords() {
@@ -39,7 +44,7 @@ public class WordCluster {
 			     List<Integer> tempIntList = new ArrayList<Integer>();
 			     int counter = 1;
 				 for (int j = i; j < this.matchingWords.size(); j++){
-					 if (this.matchingWords.get(j).getBaseform() == tempWord.getBaseform()){
+					 if (this.matchingWords.get(j).getBaseform().equals(tempWord.getBaseform())){
 						 counter++;
 						 tempIntList.add(j);
 					 }
