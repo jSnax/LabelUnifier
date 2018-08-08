@@ -335,7 +335,9 @@ public class Sentence implements java.io.Serializable{
 					case PUNCTUATION_PERIOD:
 						break;
 					case PUNCTUATION_QUESTIONMARK:
-						break;
+						if (!(Structure.isProperSentence())) error = true;
+						p.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.YES_NO);		
+					    break;
 					case VERB_BASE:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 						//old:	if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
@@ -389,6 +391,22 @@ public class Sentence implements java.io.Serializable{
 						}
 						verb = nlgFactory.createVerbPhrase(tempString);
 						p.setFeature(Feature.PASSIVE, true);
+						p.setVerb(verb);
+						if (tempString == "") error = true;
+						passive = true;
+						break;
+					case VERB_PASSIVE_PAST:
+						while (tempString == "" && j < tempSentence.getWordsarray().size()){
+						//old:	if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
+							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"){
+							//old:	tempString = tempSentence.getWordsarray().get(j).getBaseform();
+							tempString = this.BaseOfTempWord(j);
+							}
+							j++;
+						}
+						verb = nlgFactory.createVerbPhrase(tempString);
+						p.setFeature(Feature.PASSIVE, true);
+						p.setFeature(Feature.TENSE, Tense.PAST);
 						p.setVerb(verb);
 						if (tempString == "") error = true;
 						passive = true;
