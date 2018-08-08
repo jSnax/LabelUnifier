@@ -148,15 +148,14 @@ public class shortPresentation {
 	tempList3.add(PhraseStructureTypes.NOUN_SINGULAR_OBJECT);
 	Structure3.setElements(tempList3);
 	tempList4.add(PhraseStructureTypes.NOUN_PLURAL_SUBJECT);
-	tempList4.add(PhraseStructureTypes.ADVERB);
 	tempList4.add(PhraseStructureTypes.VERB_SIMPLEFUTURE);
 	tempList4.add(PhraseStructureTypes.NOUN_PLURAL_OBJECT);
+	tempList4.add(PhraseStructureTypes.PUNCTUATION_QUESTIONMARK);
 	Structure4.setElements(tempList4);
+	tempList5.add(PhraseStructureTypes.NOUN_SINGULAR_OBJECT);
+	tempList5.add(PhraseStructureTypes.VERB_PASSIVE_PAST);
 	tempList5.add(PhraseStructureTypes.NOUN_SINGULAR_SUBJECT);
-	tempList5.add(PhraseStructureTypes.VERB_SIMPLEFUTURE);
-	tempList5.add(PhraseStructureTypes.ADVERB);
-	tempList5.add(PhraseStructureTypes.ADJECTIVE_FOR_OBJECT);
-	tempList5.add(PhraseStructureTypes.NOUN_PLURAL_OBJECT);
+	tempList5.add(PhraseStructureTypes.PUNCTUATION_QUESTIONMARK);
 	Structure5.setElements(tempList5);
 	allStructures.add(Structure);
 	allStructures.add(Structure2);
@@ -168,8 +167,8 @@ public class shortPresentation {
 
 	completeList.sortStructures();
 	
-	testList.getInputLabels().get(4).getSentenceArray().get(0).getWordsarray().get(4).setRole(RoleLeopold.SUBJECT);
-	testList.getInputLabels().get(4).getSentenceArray().get(0).getWordsarray().get(0).setRole(RoleLeopold.BUSINESS_OBJECT);
+	//testList.getInputLabels().get(4).getSentenceArray().get(0).getWordsarray().get(4).setRole(RoleLeopold.SUBJECT);
+	//testList.getInputLabels().get(4).getSentenceArray().get(0).getWordsarray().get(0).setRole(RoleLeopold.BUSINESS_OBJECT);
 	for (int i = 0; i < testList.getInputLabels().size(); i++){
 		for (int j = 0; j < testList.getInputLabels().get(i).getSentenceArray().size(); j++){
 			ArrayList<Phrase> tempPhrase = testList.getInputLabels().get(i).getSentenceArray().get(j).toPhrase(completeList, realiser, nlgFactory);
