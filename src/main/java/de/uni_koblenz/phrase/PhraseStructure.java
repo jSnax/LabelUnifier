@@ -43,5 +43,17 @@ public class PhraseStructure {
 	public void setElements(List<PhraseStructureTypes> elements) {
 		this.elements = elements;
 	}
+	
+	public boolean isProperSentence(){
+		boolean hasSubject = false;
+		boolean hasObject = false;
+		boolean hasVerb = false;
+		for (PhraseStructureTypes current : this.getElements()){
+			if (current.getdeterminer() == "Verb") hasVerb = true;
+			if (current.getdeterminer() == "Subject") hasSubject = true;
+			if (current.getdeterminer() == "Object") hasObject = true;
+		}
+		return (hasSubject && hasObject && hasVerb);
+	}
 
 }
