@@ -152,7 +152,6 @@ public class shortPresentation {
 	tempList4.add(PhraseStructureTypes.NOUN_PLURAL_OBJECT);
 	tempList4.add(PhraseStructureTypes.PUNCTUATION_QUESTIONMARK);
 	Structure4.setElements(tempList4);
-	tempList5.add(PhraseStructureTypes.NOUN_SINGULAR_OBJECT);
 	tempList5.add(PhraseStructureTypes.VERB_PASSIVE_PAST);
 	tempList5.add(PhraseStructureTypes.NOUN_SINGULAR_SUBJECT);
 	tempList5.add(PhraseStructureTypes.PUNCTUATION_QUESTIONMARK);
