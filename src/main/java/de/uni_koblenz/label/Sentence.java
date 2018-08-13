@@ -282,14 +282,14 @@ public class Sentence implements java.io.Serializable{
 			List<PhraseStructure> allStructures = StructureList.getAllStructures();
 			String tempString = "";
 			int j = 0;
-			NPPhraseSpec object = new NPPhraseSpec(nlgFactory);
-			NPPhraseSpec subject = new NPPhraseSpec(nlgFactory);
-			VPPhraseSpec verb = new VPPhraseSpec(nlgFactory);
 			boolean passive;
 			boolean error;
 			int counter = 0;
 			while (counter < allStructures.size()){
 				SPhraseSpec p = nlgFactory.createClause();
+				NPPhraseSpec object = new NPPhraseSpec(nlgFactory);
+				NPPhraseSpec subject = new NPPhraseSpec(nlgFactory);
+				VPPhraseSpec verb = new VPPhraseSpec(nlgFactory);
 				PhraseStructure Structure = allStructures.get(counter);
 				int i = 0;
 				passive = false;
