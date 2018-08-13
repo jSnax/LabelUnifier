@@ -84,7 +84,55 @@ public class Sentence implements java.io.Serializable{
 		this.contentAsString = contentAsString;
 	}
 
+	public static boolean isPassive(List<Word> w){
 
+		for (int i = 0; i < w.size(); i++) {
+			for (int j = 0; j < w.get(i).getGrammaticalRelations().size(); j++) {	
+				if(w.get(i).getGrammaticalRelations().get(j).getGrammaticalRelationName()!=null) {
+					
+					if(w.get(i).getGrammaticalRelations().get(j).getGrammaticalRelationName().equals(RelationName.NOMINAL_PASSIVE_SUBJECT)
+						|| w.get(i).getGrammaticalRelations().get(j).getGrammaticalRelationName().equals(RelationName.CONTROLLING_NOMINAL_PASSIVE_SUBJECT)) 
+						return true;
+					}
+				}
+			}
+		return false;		
+	}
+
+	public static void passiveHandling(List<Word> w) {
+	
+		for(int i = 0; i < w.size(); i++) {
+		
+			if(isPassive(w)==true) {
+			
+				if((w.get(i).getPartOfSpeech()!=null)
+						&& (w.get(i).getPartOfSpeech().getJwnlType()==POS.NOUN || w.get(i).getPartOfSpeech()==PartOfSpeechTypes.PERSONAL_PRONOUN)){
+					if(i<=3) {
+						w.get(i).setRole(RoleLeopold.BUSINESS_OBJECT); }
+					if(i==1) {
+						if(w.get(i-1).getOriginalForm().equals("by")) {
+							w.get(i).setRole(RoleLeopold.SUBJECT); }
+					
+					}else if(i==2) {
+						if(w.get(i-2).getOriginalForm().equals("by")|| w.get(i-1).getOriginalForm().equals("by")) {
+							w.get(i).setRole(RoleLeopold.SUBJECT); }
+					
+					}else if(i>=3) {
+						if(w.get(i-3).getOriginalForm().equals("by") || w.get(i-2).getOriginalForm().equals("by") || w.get(i-1).getOriginalForm().equals("by")){
+							w.get(i).setRole(RoleLeopold.SUBJECT); }
+						if(w.get(i-2).getRole().equals(RoleLeopold.SUBJECT) || w.get(i-1).getRole().equals(RoleLeopold.SUBJECT)) {
+							w.get(i).setRole(RoleLeopold.OPTIONAL_INFORMATION_FRAGMENT); }
+						
+					}else{
+						if(w.get(i).getOriginalForm().equals("by") && w.get(i+1).getPartOfSpeech().getJwnlType()==POS.NOUN) {
+							w.get(i+1).setRole(RoleLeopold.SUBJECT);
+						}else if(w.get(i).getOriginalForm().equals("by") && w.get(i+2).getPartOfSpeech().getJwnlType()==POS.NOUN) {
+							w.get(i+1).setRole(RoleLeopold.SUBJECT); }
+					}	
+				}
+			}
+		}
+	}
 
 	/*
 	 * method to create wordsarray from CoreSentence
@@ -207,8 +255,10 @@ public class Sentence implements java.io.Serializable{
 	    // removing all unused WORDs from wordsarray like punctuation and compound words
     	// at this point because other methods rely on the fact that the index of corenlpsentence equals wordsarray 
 	    wordsarray.removeAll(toRemove);
+	    
+	    //redefining role for passive sentences
+	    passiveHandling(wordsarray);
     		
-		
 	}
 	
 	@Override
