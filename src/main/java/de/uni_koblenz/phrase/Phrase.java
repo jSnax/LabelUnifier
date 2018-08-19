@@ -18,6 +18,7 @@ public class Phrase {
 	private double[] vectorNumeration;
 	private Vector<String> personalVectorSpace;
 	private int usedStructure;
+	private int usedStructureSize;
 
 	public Phrase() {
 		
@@ -262,6 +263,16 @@ public class Phrase {
 
 		public void setFullContent(String fullContent) {
 			this.fullContent = fullContent;
+		}
+
+
+		public int getUsedStructureSize() {
+			return usedStructureSize;
+		}
+
+
+		public void setUsedStructureSize(int usedStructureSize) {
+			this.usedStructureSize = usedStructureSize;
 		}
 }
 

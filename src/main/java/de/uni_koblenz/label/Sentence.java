@@ -541,6 +541,7 @@ public class Sentence implements java.io.Serializable{
 					}
 					currentPhrase.setseparatedContent(wordList);
 					currentPhrase.setUsedStructure(counter);
+					currentPhrase.setUsedStructureSize(allStructures.get(counter).getElements().size());
 					result.add(currentPhrase);
 				}
 				counter++;
