@@ -190,5 +190,9 @@ public class shortPresentation {
 			System.out.println("");
 		}
 	}
+	
+	PhraseList demoPhrasenCompare = new PhraseList();
+	demoPhrasenCompare.setWholeInput(PhraseListList);
+	demoPhrasenCompare.phraseCompareAndDecision();
 	}
 }
