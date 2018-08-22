@@ -16,6 +16,10 @@ import java.io.IOException;
 public class PhraseStructureList {
 	List<PhraseStructure> AllStructures;
 	
+    public PhraseStructureList() {
+        
+    }
+	
 	public List<PhraseStructure> getAllStructures() {
 		return AllStructures;
 	}
