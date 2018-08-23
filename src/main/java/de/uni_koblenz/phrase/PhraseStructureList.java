@@ -29,11 +29,11 @@ public class PhraseStructureList {
         try {
         	
         	br = new BufferedReader(new FileReader(tsvFile));
-        	
+        	while ((line = br.readLine()) != null) {
         	String[] phraseElement = line.split(tsvSplitBy);
         	
         	
-        
+        	}
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
