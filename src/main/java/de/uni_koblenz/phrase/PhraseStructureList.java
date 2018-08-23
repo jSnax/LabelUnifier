@@ -25,15 +25,42 @@ public class PhraseStructureList {
         BufferedReader br = null;
         String line = "";
         String tsvSplitBy = "\t";
+        PhraseStructureTypes pstypes;
         
         try {
         	
         	br = new BufferedReader(new FileReader(tsvFile));
         	while ((line = br.readLine()) != null) {
-        	String[] phraseElement = line.split(tsvSplitBy);
         	
+        	String[] phraseElement = line.split(tsvSplitBy);
+        	        	
+        	if(phraseElement[0] == "n") {
+        		br.skip(line.length());
+        	}
+        	
+        	else if(phraseElement[0] == "y") {
+        		PhraseStructure structure = new PhraseStructure();
+        		for(int i = 1; i < line.length(); i++) {
+        			// Hier komm ich grad nicht weiter.
+        			/*pstypes = null
+        			switch(pstypes) {
+        			case VERB_BASE: 
+        				structure.setPhraseElements(phraseElement[i]);
+        				break;
+        				
+        			
+        			
+        			default:
+        		}*/
+        	}
+        	
+        	List<PhraseStructure> tsvlist = new ArrayList<PhraseStructure>();
+        	tsvlist.add(structure);
+        		
+        	}
         	
         	}
+        	
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
