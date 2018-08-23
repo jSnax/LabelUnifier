@@ -11,13 +11,42 @@ import java.util.regex.Matcher;
 import de.uni_koblenz.enums.PartOfSpeechTypes;
 import de.uni_koblenz.enums.PhraseStructureTypes;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 
 public class PhraseStructureList {
 	List<PhraseStructure> AllStructures;
 	
     public PhraseStructureList() {
+    	
+    	String tsvFile = "[file-source-here]";
+        BufferedReader br = null;
+        String line = "";
+        String tsvSplitBy = "\t";
         
+        try {
+        	
+        	br = new BufferedReader(new FileReader(tsvFile));
+        	
+        	String[] phraseElement = line.split(tsvSplitBy);
+        	
+        	
+        
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 	
 	public List<PhraseStructure> getAllStructures() {
