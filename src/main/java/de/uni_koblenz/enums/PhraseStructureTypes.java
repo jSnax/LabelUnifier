@@ -19,6 +19,7 @@ public enum PhraseStructureTypes {
 	ADJECTIVE_FOR_OBJECT("Addition"),
 	ADJECTIVE_FOR_SUBJECT("Addition"),
 	ADVERB("Addition");
+
 	
 	private String determiner;
 	
