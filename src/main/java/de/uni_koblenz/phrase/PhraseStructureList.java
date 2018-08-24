@@ -24,9 +24,8 @@ public class PhraseStructureList {
     	String tsvFile = "[file-source-here]";
         BufferedReader br = null;
         String line = "";
-        String tsvSplitBy = "\t";
-        PhraseStructureTypes pstypes;
-        
+        String tsvSplitBy = "\t";  
+		List<PhraseStructureTypes> tempList = new ArrayList<PhraseStructureTypes>();
         try {
         	
         	br = new BufferedReader(new FileReader(tsvFile));
@@ -39,14 +38,15 @@ public class PhraseStructureList {
         	}
         	
         	else if(phraseElement[0] == "y") {
-        		PhraseStructure Structure = new PhraseStructure();
-        		List<PhraseStructureTypes> tempList = new ArrayList<PhraseStructureTypes>();
+        		PhraseStructure structure = new PhraseStructure();
+        		tempList = new ArrayList<PhraseStructureTypes>();
         		//Ein Tab == 5 Chars (bzw 5 Leerzeichen)
         		br.skip(5);
         		for(int i = 1; i < line.length(); i++) {
         			String PhraseString = phraseElement[i];
+        			PhraseStructureTypes pstypes = PhraseStructureTypes.valueOf(PhraseString);
         			// Man kann nicht über einen String switchen...
-        			pstypes = Structure.getElements().get(i);
+        			// Ist richtig, aber durch den Befehl in Zeile 47 wird der String zu einem PhraseStructureTypes umgewandelt
         			switch(pstypes) {
         			case VERB_IMPERATIVE: 
         				tempList.add(PhraseStructureTypes.VERB_IMPERATIVE);
@@ -104,13 +104,10 @@ public class PhraseStructureList {
         			
         		br.skip(5);
         	}
-        	
-        	//tempList Ergebnis WO speichern?
-        	List<PhraseStructure> tsvlist = new ArrayList<PhraseStructure>();
-        	
-        	
+        	        	
+        	structure.setElements(tempList);
+        	this.AllStructures.add(structure);
         	}
-        	
         	}
         	
         } catch (FileNotFoundException e) {
