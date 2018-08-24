@@ -41,7 +41,7 @@ import de.uni_koblenz.label.*;
 import de.uni_koblenz.phrase.*;
 
 public class timTest {
-	public static void main (String args[]) throws JWNLException, ClassNotFoundException, IOException {
+	public static void main (String args[]) throws Exception {
 		
 	System.out.println("Started.");
 	Lexicon lexicon = Lexicon.getDefaultLexicon();

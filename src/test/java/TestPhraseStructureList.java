@@ -42,7 +42,7 @@ import de.uni_koblenz.label.*;
 import de.uni_koblenz.phrase.*;
 
 public class TestPhraseStructureList {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		PhraseStructureList testList = new PhraseStructureList();
 		System.out.println("Test completed");
 		for (int i = 0; i < testList.getAllStructures().size(); i++){
