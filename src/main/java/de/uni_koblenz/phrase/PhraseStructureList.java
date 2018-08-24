@@ -21,7 +21,10 @@ public class PhraseStructureList {
 	
     public PhraseStructureList() {
     	
-    	String tsvFile = "[file-source-here]";
+    	String tsvFile = "C:\\Users\\jSnax\\Desktop\\testfile.txt";
+    	// ToDo: Ultimately, the file needs to be read from the JAR's location. Since we don't have a JAR currently,
+    	// the file source used above has to be altered to suit the 
+    	// https://stackoverflow.com/questions/3627426/loading-a-file-relative-to-the-executing-jar-file
         BufferedReader br = null;
         String line = "";
         String tsvSplitBy = "\t";  
@@ -32,12 +35,12 @@ public class PhraseStructureList {
         	while ((line = br.readLine()) != null) {
         	
         	String[] phraseElement = line.split(tsvSplitBy);
-        	        	
+        	System.out.println(phraseElement[0]);
         	if(phraseElement[0] == "n") {
         		br.skip(line.length());
         	}
         	
-        	else if(phraseElement[0] == "y") {
+        	else if(phraseElement[0].toCharArray()[0] == 'y') {
         		PhraseStructure structure = new PhraseStructure();
         		tempList = new ArrayList<PhraseStructureTypes>();
         		//Ein Tab == 5 Chars (bzw 5 Leerzeichen)
