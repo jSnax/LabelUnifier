@@ -19,7 +19,7 @@ import java.io.IOException;
 public class PhraseStructureList {
 	List<PhraseStructure> AllStructures;
 	
-    public PhraseStructureList() {
+    public PhraseStructureList() throws Exception {
     	
     	String tsvFile = "C:\\Users\\jSnax\\Desktop\\testfile.txt";
     	// ToDo: Ultimately, the file needs to be read from the JAR's location. Since we don't have a JAR currently,
@@ -42,7 +42,13 @@ public class PhraseStructureList {
         		tempList = new ArrayList<PhraseStructureTypes>();
         		for(int i = 1; i < phraseElement.length; i++) {
         			String PhraseString = phraseElement[i];
-        			PhraseStructureTypes pstypes = PhraseStructureTypes.valueOf(PhraseString);
+        			PhraseStructureTypes pstypes = PhraseStructureTypes.VERB_BASE;
+        			try{
+        			pstypes = PhraseStructureTypes.valueOf(PhraseString);
+        			}catch (IllegalArgumentException e) {
+        				System.out.println(PhraseString);
+        	            throw new Exception("The element above is not a proper PhraseStructureType.");
+        			}
         			// Man kann nicht über einen String switchen...
         			// Ist richtig, aber durch den Befehl in der vorigen Codezeile wird der String zu einem PhraseStructureTypes umgewandelt
         			switch(pstypes) {
@@ -97,7 +103,11 @@ public class PhraseStructureList {
         			case ADVERB: 
         				tempList.add(PhraseStructureTypes.ADVERB);
         				break;
-        			default: System.out.println("No valid PhraseStructureType");
+					case VERB_SIMPLEFUTURE:
+        				tempList.add(PhraseStructureTypes.VERB_SIMPLEFUTURE);
+						break;
+					default:
+						break;
         		}
         			
         	}
