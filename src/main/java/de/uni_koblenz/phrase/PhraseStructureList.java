@@ -108,7 +108,7 @@ public class PhraseStructureList {
         	//tempList Ergebnis WO speichern?
         	List<PhraseStructure> tsvlist = new ArrayList<PhraseStructure>();
         	
-        		
+        	
         	}
         	
         	}
