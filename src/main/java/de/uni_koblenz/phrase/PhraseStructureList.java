@@ -23,33 +23,28 @@ public class PhraseStructureList {
     	
     	String tsvFile = "C:\\Users\\jSnax\\Desktop\\testfile.txt";
     	// ToDo: Ultimately, the file needs to be read from the JAR's location. Since we don't have a JAR currently,
-    	// the file source used above has to be altered to suit the 
+    	// the file source used above has to be altered to suit the actual location
+    	// Once we have the JAR, refer to the link below for possible fixes
     	// https://stackoverflow.com/questions/3627426/loading-a-file-relative-to-the-executing-jar-file
         BufferedReader br = null;
         String line = "";
-        String tsvSplitBy = "\t";  
+        String tsvSplitBy = ", ";  
 		List<PhraseStructureTypes> tempList = new ArrayList<PhraseStructureTypes>();
+		List<PhraseStructure> structureList = new ArrayList<PhraseStructure>();
         try {
         	
         	br = new BufferedReader(new FileReader(tsvFile));
         	while ((line = br.readLine()) != null) {
         	
         	String[] phraseElement = line.split(tsvSplitBy);
-        	System.out.println(phraseElement[0]);
-        	if(phraseElement[0] == "n") {
-        		br.skip(line.length());
-        	}
-        	
-        	else if(phraseElement[0].toCharArray()[0] == 'y') {
+        	if(phraseElement[0].toCharArray()[0] == 'y') {
         		PhraseStructure structure = new PhraseStructure();
         		tempList = new ArrayList<PhraseStructureTypes>();
-        		//Ein Tab == 5 Chars (bzw 5 Leerzeichen)
-        		br.skip(5);
-        		for(int i = 1; i < line.length(); i++) {
+        		for(int i = 1; i < phraseElement.length; i++) {
         			String PhraseString = phraseElement[i];
         			PhraseStructureTypes pstypes = PhraseStructureTypes.valueOf(PhraseString);
         			// Man kann nicht über einen String switchen...
-        			// Ist richtig, aber durch den Befehl in Zeile 47 wird der String zu einem PhraseStructureTypes umgewandelt
+        			// Ist richtig, aber durch den Befehl in der vorigen Codezeile wird der String zu einem PhraseStructureTypes umgewandelt
         			switch(pstypes) {
         			case VERB_IMPERATIVE: 
         				tempList.add(PhraseStructureTypes.VERB_IMPERATIVE);
@@ -105,11 +100,10 @@ public class PhraseStructureList {
         			default: System.out.println("No valid PhraseStructureType");
         		}
         			
-        		br.skip(5);
         	}
         	        	
         	structure.setElements(tempList);
-        	this.AllStructures.add(structure);
+        	structureList.add(structure);
         	}
         	}
         	
@@ -126,6 +120,7 @@ public class PhraseStructureList {
                 }
             }
         }
+        this.AllStructures = structureList;
     }
 	
 	public List<PhraseStructure> getAllStructures() {

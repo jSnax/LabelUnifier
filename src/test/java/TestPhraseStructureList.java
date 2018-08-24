@@ -45,5 +45,9 @@ public class TestPhraseStructureList {
 	public static void main(String[] args) {
 		PhraseStructureList testList = new PhraseStructureList();
 		System.out.println("Test completed");
+		for (int i = 0; i < testList.getAllStructures().size(); i++){
+			System.out.println(testList.getAllStructures().get(i).getElements());
+		}
+		
 	}
 }
