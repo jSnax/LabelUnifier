@@ -9,29 +9,38 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DomainThesaurus {
+		List<String> AllWords;   
 
 	public DomainThesaurus() {
 		
-		String csvFile = "[file-source-here]";
+		String dtFile = "C:\\Users\\jSnax\\Desktop\\testfile.txt"; 
         BufferedReader br = null;
         String line = "";
         String csvSplitBy = ",";
-        
-        try {
+        List<String> domainWords = new ArrayList<String>();
+		
+		try {
         	
-        	br = new BufferedReader(new FileReader(csvFile));
-        	//List is placeholder for final type of List to save domainThesaurus preferred words
-        	ArrayList<String> preferredWords = new ArrayList<String>();
+        	br = new BufferedReader(new FileReader(dtFile));
+			List<String> preferredWords = new ArrayList<String>();
+        	while ((line = br.readLine()) != null) {			
+			
+			String[] phraseElement = line.split(csvSplitBy);
         	//skip first char, which is "["
-        	br.skip(1);
-        	while ((line = br.readLine()) != "]") {
+        	br.skip(1);       		  		
         		
-        		String[] domainElement = line.split(csvSplitBy);
-        		
-        		for(int i = 0; i < line.length(); i++) {
-        			preferredWords.add(i, domainElement[i]);
+				for(int i = 0; i < phraseElement.length; i++){      			
+					
+					if(phraseElement[i].contains("]")){
+					phraseElement[i].replace("]","");
+					preferredWords.add(i, phraseElement[i]);
+					}
+					else{
+					preferredWords.add(i, phraseElement[i]);
+					}					
         		}
-        		
+        	// Übergabe so nicht möglich
+			//domainWords.add(preferredWords);   
         	}
         	
         } catch (FileNotFoundException e) {
@@ -47,5 +56,6 @@ public class DomainThesaurus {
                 }
             }
         }
+		this.AllWords = domainWords;
 	}
 }
