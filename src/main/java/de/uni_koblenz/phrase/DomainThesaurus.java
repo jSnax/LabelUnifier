@@ -11,9 +11,17 @@ import java.util.List;
 public class DomainThesaurus {
 		List<String> AllWords;   
 
+	public List<String> getAllWords() {
+			return AllWords;
+		}
+
+		public void setAllWords(List<String> allWords) {
+			AllWords = allWords;
+		}
+
 	public DomainThesaurus() {
 		
-		String dtFile = "C:\\Users\\jSnax\\Desktop\\testfile.txt"; 
+		String dtFile = "C:\\Users\\jSnax\\Desktop\\testfile2.txt"; 
         BufferedReader br = null;
         String line = "";
         String csvSplitBy = ",";
@@ -25,22 +33,16 @@ public class DomainThesaurus {
 			List<String> preferredWords = new ArrayList<String>();
         	while ((line = br.readLine()) != null) {			
 			
-			String[] phraseElement = line.split(csvSplitBy);
-        	//skip first char, which is "["
-        	br.skip(1);       		  		
+			String[] phraseElement = line.split(csvSplitBy);    		  		
         		
-				for(int i = 0; i < phraseElement.length; i++){      			
-					
-					if(phraseElement[i].contains("]")){
-					phraseElement[i].replace("]","");
-					preferredWords.add(i, phraseElement[i]);
+				for(int i = 0; i < phraseElement.length; i++){
+					if (i != 0){
+						domainWords.add(i, (phraseElement[i].substring(1)));
 					}
-					else{
-					preferredWords.add(i, phraseElement[i]);
-					}					
-        		}
-        	// Übergabe so nicht möglich
-			//domainWords.add(preferredWords);   
+					else {
+						domainWords.add(i, phraseElement[i]);
+					}
+				}					
         	}
         	
         } catch (FileNotFoundException e) {
