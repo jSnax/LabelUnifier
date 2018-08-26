@@ -193,6 +193,6 @@ public class shortPresentation {
 	
 	PhraseList demoPhrasenCompare = new PhraseList();
 	demoPhrasenCompare.setWholeInput(PhraseListList);
-	demoPhrasenCompare.phraseCompareAndDecision();
+	demoPhrasenCompare.phraseCompareAndDecision(testList);
 	}
 }

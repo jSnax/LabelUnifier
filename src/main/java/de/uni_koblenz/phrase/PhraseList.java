@@ -5,6 +5,7 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.uni_koblenz.cluster.PhraseCluster;
 import de.uni_koblenz.label.*;
 
 public class PhraseList {
@@ -13,9 +14,11 @@ public class PhraseList {
 	private List<Phrase> phrases;
 	private ArrayList<ArrayList<Phrase>> wholeInput;
 	private ArrayList<String> phrasesFinal;
+	private ArrayList<PhraseCluster> allBuiltClusters;
 	
 	public PhraseList() {
 		this.phrasesFinal = new ArrayList<String>();
+		this.allBuiltClusters = new ArrayList<PhraseCluster>();
  	}
 	
 	public Vector<String> getVectorSpace() {
@@ -50,14 +53,24 @@ public class PhraseList {
 	public void setPhrasesFinal(ArrayList<String> phrasesFinal) {
 		this.phrasesFinal = phrasesFinal;
 	}
+	
+
+	public ArrayList<PhraseCluster> getAllBuiltClusters() {
+		return allBuiltClusters;
+	}
+
+	public void setAllBuiltClusters(ArrayList<PhraseCluster> allBuiltClusters) {
+		this.allBuiltClusters = allBuiltClusters;
+	}
 
 	public void addPhrase(Phrase phrase) {
 		Phrase phrase2 = phrase;
 		this.phrases.add(phrase2);
 	}
 	
-	public void phraseCompareAndDecision() {
+	public void phraseCompareAndDecision(LabelList labelList) {
 		System.out.println("Die vollständige Phrasenlist beinhaltet:");
+		ArrayList<Integer> controller = new ArrayList<Integer>();
 		for (int i = 0; i < this.wholeInput.size(); i++) {
 			this.phrasesFinal.add(this.wholeInput.get(i).get(0).getFullContent());
 			System.out.println(this.phrasesFinal.get(i));
@@ -68,28 +81,34 @@ public class PhraseList {
 			}
 		}
 		for (int zaehlerLabels = 0; zaehlerLabels < this.wholeInput.size(); zaehlerLabels++) {
-			for (int zaehlerPhrase = 0; zaehlerPhrase < this.wholeInput.get(zaehlerLabels).size(); zaehlerPhrase++) {
-				String currentPhrase = this.wholeInput.get(zaehlerLabels).get(zaehlerPhrase).getFullContent();
-				System.out.println(phrasesFinal.get(0));
+				String currentPhrase = this.wholeInput.get(zaehlerLabels).get(0).getFullContent();
 				System.out.println("Die aktuell kontrollierte Phrase ist:");
 				System.out.println(currentPhrase);
-				for (int labelDimension = zaehlerLabels + 1; labelDimension < this.wholeInput.size(); labelDimension ++) {
-					for (int phrasenDimension = 0; phrasenDimension < this.wholeInput.get(labelDimension).size(); phrasenDimension++){
-						if (currentPhrase.equals(this.wholeInput.get(labelDimension).get(phrasenDimension).getFullContent())) {
-							this.phrasesFinal.set(zaehlerLabels, currentPhrase);
+				for (int labelDimension = zaehlerLabels + 1; labelDimension < this.wholeInput.size(); labelDimension++) {
+						if (currentPhrase.equals(this.wholeInput.get(labelDimension).get(0).getFullContent())) {
+							PhraseCluster currentCluster = new PhraseCluster();
+							currentCluster.setBuiltPhrase(wholeInput.get(labelDimension).get(0).getFullContent());
+							currentCluster.getMatchingLabels().add(labelList.getInputLabels().get(zaehlerLabels));
+							currentCluster.getMatchingLabels().add(labelList.getInputLabels().get(labelDimension));
+							this.allBuiltClusters.add(currentCluster);
+							controller.add(zaehlerLabels);
+							controller.add(labelDimension);
 							break;
-							
 						}
-						continue;
+						else if(!(controller.contains(zaehlerLabels))){
+						PhraseCluster currentCluster = new PhraseCluster();
+						currentCluster.setBuiltPhrase(wholeInput.get(zaehlerLabels).get(0).getFullContent());
+						currentCluster.getMatchingLabels().add(labelList.getInputLabels().get(zaehlerLabels));
+						this.allBuiltClusters.add(currentCluster);
+						controller.add(zaehlerLabels);
+						}
 					}
-					break;
-				}
-				break;
 			}
-		}
 		System.out.println("Die finalen Phrasen sind: ");
-			for (int i = 0; i < this.phrasesFinal.size(); i++) {
-				System.out.println(phrasesFinal.get(i));
-			}
+			for (int i = 0; i < this.allBuiltClusters.size(); i++) {
+				System.out.println(allBuiltClusters.get(i).getBuiltPhrase());
 		}
 	}
+}
+
+
