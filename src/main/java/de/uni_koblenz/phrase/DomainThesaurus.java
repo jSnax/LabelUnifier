@@ -30,7 +30,7 @@ public class DomainThesaurus {
 		try {
         	
         	br = new BufferedReader(new FileReader(dtFile));
-			List<String> preferredWords = new ArrayList<String>();
+        	
         	while ((line = br.readLine()) != null) {			
 			
 			String[] phraseElement = line.split(csvSplitBy);    		  		
