@@ -132,7 +132,7 @@ public class MainPP {
 		
 		String input1 ="Complete application, Fill out application form, Add certificate of Bachelor degree, Add certificate of German language, Send application, \n" + 
 				"Take Interview, Receive Rejection, Receive acceptance, Immatriculate, \n" + 
-				"Check application in time, Ckeck application complete, Hand application over to examining board, \n" + 
+				"Check application in time, Check application complete, Hand application over to examining board, \n" + 
 				"Check if Bachelor is, Send additional requirements, Check if Bachelors Degree is within top 85%, \n" + 
 				"Invite for talk, talk to applicant, Document, Rank with other applicants, \n" + 
 				"Send acceptance, Send rejection";
