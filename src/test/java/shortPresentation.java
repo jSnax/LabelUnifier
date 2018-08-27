@@ -27,6 +27,8 @@ import java.io.IOException;
 import de.uni_koblenz.label.Label;
 import de.uni_koblenz.label.LabelList;
 import net.sf.extjwnl.JWNLException;
+
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -180,16 +182,24 @@ public class shortPresentation {
 	}
 	
 	System.out.println("Full Phrases to matching Labels:");
+    List<String> lines = new ArrayList<String>(); 
+    
 	for (int i = 0; i < testList.getInputLabels().size(); i++){
 		for (int j = 0; j < testList.getInputLabels().get(i).getSentenceArray().size(); j++){
 			System.out.println("Label "+i+" was: "+testList.getInputLabels().get(i).getSentenceArray().get(j).getContentAsString());
+			lines.add("Label "+i+" was: "+testList.getInputLabels().get(i).getSentenceArray().get(j).getContentAsString());
 			System.out.println("Possible Phrases:");
+			lines.add("Possible Phrases:");
 			for (int k = 0; k < PhraseListList.get(i).size(); k++){
 				System.out.println("Phrase "+k+": "+PhraseListList.get(i).get(k).getFullContent());
+				lines.add("Phrase "+k+": "+PhraseListList.get(i).get(k).getFullContent());
 			}
 			System.out.println("");
+			lines.add("");
 		}
 	}
+	java.nio.file.Path file = Paths.get("result.txt");
+    Files.write(file, lines, Charset.forName("UTF-8"));
 	
 	PhraseList demoPhrasenCompare = new PhraseList();
 	demoPhrasenCompare.setWholeInput(PhraseListList);
