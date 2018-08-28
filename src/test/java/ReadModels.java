@@ -4,6 +4,24 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ReadModels {
+
+	public ArrayList <String> GetFileName (File y) throws FileNotFoundException{
+		
+		Scanner sc;
+		ArrayList <String> FName = new ArrayList <String>();
+		if(y.exists()) {
+				 sc = new Scanner(y);
+				while (sc.hasNextLine()) {
+					if (sc.hasNext("<place") || sc.hasNext("<transition") ) {
+						sc.next();
+						FName.add(y.getName().replace(".pnml", ""));}	
+					else 
+						sc.nextLine();
+				}
+			}
+		return FName;
+	}
+	
 	public ArrayList <String> GetIDs (File y) throws FileNotFoundException {
 		Scanner sc;
 		ArrayList <String> ID = new ArrayList <String>();
@@ -12,7 +30,7 @@ public class ReadModels {
 			while (sc.hasNextLine()) {
 				if (sc.hasNext("<place") || sc.hasNext("<transition") ) {
 					sc.next();
-					ID.add(sc.next());}	
+					ID.add(sc.next().replace("id=\"", "").replace("\">", ""));}	
 				else 
 					sc.nextLine();
 			}
@@ -32,9 +50,10 @@ public class ReadModels {
 						LabelList.add(sc.nextLine().replace("<text>", "").replace("</text>", ""));}
 					else 
 						sc.nextLine();
-			}}
-		
+				}
+			}
 		return LabelList;
 	}
+
 
 }
