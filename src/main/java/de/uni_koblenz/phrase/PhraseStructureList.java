@@ -21,7 +21,7 @@ public class PhraseStructureList {
 	
     public PhraseStructureList() throws Exception {
     	
-    	String tsvFile = "C:\\Users\\jSnax\\Desktop\\testfile.txt";
+    	String tsvFile = "src/test/resources/Structures_And_Thesaurus/PhraseStructureList.txt";
     	// ToDo: Ultimately, the file needs to be read from the JAR's location. Since we don't have a JAR currently,
     	// the file source used above has to be altered to suit the actual location
     	// Once we have the JAR, refer to the link below for possible fixes

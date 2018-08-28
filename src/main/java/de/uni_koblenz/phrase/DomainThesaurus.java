@@ -21,7 +21,7 @@ public class DomainThesaurus {
 
 	public DomainThesaurus() {
 		
-		String dtFile = "C:\\Users\\jSnax\\Desktop\\testfile2.txt"; 
+		String dtFile = "src/test/resources/Structures_And_Thesaurus/DomainThesaurus.txt"; 
         BufferedReader br = null;
         String line = "";
         String csvSplitBy = ",";
