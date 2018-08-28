@@ -27,6 +27,8 @@ import java.io.IOException;
 import de.uni_koblenz.label.Label;
 import de.uni_koblenz.label.LabelList;
 import net.sf.extjwnl.JWNLException;
+
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -41,7 +43,7 @@ import de.uni_koblenz.label.*;
 import de.uni_koblenz.phrase.*;
 
 public class shortPresentation {
-	public static void main (String args[]) throws JWNLException, ClassNotFoundException, IOException {
+	public static void main (String args[]) throws Exception {
 		
 	System.out.println("Started.");
 	Lexicon lexicon = Lexicon.getDefaultLexicon();
@@ -148,15 +150,13 @@ public class shortPresentation {
 	tempList3.add(PhraseStructureTypes.NOUN_SINGULAR_OBJECT);
 	Structure3.setElements(tempList3);
 	tempList4.add(PhraseStructureTypes.NOUN_PLURAL_SUBJECT);
-	tempList4.add(PhraseStructureTypes.ADVERB);
 	tempList4.add(PhraseStructureTypes.VERB_SIMPLEFUTURE);
 	tempList4.add(PhraseStructureTypes.NOUN_PLURAL_OBJECT);
+	tempList4.add(PhraseStructureTypes.PUNCTUATION_QUESTIONMARK);
 	Structure4.setElements(tempList4);
+	tempList5.add(PhraseStructureTypes.VERB_PASSIVE_PAST);
 	tempList5.add(PhraseStructureTypes.NOUN_SINGULAR_SUBJECT);
-	tempList5.add(PhraseStructureTypes.VERB_SIMPLEFUTURE);
-	tempList5.add(PhraseStructureTypes.ADVERB);
-	tempList5.add(PhraseStructureTypes.ADJECTIVE_FOR_OBJECT);
-	tempList5.add(PhraseStructureTypes.NOUN_PLURAL_OBJECT);
+	tempList5.add(PhraseStructureTypes.PUNCTUATION_QUESTIONMARK);
 	Structure5.setElements(tempList5);
 	allStructures.add(Structure);
 	allStructures.add(Structure2);
@@ -168,8 +168,8 @@ public class shortPresentation {
 
 	completeList.sortStructures();
 	
-	testList.getInputLabels().get(4).getSentenceArray().get(0).getWordsarray().get(4).setRole(RoleLeopold.SUBJECT);
-	testList.getInputLabels().get(4).getSentenceArray().get(0).getWordsarray().get(0).setRole(RoleLeopold.BUSINESS_OBJECT);
+	//testList.getInputLabels().get(4).getSentenceArray().get(0).getWordsarray().get(4).setRole(RoleLeopold.SUBJECT);
+	//testList.getInputLabels().get(4).getSentenceArray().get(0).getWordsarray().get(0).setRole(RoleLeopold.BUSINESS_OBJECT);
 	for (int i = 0; i < testList.getInputLabels().size(); i++){
 		for (int j = 0; j < testList.getInputLabels().get(i).getSentenceArray().size(); j++){
 			ArrayList<Phrase> tempPhrase = testList.getInputLabels().get(i).getSentenceArray().get(j).toPhrase(completeList, realiser, nlgFactory);
@@ -182,15 +182,27 @@ public class shortPresentation {
 	}
 	
 	System.out.println("Full Phrases to matching Labels:");
+    List<String> lines = new ArrayList<String>(); 
+    
 	for (int i = 0; i < testList.getInputLabels().size(); i++){
 		for (int j = 0; j < testList.getInputLabels().get(i).getSentenceArray().size(); j++){
 			System.out.println("Label "+i+" was: "+testList.getInputLabels().get(i).getSentenceArray().get(j).getContentAsString());
+			lines.add("Label "+i+" was: "+testList.getInputLabels().get(i).getSentenceArray().get(j).getContentAsString());
 			System.out.println("Possible Phrases:");
+			lines.add("Possible Phrases:");
 			for (int k = 0; k < PhraseListList.get(i).size(); k++){
 				System.out.println("Phrase "+k+": "+PhraseListList.get(i).get(k).getFullContent());
+				lines.add("Phrase "+k+": "+PhraseListList.get(i).get(k).getFullContent());
 			}
 			System.out.println("");
+			lines.add("");
 		}
 	}
+	java.nio.file.Path file = Paths.get("result.txt");
+    Files.write(file, lines, Charset.forName("UTF-8"));
+	
+	PhraseList demoPhrasenCompare = new PhraseList();
+	demoPhrasenCompare.setWholeInput(PhraseListList);
+	demoPhrasenCompare.phraseCompareAndDecision(testList);
 	}
 }

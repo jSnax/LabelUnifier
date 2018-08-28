@@ -84,7 +84,55 @@ public class Sentence implements java.io.Serializable{
 		this.contentAsString = contentAsString;
 	}
 
+	public static boolean isPassive(List<Word> w){
 
+		for (int i = 0; i < w.size(); i++) {
+			for (int j = 0; j < w.get(i).getGrammaticalRelations().size(); j++) {	
+				if(w.get(i).getGrammaticalRelations().get(j).getGrammaticalRelationName()!=null) {
+					
+					if(w.get(i).getGrammaticalRelations().get(j).getGrammaticalRelationName().equals(RelationName.NOMINAL_PASSIVE_SUBJECT)
+						|| w.get(i).getGrammaticalRelations().get(j).getGrammaticalRelationName().equals(RelationName.CONTROLLING_NOMINAL_PASSIVE_SUBJECT)) 
+						return true;
+					}
+				}
+			}
+		return false;		
+	}
+
+	public static void passiveHandling(List<Word> w) {
+	
+		for(int i = 0; i < w.size(); i++) {
+		
+			if(isPassive(w)==true) {
+			
+				if((w.get(i).getPartOfSpeech()!=null)
+						&& (w.get(i).getPartOfSpeech().getJwnlType()==POS.NOUN || w.get(i).getPartOfSpeech()==PartOfSpeechTypes.PERSONAL_PRONOUN)){
+					if(i<=3) {
+						w.get(i).setRole(RoleLeopold.BUSINESS_OBJECT); }
+					if(i==1) {
+						if(w.get(i-1).getOriginalForm().equals("by")) {
+							w.get(i).setRole(RoleLeopold.SUBJECT); }
+					
+					}else if(i==2) {
+						if(w.get(i-2).getOriginalForm().equals("by")|| w.get(i-1).getOriginalForm().equals("by")) {
+							w.get(i).setRole(RoleLeopold.SUBJECT); }
+					
+					}else if(i>=3) {
+						if(w.get(i-3).getOriginalForm().equals("by") || w.get(i-2).getOriginalForm().equals("by") || w.get(i-1).getOriginalForm().equals("by")){
+							w.get(i).setRole(RoleLeopold.SUBJECT); }
+						if(w.get(i-2).getRole().equals(RoleLeopold.SUBJECT) || w.get(i-1).getRole().equals(RoleLeopold.SUBJECT)) {
+							w.get(i).setRole(RoleLeopold.OPTIONAL_INFORMATION_FRAGMENT); }
+						
+					}else{
+						if(w.get(i).getOriginalForm().equals("by") && w.get(i+1).getPartOfSpeech().getJwnlType()==POS.NOUN) {
+							w.get(i+1).setRole(RoleLeopold.SUBJECT);
+						}else if(w.get(i).getOriginalForm().equals("by") && w.get(i+2).getPartOfSpeech().getJwnlType()==POS.NOUN) {
+							w.get(i+1).setRole(RoleLeopold.SUBJECT); }
+					}	
+				}
+			}
+		}
+	}
 
 	/*
 	 * method to create wordsarray from CoreSentence
@@ -207,8 +255,10 @@ public class Sentence implements java.io.Serializable{
 	    // removing all unused WORDs from wordsarray like punctuation and compound words
     	// at this point because other methods rely on the fact that the index of corenlpsentence equals wordsarray 
 	    wordsarray.removeAll(toRemove);
+	    
+	    //redefining role for passive sentences
+	    passiveHandling(wordsarray);
     		
-		
 	}
 	
 	@Override
@@ -232,14 +282,14 @@ public class Sentence implements java.io.Serializable{
 			List<PhraseStructure> allStructures = StructureList.getAllStructures();
 			String tempString = "";
 			int j = 0;
-			NPPhraseSpec object = new NPPhraseSpec(nlgFactory);
-			NPPhraseSpec subject = new NPPhraseSpec(nlgFactory);
-			VPPhraseSpec verb = new VPPhraseSpec(nlgFactory);
 			boolean passive;
 			boolean error;
 			int counter = 0;
 			while (counter < allStructures.size()){
 				SPhraseSpec p = nlgFactory.createClause();
+				NPPhraseSpec object = new NPPhraseSpec(nlgFactory);
+				NPPhraseSpec subject = new NPPhraseSpec(nlgFactory);
+				VPPhraseSpec verb = new VPPhraseSpec(nlgFactory);
 				PhraseStructure Structure = allStructures.get(counter);
 				int i = 0;
 				passive = false;
@@ -335,7 +385,9 @@ public class Sentence implements java.io.Serializable{
 					case PUNCTUATION_PERIOD:
 						break;
 					case PUNCTUATION_QUESTIONMARK:
-						break;
+						if (!(Structure.isProperSentence())) error = true;
+						p.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.YES_NO);		
+					    break;
 					case VERB_BASE:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 						//old:	if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
@@ -389,6 +441,22 @@ public class Sentence implements java.io.Serializable{
 						}
 						verb = nlgFactory.createVerbPhrase(tempString);
 						p.setFeature(Feature.PASSIVE, true);
+						p.setVerb(verb);
+						if (tempString == "") error = true;
+						passive = true;
+						break;
+					case VERB_PASSIVE_PAST:
+						while (tempString == "" && j < tempSentence.getWordsarray().size()){
+						//old:	if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
+							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"){
+							//old:	tempString = tempSentence.getWordsarray().get(j).getBaseform();
+							tempString = this.BaseOfTempWord(j);
+							}
+							j++;
+						}
+						verb = nlgFactory.createVerbPhrase(tempString);
+						p.setFeature(Feature.PASSIVE, true);
+						p.setFeature(Feature.TENSE, Tense.PAST);
 						p.setVerb(verb);
 						if (tempString == "") error = true;
 						passive = true;
@@ -473,6 +541,7 @@ public class Sentence implements java.io.Serializable{
 					}
 					currentPhrase.setseparatedContent(wordList);
 					currentPhrase.setUsedStructure(counter);
+					currentPhrase.setUsedStructureSize(allStructures.get(counter).getElements().size());
 					result.add(currentPhrase);
 				}
 				counter++;
