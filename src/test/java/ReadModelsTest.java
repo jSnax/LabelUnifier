@@ -10,9 +10,7 @@ public class ReadModelsTest {
 		ReadModels Reader = new ReadModels() ;
 		ArrayList <String> IDs = new ArrayList <String> ();
 		ArrayList <String> Labelliste = new ArrayList <String> ();
-		File Model = new File("C:\\Users\\Jan Angemeer\\git\\SemanticProcessModeling\\src\\test\\resources\\dataset2\\models\\birthCertificate_p246.pnml");
-		// not done yet
-		
+		File Model = new File("src/test/resources/dataset2/models/birthCertificate_p246.pnml");
 		IDs= Reader.GetIDs(Model);
 		System.out.println("Die IDs des Models sind:" + IDs);
 		
