@@ -1,7 +1,10 @@
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-
-
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.*;
 
 import de.uni_koblenz.cluster.*;
@@ -71,8 +74,45 @@ public class shortPresentation2 {
 	String[] input = new String[inputTemp.size()];
 	input = inputTemp.toArray(input);
 
-	// Fill Labels with word arrays
-	LabelList testList = new LabelList(input);
+	LabelList testList=new LabelList();
+	LabelList safetyList=new LabelList();
+	// SOURCE:http://www.avajava.com/tutorials/lessons/how-do-i-write-an-object-to-a-file-and-read-it-back.html
+	try {
+		// read object from file
+		FileInputStream fis = new FileInputStream("src/test/resources/short.txt");
+		System.out.println("FOUND EXISTING FILE");
+	} catch (FileNotFoundException e) {
+		try {
+			System.out.println("NO FILE FOUND. CREATING NEW FILE");
+			// Fill Labels with word arrays
+			LabelList inputList = new LabelList(input);
+			// write object to file
+			FileOutputStream fos = new FileOutputStream("src/test/resources/short.txt");
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(inputList);
+			oos.close();
+		} catch (IOException e2) {
+			e.printStackTrace();
+		} 
+	} finally{
+		FileInputStream fis = new FileInputStream("src/test/resources/short.txt");
+		ObjectInputStream ois = new ObjectInputStream(fis);
+		
+		testList = (LabelList) ois.readObject();
+		ois.close();
+		System.out.print(testList);
+		fis.close();
+		FileInputStream fis2 = new FileInputStream("src/test/resources/short.txt");
+		ObjectInputStream ois2 = new ObjectInputStream(fis2);
+		
+		safetyList = (LabelList) ois2.readObject();
+		ois2.close();
+	}
+	// make copy of original testList
+
+	/*
+	 *  ORIGINAL CODE FROM MAIN 
+	 */
 	
 	System.out.println("Printing Preprocessing results:");
 	System.out.println(testList);
