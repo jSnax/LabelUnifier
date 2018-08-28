@@ -1,0 +1,127 @@
+Label 0 was: p7.
+Possible Phrases:
+
+Label 1 was: Identity confirmed.
+Possible Phrases:
+
+Label 2 was: p5.
+Possible Phrases:
+
+Label 3 was: p3.
+Possible Phrases:
+
+Label 4 was: p2.
+Possible Phrases:
+
+Label 5 was: Start.
+Possible Phrases:
+
+Label 6 was: Finalized.
+Possible Phrases:
+
+Label 7 was: p8.
+Possible Phrases:
+
+Label 8 was: p10.
+Possible Phrases:
+
+Label 9 was: p18.
+Possible Phrases:
+
+Label 10 was: End.
+Possible Phrases:
+
+Label 11 was: p16.
+Possible Phrases:
+
+Label 12 was: Updated.
+Possible Phrases:
+
+Label 13 was: p14.
+Possible Phrases:
+
+Label 14 was: p13.
+Possible Phrases:
+
+Label 15 was: p11.
+Possible Phrases:
+
+Label 16 was: p19.
+Possible Phrases:
+
+Label 17 was: Send PL.
+Possible Phrases:
+Phrase 0: Send PL.
+
+Label 18 was: Confirm identity.
+Possible Phrases:
+Phrase 0: Confirm identity.
+
+Label 19 was: Return documents 1.
+Possible Phrases:
+
+Label 20 was: Finalize message.
+Possible Phrases:
+Phrase 0: Finalize message.
+
+Label 21 was: Receive notification birth.
+Possible Phrases:
+Phrase 0: Receive notification birth.
+
+Label 22 was: Archive documents.
+Possible Phrases:
+
+Label 23 was: Search GBA data.
+Possible Phrases:
+
+Label 24 was: t11.
+Possible Phrases:
+
+Label 25 was: Sign birth certificate.
+Possible Phrases:
+
+Label 26 was: Create birth certificate.
+Possible Phrases:
+Phrase 0: Create birth certificate.
+
+Label 27 was: Return documents 2.
+Possible Phrases:
+
+Label 28 was: Update GBA.
+Possible Phrases:
+
+Label 29 was: Determine next action.
+Possible Phrases:
+Phrase 0: Determine action.
+
+Label 30 was: Send data.
+Possible Phrases:
+
+Label 31 was: Check validity.
+Possible Phrases:
+Phrase 0: Check validity.
+
+Label 32 was: Send notifications.
+Possible Phrases:
+
+Label 33 was: Confirm identity without.
+Possible Phrases:
+Phrase 0: Confirm identity.
+
+Label 34 was: Confirm identity with passport.
+Possible Phrases:
+Phrase 0: Confirm identity.
+
+Label 35 was: Refuse continuation.
+Possible Phrases:
+Phrase 0: Refuse continuation.
+
+Label 36 was: t7.
+Possible Phrases:
+
+Label 37 was: Fill in birth registration form.
+Possible Phrases:
+
+Label 38 was: Check GBA data.
+Possible Phrases:
+

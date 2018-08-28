@@ -158,18 +158,33 @@ public class LabelList implements java.io.Serializable{
                 // iteration over all words in sentence
                 for (Word w : s.getWordsarray()) {
                     if (w.getPartOfSpeech().getJwnlType() != null && w.getBaseform() != "be" && w.getBaseform() != "have"){
-                    	// TODO: Exception for "will" as a verb
+                    	// TODO: Exception for "will" as a verb or just refining the function as whole, e.g. stop using contains below
                         tempWord = dictionary.getIndexWord(w.getPartOfSpeech().getJwnlType(), w.getBaseform());
                         // Transform baseform of Word j in Label i into an indexWord so extjwnl can use it
-                        tempSyn = tempWord.getSenses();
-                        // Sysnte for Word j
-                        w.setSynonyms(new ArrayList<String>());
-                        // pre-create the Synonym list for Word j
-                        // CAUTION: This will override any pre-existing synonym list, so this method may only be called once
-                        for (net.sf.extjwnl.data.Synset syn : tempSyn) {
-                            // Iterate over all meanings in the synset, z refers to the current meaning
-                            if (w.getPartOfSpeech().getJwnlType() != POS.ADJECTIVE) {
-                                nodelist=PointerUtils.getCoordinateTerms(syn);
+                        try{
+                            tempSyn = tempWord.getSenses();
+                            // Sysnte for Word j
+                            w.setSynonyms(new ArrayList<String>());
+                            // pre-create the Synonym list for Word j
+                            // CAUTION: This will override any pre-existing synonym list, so this method may only be called once
+                            for (net.sf.extjwnl.data.Synset syn : tempSyn) {
+                                // Iterate over all meanings in the synset, z refers to the current meaning
+                                if (w.getPartOfSpeech().getJwnlType() != POS.ADJECTIVE) {
+                                    nodelist=PointerUtils.getCoordinateTerms(syn);
+                                    for(PointerTargetNode node:nodelist) {
+                                        for(net.sf.extjwnl.data.Word word:node.getSynset().getWords()) {
+                                            if (!w.getSynonyms().contains(word.getLemma()))
+                                                w.addSynonym(word.getLemma());
+                                                // Go through the synonym list and add each synonym to synonym list for word j, unless it's already in there
+                                        }
+                                    }
+                                    nodelist=PointerUtils.getDirectHypernyms(syn);
+                                }
+                                else {
+                                    nodelist=PointerUtils.getSynonyms(syn);
+                                }
+                                // Copy all synonyms to nodelist.
+                                // For nouns and verbs, a combination of getDirectHypernyms and getCoordinateTerms has to be used since getSynonyms only works on adjectives
                                 for(PointerTargetNode node:nodelist) {
                                     for(net.sf.extjwnl.data.Word word:node.getSynset().getWords()) {
                                         if (!w.getSynonyms().contains(word.getLemma()))
@@ -177,21 +192,13 @@ public class LabelList implements java.io.Serializable{
                                             // Go through the synonym list and add each synonym to synonym list for word j, unless it's already in there
                                     }
                                 }
-                                nodelist=PointerUtils.getDirectHypernyms(syn);
-                            }
-                            else {
-                                nodelist=PointerUtils.getSynonyms(syn);
-                            }
-                            // Copy all synonyms to nodelist.
-                            // For nouns and verbs, a combination of getDirectHypernyms and getCoordinateTerms has to be used since getSynonyms only works on adjectives
-                            for(PointerTargetNode node:nodelist) {
-                                for(net.sf.extjwnl.data.Word word:node.getSynset().getWords()) {
-                                    if (!w.getSynonyms().contains(word.getLemma()))
-                                        w.addSynonym(word.getLemma());
-                                        // Go through the synonym list and add each synonym to synonym list for word j, unless it's already in there
-                                }
                             }
                         }
+                        catch (NullPointerException q){
+                        	w.setSynonyms(new ArrayList<String>());
+                        	w.addSynonym(w.getBaseform());
+                        }
+
                     }
                 }
             }
