@@ -29,7 +29,7 @@ public class ReadModels {
 				if (sc.hasNext("<place") || sc.hasNext("<transition")) {
 					sc.nextLine();
 					sc.nextLine();
-						LabelList.add(sc.nextLine());}
+						LabelList.add(sc.nextLine().replace("<text>", "").replace("</text>", ""));}
 					else 
 						sc.nextLine();
 			}}
