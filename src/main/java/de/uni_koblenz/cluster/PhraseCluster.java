@@ -8,7 +8,7 @@ import de.uni_koblenz.phrase.Phrase;
 
 public class PhraseCluster {
 
-	public ArrayList<Label> matchingLabels;
+	public ArrayList<String> matchingLabels;
 	public String builtPhrase;
 	
 	public PhraseCluster(LabelList RemainingLabels) {
@@ -20,15 +20,15 @@ public class PhraseCluster {
 }
 	
 	public PhraseCluster() {
-		this.matchingLabels = new ArrayList<Label>();
+		this.matchingLabels = new ArrayList<String>();
 	}
 
 
-		public List<Label> getMatchingLabels() {
+		public List<String> getMatchingLabels() {
 			return matchingLabels;
 		}
 
-		public void setMatchingLabels(ArrayList<Label> matchingLabels) {
+		public void setMatchingLabels(ArrayList<String> matchingLabels) {
 			this.matchingLabels = matchingLabels;
 		}
 

@@ -88,8 +88,8 @@ public class PhraseList {
 						if (currentPhrase.equals(this.wholeInput.get(labelDimension).get(0).getFullContent())) {
 							PhraseCluster currentCluster = new PhraseCluster();
 							currentCluster.setBuiltPhrase(wholeInput.get(labelDimension).get(0).getFullContent());
-							currentCluster.getMatchingLabels().add(labelList.getInputLabels().get(zaehlerLabels));
-							currentCluster.getMatchingLabels().add(labelList.getInputLabels().get(labelDimension));
+							currentCluster.getMatchingLabels().add(labelList.getInputLabels().get(zaehlerLabels).getLabelAsString());
+							currentCluster.getMatchingLabels().add(labelList.getInputLabels().get(labelDimension).getLabelAsString());
 							this.allBuiltClusters.add(currentCluster);
 							controller.add(zaehlerLabels);
 							controller.add(labelDimension);
@@ -98,15 +98,26 @@ public class PhraseList {
 						else if(!(controller.contains(zaehlerLabels))){
 						PhraseCluster currentCluster = new PhraseCluster();
 						currentCluster.setBuiltPhrase(wholeInput.get(zaehlerLabels).get(0).getFullContent());
-						currentCluster.getMatchingLabels().add(labelList.getInputLabels().get(zaehlerLabels));
+						currentCluster.getMatchingLabels().add(labelList.getInputLabels().get(zaehlerLabels).getLabelAsString());
 						this.allBuiltClusters.add(currentCluster);
 						controller.add(zaehlerLabels);
 						}
 					}
+				if(!(controller.contains(zaehlerLabels))) {
+					PhraseCluster currentCluster = new PhraseCluster();
+					currentCluster.setBuiltPhrase(wholeInput.get(zaehlerLabels).get(0).getFullContent());
+					currentCluster.getMatchingLabels().add(labelList.getInputLabels().get(zaehlerLabels).getLabelAsString());
+					this.allBuiltClusters.add(currentCluster);
+					controller.add(zaehlerLabels);
+				}
 			}
 		System.out.println("Die finalen Phrasen sind: ");
 			for (int i = 0; i < this.allBuiltClusters.size(); i++) {
 				System.out.println(allBuiltClusters.get(i).getBuiltPhrase());
+				System.out.println("Mit den Labels: ");
+				System.out.println(allBuiltClusters.get(i).getMatchingLabels().get(0));
+				//System.out.println(allBuiltClusters.get(i).getMatchingLabels().get(1));
+				System.out.println("\n");
 		}
 	}
 }
