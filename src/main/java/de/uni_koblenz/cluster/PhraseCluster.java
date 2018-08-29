@@ -16,7 +16,9 @@ public class PhraseCluster {
 		Label DefiningLabel = RemainingLabels.getInputLabels().get(0); 
 		matchingLabels.add(DefiningLabel);
 		// Takes the first remaining label in the LabelList and creates a new LabelCluster for it*/
-
+		//matchinlabels = arraylist<arraylist<Phrase>>();
+		//It saves the arrayList of the Labels that fit with the DefiningLabel according to the String Comparison
+		//
 }
 	
 	public PhraseCluster() {
