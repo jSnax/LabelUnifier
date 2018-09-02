@@ -200,9 +200,10 @@ public class shortPresentation {
 	}
 	java.nio.file.Path file = Paths.get("result.txt");
     Files.write(file, lines, Charset.forName("UTF-8"));
-	
+	System.out.println("---------------------");
 	PhraseList demoPhrasenCompare = new PhraseList();
 	demoPhrasenCompare.setWholeInput(PhraseListList);
 	demoPhrasenCompare.phraseCompareAndDecision(testList);
+	demoPhrasenCompare.writeToFile();
 	}
 }
