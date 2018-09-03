@@ -1,1 +1,1 @@
-bill, check, computer
+invoice, check

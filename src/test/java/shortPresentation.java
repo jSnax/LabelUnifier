@@ -7,7 +7,6 @@ import de.uni_koblenz.cluster.*;
 import de.uni_koblenz.enums.*;
 import de.uni_koblenz.label.*;
 import de.uni_koblenz.phrase.*;
-import de.uni_koblenz.phrase.PhraseStructure;
 import net.sf.extjwnl.JWNLException;
 import net.sf.extjwnl.data.POS;
 import net.sf.extjwnl.data.PointerUtils;
@@ -69,6 +68,8 @@ public class shortPresentation {
 	System.out.println("Printing Preprocessing results:");
 	System.out.println(testList);
 	
+	// Create DomainThesaurus
+	DomainThesaurus thesaurus = new DomainThesaurus();
 	// Set Input Labels to previously created Label list
 	System.out.println("Printing Labels:");
 	for (int i = 0; i < testList.getInputLabels().size(); i++){
@@ -115,7 +116,7 @@ public class shortPresentation {
 	System.out.println("Printing Generalized Wordclusters");
 
 	for (int i = 0; i < AllClusters.size(); i++){
-		AllClusters.get(i).calculateDominance();
+		AllClusters.get(i).calculateDominance(thesaurus);
 		AllClusters.get(i).generalizeWords();
 	}
 	
