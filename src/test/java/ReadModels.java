@@ -54,6 +54,24 @@ public class ReadModels {
 			}
 		return LabelList;
 	}
+	
+	public ArrayList <String> GetComparedIDs (File y) throws FileNotFoundException {
+		Scanner sc;
+		ArrayList <String> ComparedIDs = new ArrayList <String>();
+		if(y.exists()) {
+			 sc = new Scanner(y);
+			while (sc.hasNextLine()) {
+				if (sc.hasNext("<Cell>") ) {
+					sc.nextLine();
+					sc.next();
+					ComparedIDs.add(sc.next().replace("rdf:resource='http://", "").replace("'/>", "") + sc.next().replace("<entity2", " ") + sc.next().replace("rdf:resource='http://", "").replace("'/>", "") );
 
+				}	
+				else 
+					sc.nextLine();
+			}
+		}
+		return ComparedIDs ;
+	}
 
 }

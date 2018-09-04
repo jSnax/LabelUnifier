@@ -9,10 +9,11 @@ public class ReadModelsTest {
 		System.out.println("Algorithmus gestarted");
 		
 		ReadModels Reader = new ReadModels() ;
-
-		ArrayList<String> IDs = new ArrayList <String> ();
+		
+		ArrayList <String> IDs = new ArrayList <String> ();
 		ArrayList <String> Labelliste = new ArrayList <String> ();
 		ArrayList <String> FileName = new ArrayList <String> ();
+		ArrayList <String> ComparedIDs = new ArrayList <String> ();
 		
 		
 		File dir = new File("src/test/resources/dataset2/models");
@@ -32,6 +33,17 @@ public class ReadModelsTest {
 				System.out.println("Die Labels des Models sind: " + Labelliste);
 				System.out.println();
 				
+		}
+		File gold = new File("src/test/resources/dataset2/goldstandard");
+		File[] fileListgold = gold.listFiles();
+		
+		
+		for(File f : fileListgold) {
+			File goldmodel = new File(f.toURI());
+			
+				ComparedIDs = Reader.GetComparedIDs(goldmodel);
+				System.out.println( "Die identischen ID's sind:" + ComparedIDs);
+				System.out.println();
 		}
 		
 		System.out.println("Algorithmus beendet");
