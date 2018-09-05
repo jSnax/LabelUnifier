@@ -283,6 +283,7 @@ public class Word implements java.io.Serializable{
 	}
 
 
+
 }
 	
 	/* stem nimmt String originalForm als Input und gibt String(?) baseForm als Output
