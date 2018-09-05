@@ -23,7 +23,7 @@ Possible Phrases:
 Phrase 0: Company will pay invoice.
 Phrase 1: Pay invoice.
 
-Label 5 was: Verify bill.
+Label 5 was: Verify bill and currency.
 Possible Phrases:
 Phrase 0: Check invoice.
 

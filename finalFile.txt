@@ -17,6 +17,6 @@ Bill is payed by company.
 
 The current Phrase is: Check invoice.
 The matching labels are:
-Verify bill.
+Verify bill and currency.
 
 
