@@ -57,7 +57,7 @@ public class shortPresentation {
 			"Employees check bills",
 			"Company pays bill",
 			"Bill is payed by company",
-			"Verify bill"
+			"Verify bill and currency"
 			
 	};
 	
