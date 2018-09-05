@@ -19,6 +19,7 @@ public class Phrase {
 	private Vector<String> personalVectorSpace;
 	private int usedStructure;
 	private int usedStructureSize;
+	private boolean noStructureFound;
 
 	public Phrase() {
 		
@@ -200,6 +201,16 @@ public class Phrase {
 
 		public void setUsedStructureSize(int usedStructureSize) {
 			this.usedStructureSize = usedStructureSize;
+		}
+
+
+		public boolean getNoStructureFound() {
+			return noStructureFound;
+		}
+
+
+		public void setNoStructureFound(boolean noStructureFound) {
+			this.noStructureFound = noStructureFound;
 		}
 }
 
