@@ -285,7 +285,9 @@ public class Sentence implements java.io.Serializable{
 			boolean passive;
 			boolean error;
 			int counter = 0;
-			while (counter < allStructures.size()){
+			boolean hasFittingStructure = false;
+			int maximumStructureUsed = 0;
+			while ((counter < allStructures.size()) && (allStructures.get(counter).getElements().size() >= maximumStructureUsed)){
 				SPhraseSpec p = nlgFactory.createClause();
 				NPPhraseSpec object = new NPPhraseSpec(nlgFactory);
 				NPPhraseSpec subject = new NPPhraseSpec(nlgFactory);
@@ -531,7 +533,9 @@ public class Sentence implements java.io.Serializable{
 						subject = object;
 						object = switcher;
 					}
+					hasFittingStructure = true;
 					Phrase currentPhrase = new Phrase();
+					currentPhrase.setNoStructureFound(false);
 					currentPhrase.setFullContent(realiser.realiseSentence(p));
 					List<String> wordList = new ArrayList<String>(Arrays.asList(currentPhrase.getFullContent().split(" ")));
 					for (int t = 0; t < wordList.size(); t++){
@@ -542,9 +546,23 @@ public class Sentence implements java.io.Serializable{
 					currentPhrase.setseparatedContent(wordList);
 					currentPhrase.setUsedStructure(counter);
 					currentPhrase.setUsedStructureSize(allStructures.get(counter).getElements().size());
+					maximumStructureUsed = allStructures.get(counter).getElements().size();
 					result.add(currentPhrase);
 				}
 				counter++;
+			}
+			if (!hasFittingStructure){
+				Phrase originalSentence = new Phrase();
+				originalSentence.setFullContent(this.getContentAsString());
+				List<String> wordList = new ArrayList<String>(Arrays.asList(originalSentence.getFullContent().split(" ")));
+				for (int t = 0; t < wordList.size(); t++){
+					if (wordList.get(t).contains(",") || wordList.get(t).contains(".")){
+						wordList.set(t, wordList.get(t).substring(0, wordList.get(t).length()-1));
+					}
+				}
+				originalSentence.setseparatedContent(wordList);
+				originalSentence.setNoStructureFound(true);
+				result.add(originalSentence);
 			}
 			return(result);
 		}
