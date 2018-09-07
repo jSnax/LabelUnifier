@@ -142,6 +142,74 @@ public class PhraseList {
 				finalPhrasesAndTheirLabels.add("\n");	
 		}
 	}
+	
+	public void phraseCompareAndDecisionFinal(LabelList labelList) {
+		ArrayList<Integer> controller = new ArrayList<Integer>();
+		PhraseCluster firstCluster = new PhraseCluster();
+		String firstPhrase = this.wholeInput.get(0).get(0).getFullContent();
+		firstCluster.setBuiltPhrase(wholeInput.get(0).get(0).getFullContent());
+		firstCluster.getMatchingLabels().add(labelList.getInputLabels().get(0).getLabelAsString());
+		controller.add(0);
+		for(int phrasenDurchzaehler = 1; phrasenDurchzaehler < this.wholeInput.size(); phrasenDurchzaehler++) {
+			if(firstPhrase.equals(this.wholeInput.get(phrasenDurchzaehler).get(0).getFullContent())) {
+				controller.add(phrasenDurchzaehler);
+				firstCluster.getMatchingLabels().add(labelList.getInputLabels().get(phrasenDurchzaehler).getLabelAsString());
+				continue;
+			}
+			else {
+				continue;
+			}
+		}
+		this.allBuiltClusters.add(firstCluster);
+		for(int labelDurchzaehler = 1; labelDurchzaehler < this.wholeInput.size(); labelDurchzaehler++) { //setzt aktuell betrachtete Phrase
+			PhraseCluster currentCluster = new PhraseCluster(); //erzeugt neues leeres Cluster
+			String currentPhrase = this.wholeInput.get(labelDurchzaehler).get(0).getFullContent(); //setzt die Phrase auf aktuell betrachtete Position
+			if(controller.contains(labelDurchzaehler)) {		//falls das aktuelle Label bereits einen Cluster bildet, wir dieses übersprungen
+				continue;
+			}
+			else{
+				currentCluster.getMatchingLabels().add(labelList.getInputLabels().get(labelDurchzaehler).getLabelAsString()); //schreibt label von Vergleichsbasis in das Cluster (wird aber nicht zwangsläufig hinzugefügt)
+				for(int vergleichsblock = labelDurchzaehler + 1; vergleichsblock < this.wholeInput.size(); vergleichsblock++) {
+					if(currentPhrase.equals(this.wholeInput.get(vergleichsblock).get(0).getFullContent())) { //Bildung eines Clusters, wenn die Phrasen gleich sind
+						controller.add(vergleichsblock);
+						controller.add(labelDurchzaehler);
+						currentCluster.getMatchingLabels().add(labelList.getInputLabels().get(vergleichsblock).getLabelAsString());
+						currentCluster.setBuiltPhrase(wholeInput.get(labelDurchzaehler).get(0).getFullContent());
+						continue;
+					}
+					else if ((vergleichsblock == this.wholeInput.size() - 1) && !(controller.contains(labelDurchzaehler))) {
+						PhraseCluster lastCluster = new PhraseCluster();
+						currentCluster.getMatchingLabels().clear();
+						currentCluster.getMatchingLabels().add(labelList.getInputLabels().get(labelDurchzaehler).getLabelAsString());
+						currentCluster.setBuiltPhrase(wholeInput.get(labelDurchzaehler).get(0).getFullContent());
+						break;
+					}
+					else {
+						continue;
+					}
+				}
+				this.allBuiltClusters.add(currentCluster);
+			}
+		}
+		
+		System.out.println("Die finalen Phrasen sind: ");
+		for (int i = 0; i < this.allBuiltClusters.size(); i++) {
+			System.out.println(allBuiltClusters.get(i).getBuiltPhrase());
+			
+			System.out.println("Mit den Labels: ");
+			System.out.println(allBuiltClusters.get(i).getMatchingLabels().get(0));
+			//System.out.println(allBuiltClusters.get(i).getMatchingLabels().get(1));
+			//System.out.println(allBuiltClusters.get(i).getMatchingLabels().get(2));
+			//System.out.println(allBuiltClusters.get(i).getMatchingLabels().get(3));
+			System.out.println("\n");
+			finalPhrasesAndTheirLabels.add("The current Phrase is: " +  allBuiltClusters.get(i).getBuiltPhrase() + "\n" + "The matching labels are:");
+			for(int j = 0; j < allBuiltClusters.get(i).getMatchingLabels().size(); j++){
+				finalPhrasesAndTheirLabels.add(allBuiltClusters.get(i).getMatchingLabels().get(j));
+			}
+			finalPhrasesAndTheirLabels.add("\n");	
+		}
+	}
+	
 	public void writeToFile() throws Exception{
 		java.nio.file.Path file = Paths.get("finalFile.txt");
 	    Files.write(file, finalPhrasesAndTheirLabels, Charset.forName("UTF-8"));

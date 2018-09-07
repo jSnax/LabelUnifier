@@ -42,8 +42,6 @@ public class PhraseCluster {
 
 		public void setBuiltPhrase(String builtPhrase) {
 			this.builtPhrase = builtPhrase;
-		}
-		
-		
+		}	
 
 }
