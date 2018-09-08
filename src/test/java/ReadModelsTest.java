@@ -2,51 +2,55 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-
+import java.util.*;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 public class ReadModelsTest {
-	public static void main(String[] args) throws FileNotFoundException {
-		System.out.println("Algorithmus gestarted");
-		
-		ReadModels Reader = new ReadModels() ;
-		
-		ArrayList <String> IDs = new ArrayList <String> ();
-		ArrayList <String> Labelliste = new ArrayList <String> ();
-		ArrayList <String> FileName = new ArrayList <String> ();
-		ArrayList <String> ComparedIDs = new ArrayList <String> ();
-		
-		
-		File dir = new File("src/test/resources/dataset2/models");
-		File[] fileList = dir.listFiles();
-		
-		
-		for(File f : fileList) {
-			File Model = new File(f.toURI());
+	
+		@Test
+		public void GoldStandardTest() throws FileNotFoundException{
 			
-				FileName = Reader.GetFileName(Model);
-				System.out.println("Dateiname: " + FileName);
+			ReadModels Reader = new ReadModels() ;
+			ArrayList <String> ComparedIDs = new ArrayList <String> ();
+			ArrayList <String> labels = new ArrayList <String> ();
 			
-				IDs= Reader.GetIDs(Model);
-				System.out.println("Die IDs des Models sind: " + IDs);
+			File gold = new File("src/test/resources/dataset2/goldstandard");
+			File[] fileListgold = gold.listFiles();
 			
-				Labelliste = Reader.ReadLabels(Model);
-				System.out.println("Die Labels des Models sind: " + Labelliste);
-				System.out.println();
-				
-		}
-		File gold = new File("src/test/resources/dataset2/goldstandard");
-		File[] fileListgold = gold.listFiles();
-		
-		
-		for(File f : fileListgold) {
-			File goldmodel = new File(f.toURI());
-			
+			for(File f : fileListgold) {
+				File goldmodel = new File(f.toURI());
 				ComparedIDs = Reader.GetComparedIDs(goldmodel);
-				System.out.println( "Die identischen ID's sind:" + ComparedIDs);
-				System.out.println();
+				labels = Reader.GetLabelName(ComparedIDs);
+				
+				// NOT DONE YET
+				// The list has to be processed by the algorithm
+
+				for(int i=0; i< ComparedIDs.size(); i+=2) {
+					assertEquals(labels.get(i).trim(), labels.get(i+1).trim());
+				}	
+			} 
 		}
 		
-		System.out.println("Algorithmus beendet");
-	}
-}	
+		public static void main(String[] args) throws FileNotFoundException {
+			System.out.println("Algorithmus gestarted");
+			
+			ReadModels Reader = new ReadModels() ;
+			
+			ArrayList <String> ComparedIDs = new ArrayList <String> ();
+			ArrayList <String> Labellist = new ArrayList <String> ();
+			
+			File gold = new File("src/test/resources/dataset2/goldstandard");
+			File[] fileListgold = gold.listFiles();
+			
+			for(File f : fileListgold) {
+				File goldmodel = new File(f.toURI());
+				ComparedIDs = Reader.GetComparedIDs(goldmodel);
+				Labellist = Reader.GetLabelName(ComparedIDs);
+			}
+			System.out.println(Labellist);
+
+			System.out.println("Algorithmus beendet");
+		}
+}
 
