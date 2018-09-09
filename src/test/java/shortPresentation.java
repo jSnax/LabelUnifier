@@ -52,6 +52,7 @@ public class shortPresentation {
 	Dictionary dictionary = Dictionary.getDefaultResourceInstance();
 	
 	String[] input=new String[] {
+<<<<<<< HEAD
 			"Employee checked beautiful invoice",
 			"Employee verifies small invoice",
 			"Employees check bills",
@@ -62,6 +63,17 @@ public class shortPresentation {
 			"take bill from box",
 			"Employer pays salary from savings",
 			"Rich Employer pays big salary from huge savings quickly"
+=======
+			"Employee checked beautiful invoice", //0
+			"Employee verifies small invoice", //1
+			"Employees check bills", //2
+			"Company pays bill", //3
+			"Employee checked beautiful invoice", //4
+			"Bill is payed by company", //5
+			"Company pays bill", //6
+			"Verify bill", //7
+			"Employee verifies small invoice" //8
+>>>>>>> branch 'MergePPAndMatch' of https://gitlab.uni-koblenz.de/alexfredekind/SemanticProcessModeling.git
 			
 	};
 	
