@@ -18,7 +18,11 @@ public enum PhraseStructureTypes {
 	PUNCTUATION_QUESTIONMARK("Punctuation"),
 	ADJECTIVE_FOR_OBJECT("Addition"),
 	ADJECTIVE_FOR_SUBJECT("Addition"),
-	ADVERB("Addition");
+	ADJECTIVE_FOR_PREPOSITIONAL_OBJECT("Addition"),
+	ADVERB("Addition"),
+	PREPOSITION("Prep"),
+	PREPOSITIONAL_OBJECT_SINGULAR("PrepObj"),
+	PREPOSITIONAL_OBJECT_PLURAL("PrepObj");
 
 	
 	private String determiner;
