@@ -52,15 +52,15 @@ public class shortPresentation {
 	Dictionary dictionary = Dictionary.getDefaultResourceInstance();
 	
 	String[] input=new String[] {
-			"Employee checked beautiful invoice",
-			"Employee verifies small invoice",
-			"Employees check bills",
-			"Company pays bill",
-			"Employee checked beautiful invoice",
-			"Bill is payed by company",
-			"Company pays bill",
-			"Verify bill",
-			"Employee verifies small invoice"
+			"Employee checked beautiful invoice", //0
+			"Employee verifies small invoice", //1
+			"Employees check bills", //2
+			"Company pays bill", //3
+			"Employee checked beautiful invoice", //4
+			"Bill is payed by company", //5
+			"Company pays bill", //6
+			"Verify bill", //7
+			"Employee verifies small invoice" //8
 			
 	};
 	

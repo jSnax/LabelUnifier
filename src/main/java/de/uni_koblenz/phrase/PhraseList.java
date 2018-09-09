@@ -164,11 +164,11 @@ public class PhraseList {
 		for(int labelDurchzaehler = 1; labelDurchzaehler < this.wholeInput.size(); labelDurchzaehler++) { //setzt aktuell betrachtete Phrase
 			PhraseCluster currentCluster = new PhraseCluster(); //erzeugt neues leeres Cluster
 			String currentPhrase = this.wholeInput.get(labelDurchzaehler).get(0).getFullContent(); //setzt die Phrase auf aktuell betrachtete Position
-			if(controller.contains(labelDurchzaehler)) {		//falls das aktuelle Label bereits einen Cluster bildet, wir dieses übersprungen
+			if(controller.contains(labelDurchzaehler)) {		//falls das aktuelle Label bereits einen Cluster bildet, wir dieses ï¿½bersprungen
 				continue;
 			}
 			else{
-				currentCluster.getMatchingLabels().add(labelList.getInputLabels().get(labelDurchzaehler).getLabelAsString()); //schreibt label von Vergleichsbasis in das Cluster (wird aber nicht zwangsläufig hinzugefügt)
+				currentCluster.getMatchingLabels().add(labelList.getInputLabels().get(labelDurchzaehler).getLabelAsString()); //schreibt label von Vergleichsbasis in das Cluster (wird aber nicht zwangslï¿½ufig hinzugefï¿½gt)
 				for(int vergleichsblock = labelDurchzaehler + 1; vergleichsblock < this.wholeInput.size(); vergleichsblock++) {
 					if(currentPhrase.equals(this.wholeInput.get(vergleichsblock).get(0).getFullContent())) { //Bildung eines Clusters, wenn die Phrasen gleich sind
 						controller.add(vergleichsblock);
@@ -202,14 +202,29 @@ public class PhraseList {
 			//System.out.println(allBuiltClusters.get(i).getMatchingLabels().get(2));
 			//System.out.println(allBuiltClusters.get(i).getMatchingLabels().get(3));
 			System.out.println("\n");
-			finalPhrasesAndTheirLabels.add("The current Phrase is: " +  allBuiltClusters.get(i).getBuiltPhrase() + "\n" + "The matching labels are:");
+			finalPhrasesAndTheirLabels.add("The new label is: " +  allBuiltClusters.get(i).getBuiltPhrase() + "\n" + "The labels that were transformed into it:");
+			List<Integer> alreadyChecked = new ArrayList<Integer>();
+			ArrayList<String> comp = new ArrayList<String>();
+			for (Label l : labelList.getInputLabels()) {
+				comp.add(l.getLabelAsString());
+			}
 			for(int j = 0; j < allBuiltClusters.get(i).getMatchingLabels().size(); j++){
-				finalPhrasesAndTheirLabels.add(allBuiltClusters.get(i).getMatchingLabels().get(j));
+				String writer = "";
+				String temp = allBuiltClusters.get(i).getMatchingLabels().get(j);
+				for(int k = 0; k < comp.size(); k++){
+					if(temp.equals(comp.get(k)) && !alreadyChecked.contains(k)){
+						writer += "Label ";
+						writer += k + " ";
+						alreadyChecked.add(k);
+						break;
+					}
+				}
+				writer += " (" + allBuiltClusters.get(i).getMatchingLabels().get(j) + ")";
+				finalPhrasesAndTheirLabels.add(writer);
 			}
 			finalPhrasesAndTheirLabels.add("\n");	
 		}
 	}
-	
 	public void writeToFile() throws Exception{
 		java.nio.file.Path file = Paths.get("finalFile.txt");
 	    Files.write(file, finalPhrasesAndTheirLabels, Charset.forName("UTF-8"));
