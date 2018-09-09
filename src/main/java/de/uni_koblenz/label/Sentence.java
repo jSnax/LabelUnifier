@@ -25,7 +25,6 @@ import simplenlg.framework.InflectedWordElement;
 import simplenlg.framework.LexicalCategory;
 import simplenlg.framework.WordElement;
 import simplenlg.lexicon.Lexicon;
-import simplenlg.phrasespec.SPhraseSpec;
 import simplenlg.realiser.english.Realiser;
 import simplenlg.framework.*;
 import simplenlg.lexicon.*;
@@ -273,8 +272,6 @@ public class Sentence implements java.io.Serializable{
 	
 		public ArrayList<Phrase> toPhrase(PhraseStructureList StructureList, Realiser realiser, NLGFactory nlgFactory){
 			
-			// TODO: Check whether a given word from the Sentence was already used to avoid using same object twice
-			// Probably needs some if-cases as well, e.g. "if object != empty add to current object else new object"
 			Sentence tempSentence = new Sentence();
 			tempSentence.setWordsarray(this.getWordsarray());
 			ArrayList<Phrase> result = new ArrayList<Phrase>();
@@ -284,18 +281,25 @@ public class Sentence implements java.io.Serializable{
 			int j = 0;
 			boolean passive;
 			boolean error;
+			boolean prepositionFound;
 			int counter = 0;
 			boolean hasFittingStructure = false;
 			int maximumStructureUsed = 0;
 			while ((counter < allStructures.size()) && (allStructures.get(counter).getElements().size() >= maximumStructureUsed)){
+				for (int usageCounter = 0; usageCounter < this.getWordsarray().size(); usageCounter++){
+					this.getWordsarray().get(usageCounter).setAlreadyUsedForStructure(false);
+				}
 				SPhraseSpec p = nlgFactory.createClause();
 				NPPhraseSpec object = new NPPhraseSpec(nlgFactory);
 				NPPhraseSpec subject = new NPPhraseSpec(nlgFactory);
+				NPPhraseSpec prepositionalObject = new NPPhraseSpec(nlgFactory);
 				VPPhraseSpec verb = new VPPhraseSpec(nlgFactory);
+		        PPPhraseSpec preposition = nlgFactory.createPrepositionPhrase();
 				PhraseStructure Structure = allStructures.get(counter);
 				int i = 0;
 				passive = false;
 				error = false;
+				prepositionFound = false;
 				while (i < Structure.getElements().size() && !error){ 
 					j = 0;
 					boolean found = false;
@@ -333,9 +337,10 @@ public class Sentence implements java.io.Serializable{
 					case NOUN_PLURAL_OBJECT:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							//old: if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "BUSINESS_OBJECT"){
-							if ((this.POSofTempWord(j) == "NNS" || this.POSofTempWord(j) == "NNPS") && this.RoleOfTempWord(j) == "BUSINESS_OBJECT"){
+							if ((this.POSofTempWord(j) == "NNS" || this.POSofTempWord(j) == "NNPS") && this.RoleOfTempWord(j) == "BUSINESS_OBJECT" && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 								//old: tempString = tempSentence.getWordsarray().get(j).getBaseform();
 								tempString = this.BaseOfTempWord(j);
+								this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
 							j++;
 						}
@@ -347,9 +352,10 @@ public class Sentence implements java.io.Serializable{
 					case NOUN_PLURAL_SUBJECT:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							//old:	if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "SUBJECT"){
-							if ((this.POSofTempWord(j) == "NNS" || this.POSofTempWord(j) == "NNPS") && this.RoleOfTempWord(j) == "SUBJECT"){
+							if ((this.POSofTempWord(j) == "NNS" || this.POSofTempWord(j) == "NNPS") && this.RoleOfTempWord(j) == "SUBJECT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 								//old: tempString = tempSentence.getWordsarray().get(j).getBaseform();
 								tempString = this.BaseOfTempWord(j);
+								this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
 							j++;
 						}
@@ -361,9 +367,10 @@ public class Sentence implements java.io.Serializable{
 					case NOUN_SINGULAR_OBJECT:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							//old: if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "BUSINESS_OBJECT"){
-							if ((this.POSofTempWord(j) == "NN" || this.POSofTempWord(j) == "NNP") && this.RoleOfTempWord(j) == "BUSINESS_OBJECT"){
+							if ((this.POSofTempWord(j) == "NN" || this.POSofTempWord(j) == "NNP") && this.RoleOfTempWord(j) == "BUSINESS_OBJECT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							//old:	tempString = tempSentence.getWordsarray().get(j).getBaseform();
 								tempString = this.BaseOfTempWord(j);
+								this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
 							j++;
 						}
@@ -374,9 +381,10 @@ public class Sentence implements java.io.Serializable{
 					case NOUN_SINGULAR_SUBJECT:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 						//old:	if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "SUBJECT"){
-							if ((this.POSofTempWord(j) == "NN" || this.POSofTempWord(j) == "NNP") && this.RoleOfTempWord(j) == "SUBJECT"){
+							if ((this.POSofTempWord(j) == "NN" || this.POSofTempWord(j) == "NNP") && this.RoleOfTempWord(j) == "SUBJECT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							//old:	tempString = tempSentence.getWordsarray().get(j).getBaseform();
 							tempString = this.BaseOfTempWord(j);
+							this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
 							j++;
 						}
@@ -393,9 +401,10 @@ public class Sentence implements java.io.Serializable{
 					case VERB_BASE:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 						//old:	if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
-							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"){
+							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							//old:	tempString = tempSentence.getWordsarray().get(j).getBaseform();
 								tempString = this.BaseOfTempWord(j);
+								this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
 							j++;
 						}
@@ -406,9 +415,10 @@ public class Sentence implements java.io.Serializable{
 					case VERB_IMPERATIVE:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							//old: if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
-							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"){
+							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							//old: 	tempString = tempSentence.getWordsarray().get(j).getBaseform();
 							tempString = this.BaseOfTempWord(j);
+							this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
 							j++;
 						}
@@ -420,10 +430,10 @@ public class Sentence implements java.io.Serializable{
 					case VERB_PRESENT_PARTICIPLE:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							//old: if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
-							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"){
+							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							//old:	tempString = tempSentence.getWordsarray().get(j).getBaseform();
 								tempString = this.BaseOfTempWord(j);
-							
+								this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
 							j++;
 						}
@@ -435,9 +445,10 @@ public class Sentence implements java.io.Serializable{
 					case VERB_PASSIVE:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 						//old:	if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
-							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"){
+							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							//old:	tempString = tempSentence.getWordsarray().get(j).getBaseform();
 							tempString = this.BaseOfTempWord(j);
+							this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
 							j++;
 						}
@@ -450,9 +461,10 @@ public class Sentence implements java.io.Serializable{
 					case VERB_PASSIVE_PAST:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 						//old:	if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
-							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"){
+							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							//old:	tempString = tempSentence.getWordsarray().get(j).getBaseform();
 							tempString = this.BaseOfTempWord(j);
+							this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
 							j++;
 						}
@@ -466,9 +478,10 @@ public class Sentence implements java.io.Serializable{
 					case VERB_SIMPLEPAST:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 						//old:	if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
-							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"){
+							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							//old:	tempString = tempSentence.getWordsarray().get(j).getBaseform();
 							tempString = this.BaseOfTempWord(j);
+							this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
 							j++;
 						}
@@ -479,8 +492,9 @@ public class Sentence implements java.io.Serializable{
 						break;
 					case VERB_SIMPLEFUTURE:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
-							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"){
+							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							tempString = this.BaseOfTempWord(j);
+							this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
 							j++;
 						}
@@ -491,8 +505,9 @@ public class Sentence implements java.io.Serializable{
 						break;
 					case ADJECTIVE_FOR_OBJECT:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
-							if (this.jwnlPOSofTempWord(j) == POS.ADJECTIVE && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"){
+							if (this.jwnlPOSofTempWord(j) == POS.ADJECTIVE && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							tempString = this.BaseOfTempWord(j);
+							this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
 							j++;
 						}
@@ -501,22 +516,72 @@ public class Sentence implements java.io.Serializable{
 						break;
 					case ADJECTIVE_FOR_SUBJECT:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
-							if (this.jwnlPOSofTempWord(j) == POS.ADJECTIVE && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"){
+							if (this.jwnlPOSofTempWord(j) == POS.ADJECTIVE && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							tempString = this.BaseOfTempWord(j);
+							this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
 							j++;
 						}
 						subject.addModifier(tempString);
 						if (tempString == "") error = true;
 						break;
+					case ADJECTIVE_FOR_PREPOSITIONAL_OBJECT:
+						while (tempString == "" && j < tempSentence.getWordsarray().size()){
+							if (this.jwnlPOSofTempWord(j) == POS.ADJECTIVE && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
+							tempString = this.BaseOfTempWord(j);
+							this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
+							}
+							j++;
+						}
+						prepositionalObject.addModifier(tempString);
+						if (tempString == "") error = true;
+						break;
 					case ADVERB:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
-							if (this.jwnlPOSofTempWord(j) == POS.ADVERB && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"){
+							if (this.jwnlPOSofTempWord(j) == POS.ADVERB && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							tempString = this.BaseOfTempWord(j);
+							this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
 							j++;
 						}
 						p.addModifier(tempString);
+						if (tempString == "") error = true;
+						break;
+					case PREPOSITION:
+						while (tempString == "" && j < tempSentence.getWordsarray().size()){
+							if (this.getWordsarray().get(j).getPartOfSpeech() == PartOfSpeechTypes.PREPOSITION_SUBORDINATING_CONJUNCTION && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
+							tempString = this.BaseOfTempWord(j);
+							this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
+							}
+							j++;
+						}
+						preposition.setPreposition(tempString);
+						prepositionFound = true;
+						if (tempString == "") error = true;
+						break;
+					case PREPOSITIONAL_OBJECT_SINGULAR:
+						while (tempString == "" && j < tempSentence.getWordsarray().size()){
+							if ((this.POSofTempWord(j) == "NN" || this.POSofTempWord(j) == "NNP") && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
+							tempString = this.BaseOfTempWord(j);
+							this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
+							}
+							j++;
+						}
+						prepositionalObject = nlgFactory.createNounPhrase(tempString);
+						preposition.addComplement(prepositionalObject);
+						if (tempString == "") error = true;
+						break;
+					case PREPOSITIONAL_OBJECT_PLURAL:
+						while (tempString == "" && j < tempSentence.getWordsarray().size()){
+							if ((this.POSofTempWord(j) == "NNS" || this.POSofTempWord(j) == "NNPS") && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
+							tempString = this.BaseOfTempWord(j);
+							this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
+							}
+							j++;
+						}
+						prepositionalObject = nlgFactory.createNounPhrase(tempString);
+						prepositionalObject.setPlural(true);
+						preposition.addComplement(prepositionalObject);
 						if (tempString == "") error = true;
 						break;
 					default:
@@ -536,6 +601,9 @@ public class Sentence implements java.io.Serializable{
 					hasFittingStructure = true;
 					Phrase currentPhrase = new Phrase();
 					currentPhrase.setNoStructureFound(false);
+					if (prepositionFound){
+						p.addComplement(preposition);
+					}
 					currentPhrase.setFullContent(realiser.realiseSentence(p));
 					List<String> wordList = new ArrayList<String>(Arrays.asList(currentPhrase.getFullContent().split(" ")));
 					for (int t = 0; t < wordList.size(); t++){
