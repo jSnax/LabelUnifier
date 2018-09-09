@@ -271,7 +271,7 @@ public class Sentence implements java.io.Serializable{
 	}
 	
 		public ArrayList<Phrase> toPhrase(PhraseStructureList StructureList, Realiser realiser, NLGFactory nlgFactory){
-			
+			// This function creates Phrases according to PhraseStructures, but only if they fit the Sentence
 			Sentence tempSentence = new Sentence();
 			tempSentence.setWordsarray(this.getWordsarray());
 			ArrayList<Phrase> result = new ArrayList<Phrase>();
@@ -285,10 +285,15 @@ public class Sentence implements java.io.Serializable{
 			int counter = 0;
 			boolean hasFittingStructure = false;
 			int maximumStructureUsed = 0;
+			// Creating lots of variables that will be used later in this function
 			while ((counter < allStructures.size()) && (allStructures.get(counter).getElements().size() >= maximumStructureUsed)){
+				// This while loop stops when either all possible PhraseStructures were tried out for the current Sentence
+				// or when a fitting PhraseStructure was already found and all remaining PhraseStructures are of lesser size
 				for (int usageCounter = 0; usageCounter < this.getWordsarray().size(); usageCounter++){
 					this.getWordsarray().get(usageCounter).setAlreadyUsedForStructure(false);
 				}
+				// In toPhrase, words from a Sentence that are deemed mandatory for the currently tested PhraseStructure
+				// are marked as "being used." This for-loop removes all those marks from the previous iteration 
 				SPhraseSpec p = nlgFactory.createClause();
 				NPPhraseSpec object = new NPPhraseSpec(nlgFactory);
 				NPPhraseSpec subject = new NPPhraseSpec(nlgFactory);
@@ -300,12 +305,19 @@ public class Sentence implements java.io.Serializable{
 				passive = false;
 				error = false;
 				prepositionFound = false;
+				// Creating lots of variables that will be used later in this function
 				while (i < Structure.getElements().size() && !error){ 
 					j = 0;
+					// j refers to the position of the word that's currently being looked at in the Sentence
 					boolean found = false;
+					// found refers to determiners, i.e. articles. It is false while the part of speech that the determiner refers to has not yet been identified
 					int iterator = i;
+					// iterator refers to the position of the PhraseStructureType that's currently being looked at in the PhraseStructure
 					tempType = Structure.getElements().get(i);
+					// Shorthandle variable for the current PhraseStructureType
 					switch(tempType){
+					// In this switch case, each PhraseStructureType is handled differently. Explanations for similiarily handled Types
+					// are found in the first case they appear
 					case DETERMINER_DEFINITEARTICLE:
 						while (iterator < Structure.getElements().size() -1 && !found){
 							if (Structure.getElements().get(iterator+1).getdeterminer()=="Object"){
@@ -318,6 +330,7 @@ public class Sentence implements java.io.Serializable{
 							}
 							iterator++;
 						}
+						// This while-loop checks whether the Article is supposed to be attached to a Subject or an Object
 						if (!found) error = true;
 						break;
 					case DETERMINER_INDEFINITEARTICLE:
@@ -344,10 +357,16 @@ public class Sentence implements java.io.Serializable{
 							}
 							j++;
 						}
+						// This while-loop checks whether any word left in the Sentence being looked at fulfills three conditions:
+						// 1. It is a Noun in plural [NNS or NNPS, see PhraseStructureTypes for clarity]
+						// 2.It's role is "Business Object"
+						// 3. It was not already marked as used
 						object = nlgFactory.createNounPhrase(tempString);
 						object.setPlural(true);
 						p.setObject(object);
 						if (tempString == "") error = true;
+						// Here, the needed variables for the SimpleNLG-engine are set. Also, if the while-loop above did not successfully 
+						// find a word that matches the three criteria above, "error" is set to true which will skip to the next PhraseStructure
 						break;
 					case NOUN_PLURAL_SUBJECT:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
@@ -363,6 +382,7 @@ public class Sentence implements java.io.Serializable{
 						subject.setPlural(true);
 						p.setSubject(subject);
 						if (tempString == "") error = true;
+						// See Noun Plural Object
 						break;
 					case NOUN_SINGULAR_OBJECT:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
@@ -377,6 +397,7 @@ public class Sentence implements java.io.Serializable{
 						object = nlgFactory.createNounPhrase(tempString);
 						p.setObject(object);
 						if (tempString == "") error = true;
+						// See Noun Plural Object
 						break;
 					case NOUN_SINGULAR_SUBJECT:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
@@ -391,12 +412,16 @@ public class Sentence implements java.io.Serializable{
 						subject = nlgFactory.createNounPhrase(tempString);
 						p.setSubject(subject);
 						if (tempString == "") error = true;
+						// See Noun Plural Object
 						break;
 					case PUNCTUATION_PERIOD:
+						// Since SimpleNLG creates Periods anyway, this PartOfSpeechType needs no code to function.
 						break;
 					case PUNCTUATION_QUESTIONMARK:
 						if (!(Structure.isProperSentence())) error = true;
-						p.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.YES_NO);		
+						p.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.YES_NO);	
+						// SimpleNLG can't really handle questions that don't have a Subject, Verb AND Object. Therefore, error is set true if not all of those can be found in the given PhraseStructure
+						//TODO: Maybe catch this while processing the PhraseStructure Input List?
 					    break;
 					case VERB_BASE:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
@@ -408,9 +433,11 @@ public class Sentence implements java.io.Serializable{
 							}
 							j++;
 						}
+						// while-loop similiar to the one for nouns, just this time it is checked for Verb and Action.
 						verb = nlgFactory.createVerbPhrase(tempString);
 				        p.setVerb(verb);
 				        if (tempString == "") error = true;
+				        // Setting SimpleNLG variables for verbs and setting "error" true if no verb was found
 						break;
 					case VERB_IMPERATIVE:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
@@ -426,6 +453,7 @@ public class Sentence implements java.io.Serializable{
 						verb.setFeature(Feature.FORM,simplenlg.features.Form.IMPERATIVE);
 						p.setVerb(verb);
 						if (tempString == "") error = true;
+						// See Verb Base
 						break;
 					case VERB_PRESENT_PARTICIPLE:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
@@ -441,6 +469,7 @@ public class Sentence implements java.io.Serializable{
 						p.setFeature(Feature.FORM, simplenlg.features.Form.PRESENT_PARTICIPLE);
 						p.setVerb(verb);
 						if (tempString == "") error = true;
+						// See Verb Base
 						break;
 					case VERB_PASSIVE:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
@@ -457,12 +486,12 @@ public class Sentence implements java.io.Serializable{
 						p.setVerb(verb);
 						if (tempString == "") error = true;
 						passive = true;
+						// See Verb Base
+						// Also, passive is set to true here since generating passive sentences requires some more work further below
 						break;
 					case VERB_PASSIVE_PAST:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
-						//old:	if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
 							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
-							//old:	tempString = tempSentence.getWordsarray().get(j).getBaseform();
 							tempString = this.BaseOfTempWord(j);
 							this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
@@ -474,12 +503,12 @@ public class Sentence implements java.io.Serializable{
 						p.setVerb(verb);
 						if (tempString == "") error = true;
 						passive = true;
+						// See Verb Base
+						// Also, passive is set to true here since generating passive sentences requires some more work further below
 						break;
 					case VERB_SIMPLEPAST:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
-						//old:	if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
 							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
-							//old:	tempString = tempSentence.getWordsarray().get(j).getBaseform();
 							tempString = this.BaseOfTempWord(j);
 							this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
@@ -489,6 +518,7 @@ public class Sentence implements java.io.Serializable{
 						p.setVerb(verb);
 						p.setFeature(Feature.TENSE, Tense.PAST);
 						if (tempString == "") error = true;
+						// See Verb Base
 						break;
 					case VERB_SIMPLEFUTURE:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
@@ -502,6 +532,7 @@ public class Sentence implements java.io.Serializable{
 						// Unlike other cases since future only works like this, else you get "will will"
 						p.setFeature(Feature.TENSE, Tense.FUTURE);
 						if (tempString == "") error = true;
+						// With the exception of special handling for future, see Verb Base
 						break;
 					case ADJECTIVE_FOR_OBJECT:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
@@ -511,8 +542,10 @@ public class Sentence implements java.io.Serializable{
 							}
 							j++;
 						}
+						// while-loop like above, searches for Adjective and Optional Information Fragment however
 						object.addModifier(tempString);
 						if (tempString == "") error = true;
+						// See cases above
 						break;
 					case ADJECTIVE_FOR_SUBJECT:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
@@ -524,6 +557,7 @@ public class Sentence implements java.io.Serializable{
 						}
 						subject.addModifier(tempString);
 						if (tempString == "") error = true;
+						// See cases above
 						break;
 					case ADJECTIVE_FOR_PREPOSITIONAL_OBJECT:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
@@ -535,6 +569,7 @@ public class Sentence implements java.io.Serializable{
 						}
 						prepositionalObject.addModifier(tempString);
 						if (tempString == "") error = true;
+						// See cases above
 						break;
 					case ADVERB:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
@@ -544,8 +579,10 @@ public class Sentence implements java.io.Serializable{
 							}
 							j++;
 						}
+						// While-loop searches for Adverbs
 						p.addModifier(tempString);
 						if (tempString == "") error = true;
+						// See cases above
 						break;
 					case PREPOSITION:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
@@ -557,7 +594,9 @@ public class Sentence implements java.io.Serializable{
 						}
 						preposition.setPreposition(tempString);
 						prepositionFound = true;
+						// Similiar to passive handling, if the Phrase is supposed to include a prepositional sentence, special handling is required further below
 						if (tempString == "") error = true;
+						// See cases above
 						break;
 					case PREPOSITIONAL_OBJECT_SINGULAR:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
@@ -570,6 +609,7 @@ public class Sentence implements java.io.Serializable{
 						prepositionalObject = nlgFactory.createNounPhrase(tempString);
 						preposition.addComplement(prepositionalObject);
 						if (tempString == "") error = true;
+						// See Noun Plural Object
 						break;
 					case PREPOSITIONAL_OBJECT_PLURAL:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
@@ -583,6 +623,7 @@ public class Sentence implements java.io.Serializable{
 						prepositionalObject.setPlural(true);
 						preposition.addComplement(prepositionalObject);
 						if (tempString == "") error = true;
+						// See Noun Plural Object
 						break;
 					default:
 						break;
@@ -590,36 +631,50 @@ public class Sentence implements java.io.Serializable{
 					}
 					tempString = "";
 					i++;
+					// Resetting tempString as well as increasing the PhraseStructureTypes-Counter i
 				}
 				if (!error){
+					// Only enter this section if the current PhraseStructure fits the Sentence
 					if (passive){
 						NPPhraseSpec switcher = new NPPhraseSpec(nlgFactory);
 						switcher = subject;
 						subject = object;
 						object = switcher;
+						// For whatever reason, SimpleNLG switches object and subject in passive sentences. So before they are created, object and subject
+						// are swapped here so once they are swapped once more, they are in correct order again
 					}
 					hasFittingStructure = true;
+					// boolean value needed for output
 					Phrase currentPhrase = new Phrase();
 					currentPhrase.setNoStructureFound(false);
+					// If this section is reached, a fitting PhraseStructure has been found. 
 					if (prepositionFound){
 						p.addComplement(preposition);
+						// Adding the prepositional sentence to the Phrase
 					}
 					currentPhrase.setFullContent(realiser.realiseSentence(p));
+					// Creates the new Phrase by using SimpleNLG engine
 					List<String> wordList = new ArrayList<String>(Arrays.asList(currentPhrase.getFullContent().split(" ")));
 					for (int t = 0; t < wordList.size(); t++){
 						if (wordList.get(t).contains(",") || wordList.get(t).contains(".")){
 							wordList.set(t, wordList.get(t).substring(0, wordList.get(t).length()-1));
 						}
 					}
+					// Splits the Phrase by words
 					currentPhrase.setseparatedContent(wordList);
+					// And stores it here
 					currentPhrase.setUsedStructure(counter);
 					currentPhrase.setUsedStructureSize(allStructures.get(counter).getElements().size());
+					// Sets some variables that are needed for output
 					maximumStructureUsed = allStructures.get(counter).getElements().size();
+					// Sets the currently used Structure size as maximum structure size. This works since PhraseStructures are sorted by size first
 					result.add(currentPhrase);
 				}
 				counter++;
+				// Jump to next PhraseStructure 
 			}
 			if (!hasFittingStructure){
+				// Enter this section only if no Structure was applicable to the sentence
 				Phrase originalSentence = new Phrase();
 				originalSentence.setFullContent(this.getContentAsString());
 				List<String> wordList = new ArrayList<String>(Arrays.asList(originalSentence.getFullContent().split(" ")));
@@ -631,6 +686,8 @@ public class Sentence implements java.io.Serializable{
 				originalSentence.setseparatedContent(wordList);
 				originalSentence.setNoStructureFound(true);
 				result.add(originalSentence);
+				// In that case, create a Phrase that's identical to the original Sentence
+				// Mind that "NoStructureFound" is set to true here in order to display to the user that this Phrase was not generated from a PhraseStructure
 			}
 			return(result);
 		}
