@@ -32,6 +32,7 @@ public class Word implements java.io.Serializable{
 	private Integer dominance;
 	private List<String> Synonyms;
 	private Integer ClusterPosition;
+	private boolean alreadyUsedForStructure;
 
 	
 	public Word() {
@@ -280,6 +281,14 @@ public class Word implements java.io.Serializable{
 		
 		return String.format("%-8s%-20s%-8s%-20s%-7s%-38s%-8s%-30s%-1s","Word: ", originalForm ," Base: " , baseform , " POS: " , partOfSpeech , " Role: " , role , grammaticalRelationAsString);
 
+	}
+
+	public boolean getAlreadyUsedForStructure() {
+		return alreadyUsedForStructure;
+	}
+
+	public void setAlreadyUsedForStructure(boolean alreadyUsedForStructure) {
+		this.alreadyUsedForStructure = alreadyUsedForStructure;
 	}
 
 
