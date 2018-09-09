@@ -56,11 +56,12 @@ public class shortPresentation {
 			"Employee verifies small invoice",
 			"Employees check bills",
 			"Company pays bill",
-			"Employee checked beautiful invoice",
 			"Bill is payed by company",
-			"Company pays bill",
 			"Verify bill",
-			"Employee verifies small invoice"
+			"bill is taken from box",
+			"take bill from box",
+			"Employer pays salary from savings",
+			"Rich Employer pays big salary from huge savings quickly"
 			
 	};
 	
@@ -145,18 +146,27 @@ public class shortPresentation {
 	tempList.add(PhraseStructureTypes.NOUN_SINGULAR_SUBJECT);
 	tempList.add(PhraseStructureTypes.VERB_SIMPLEFUTURE);
 	tempList.add(PhraseStructureTypes.NOUN_SINGULAR_OBJECT);
+	tempList.add(PhraseStructureTypes.ADJECTIVE_FOR_OBJECT);
 	Structure.setElements(tempList);
 	tempList2.add(PhraseStructureTypes.NOUN_PLURAL_SUBJECT);
 	tempList2.add(PhraseStructureTypes.VERB_SIMPLEPAST);
 	tempList2.add(PhraseStructureTypes.NOUN_PLURAL_OBJECT);
 	Structure2.setElements(tempList2);
-	tempList3.add(PhraseStructureTypes.VERB_IMPERATIVE);
+	tempList3.add(PhraseStructureTypes.NOUN_SINGULAR_SUBJECT);
+	//tempList3.add(PhraseStructureTypes.ADJECTIVE_FOR_SUBJECT);
+	tempList3.add(PhraseStructureTypes.VERB_SIMPLEPAST);
 	tempList3.add(PhraseStructureTypes.NOUN_SINGULAR_OBJECT);
+	tempList3.add(PhraseStructureTypes.ADJECTIVE_FOR_OBJECT);
+	tempList3.add(PhraseStructureTypes.PREPOSITION);
+	tempList3.add(PhraseStructureTypes.PREPOSITIONAL_OBJECT_PLURAL);
+	tempList3.add(PhraseStructureTypes.ADJECTIVE_FOR_PREPOSITIONAL_OBJECT);
+	tempList3.add(PhraseStructureTypes.ADVERB);
 	Structure3.setElements(tempList3);
-	tempList4.add(PhraseStructureTypes.NOUN_PLURAL_SUBJECT);
-	tempList4.add(PhraseStructureTypes.VERB_SIMPLEFUTURE);
-	tempList4.add(PhraseStructureTypes.NOUN_PLURAL_OBJECT);
-	tempList4.add(PhraseStructureTypes.PUNCTUATION_QUESTIONMARK);
+	tempList4.add(PhraseStructureTypes.NOUN_SINGULAR_SUBJECT);
+	tempList4.add(PhraseStructureTypes.VERB_SIMPLEPAST);
+	tempList4.add(PhraseStructureTypes.NOUN_SINGULAR_OBJECT);
+	tempList4.add(PhraseStructureTypes.PREPOSITION);
+	tempList4.add(PhraseStructureTypes.PREPOSITIONAL_OBJECT_PLURAL);
 	Structure4.setElements(tempList4);
 	tempList5.add(PhraseStructureTypes.VERB_PASSIVE_PAST);
 	tempList5.add(PhraseStructureTypes.NOUN_SINGULAR_SUBJECT);
@@ -166,7 +176,7 @@ public class shortPresentation {
 	allStructures.add(Structure2);
 	allStructures.add(Structure3);
 	allStructures.add(Structure4);
-	allStructures.add(Structure5);
+//	allStructures.add(Structure5);
 	completeList.setAllStructures(allStructures);
 	ArrayList<ArrayList<Phrase>> PhraseListList = new ArrayList<ArrayList<Phrase>>();
 

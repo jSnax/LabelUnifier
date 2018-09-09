@@ -36,7 +36,7 @@ public class testSimpleNLG {
           NPPhraseSpec object = nlgFactory.createNounPhrase("bill");
           VPPhraseSpec verb = nlgFactory.createVerbPhrase("pay");
 		//  p.setFeature(Feature.PASSIVE, true);
-		  p.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.YES_NO);
+	//	  p.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.YES_NO);
 		//  p.setFeature(Feature.TENSE, Tense.PAST);
       //    object.setPlural(true);
        //   subject.addModifier("beautiful");
@@ -45,12 +45,16 @@ public class testSimpleNLG {
         //  object.setDeterminer("a");
 		//  subject.setPlural(true);
           p.setSubject(subject);
-        //  p.setObject(object);
+          p.setObject(object);
+          PPPhraseSpec pp = nlgFactory.createPrepositionPhrase();
+         // pp.addComplement("company");
+          object.addPreModifier("nice");
+          pp.addComplement(object);
+          pp.setPreposition("from");
      //     p.setVerb("pay");
           p.setVerb(verb);
+          p.addComplement(pp);
           String testString = realiser.realiseSentence(p);
           System.out.println(testString);
-          int testInt = testString.length() - testString.lastIndexOf(' ');
-          System.out.println(testString.substring(0, realiser.realiseSentence(p).length()-testInt)+"?");
 	  }
 }

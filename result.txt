@@ -1,29 +1,40 @@
 Label 0 was: Employee checked beautiful invoice.
 Possible Phrases:
-Phrase 0: Employee will check invoice.
-Phrase 1: Check invoice.
+Phrase 0: Employee will check beautiful invoice.
 
 Label 1 was: Employee verifies small invoice.
 Possible Phrases:
-Phrase 0: Employee will check invoice.
-Phrase 1: Check invoice.
+Phrase 0: Employee will check small invoice.
 
 Label 2 was: Employees check bills.
 Possible Phrases:
-Phrase 0: Will employees check invoices?
-Phrase 1: Employees checked invoices.
+Phrase 0: Employees checked invoices.
 
 Label 3 was: Company pays bill.
 Possible Phrases:
-Phrase 0: Company will pay invoice.
-Phrase 1: Pay invoice.
+Phrase 0: Company pays bill.
 
 Label 4 was: Bill is payed by company.
 Possible Phrases:
-Phrase 0: Company will pay invoice.
-Phrase 1: Pay invoice.
+Phrase 0: Bill is payed by company.
 
-Label 5 was: Verify bill and currency.
+Label 5 was: Verify bill.
 Possible Phrases:
-Phrase 0: Check invoice.
+Phrase 0: Verify bill.
+
+Label 6 was: Bill is taken from box.
+Possible Phrases:
+Phrase 0: Bill is taken from box.
+
+Label 7 was: Take bill from box.
+Possible Phrases:
+Phrase 0: Take bill from box.
+
+Label 8 was: Employer pays salary from savings.
+Possible Phrases:
+Phrase 0: Employer payed salary from savings.
+
+Label 9 was: Rich Employer pays big salary from huge savings quickly.
+Possible Phrases:
+Phrase 0: Rich employer quickly payed big salary from huge savings.
 

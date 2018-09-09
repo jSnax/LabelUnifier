@@ -1,22 +1,50 @@
-The current Phrase is: Employee will check invoice.
+The current Phrase is: Employee will check beautiful invoice.
 The matching labels are:
 Employee checked beautiful invoice.
+
+
+The current Phrase is: Employee will check small invoice.
+The matching labels are:
 Employee verifies small invoice.
 
 
-The current Phrase is: Will employees check invoices?
+The current Phrase is: Employees checked invoices.
 The matching labels are:
 Employees check bills.
 
 
-The current Phrase is: Company will pay invoice.
+The current Phrase is: Company pays bill.
 The matching labels are:
 Company pays bill.
+
+
+The current Phrase is: Bill is payed by company.
+The matching labels are:
 Bill is payed by company.
 
 
-The current Phrase is: Check invoice.
+The current Phrase is: Verify bill.
 The matching labels are:
-Verify bill and currency.
+Verify bill.
+
+
+The current Phrase is: Bill is taken from box.
+The matching labels are:
+Bill is taken from box.
+
+
+The current Phrase is: Take bill from box.
+The matching labels are:
+Take bill from box.
+
+
+The current Phrase is: Employer payed salary from savings.
+The matching labels are:
+Employer pays salary from savings.
+
+
+The current Phrase is: null
+The matching labels are:
+Rich Employer pays big salary from huge savings quickly.
 
 
