@@ -56,8 +56,11 @@ public class shortPresentation {
 			"Employee verifies small invoice",
 			"Employees check bills",
 			"Company pays bill",
+			"Employee checked beautiful invoice",
 			"Bill is payed by company",
-			"Verify bill and currency"
+			"Company pays bill",
+			"Verify bill",
+			"Employee verifies small invoice"
 			
 	};
 	
@@ -204,7 +207,7 @@ public class shortPresentation {
 	System.out.println("---------------------");
 	PhraseList demoPhrasenCompare = new PhraseList();
 	demoPhrasenCompare.setWholeInput(PhraseListList);
-	demoPhrasenCompare.phraseCompareAndDecision(testList);
+	demoPhrasenCompare.phraseCompareAndDecisionFinal(testList);
 	demoPhrasenCompare.writeToFile();
 	}
 }
