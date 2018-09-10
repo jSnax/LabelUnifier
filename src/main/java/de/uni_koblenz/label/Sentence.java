@@ -168,9 +168,12 @@ public class Sentence implements java.io.Serializable{
 	    	 */
 	    	if(relationName==RelationName.COMPOUND_MODIFIER||relationName==RelationName.PHRASAL_VERB_PARTICLE) {
 	    		toRemove.add(targetWord);
-	    		if(edge.getSource().index()>edge.getTarget().index()) {
+	    		if(edge.getSource().index()>edge.getTarget().index()&&!sourceWord.getBaseform().contains(" ")) {
 	    			sourceWord.setBaseform(targetWord.getBaseform()+" "+sourceWord.getBaseform());
 	    			sourceWord.setOriginalForm(targetWord.getOriginalForm()+" "+sourceWord.getOriginalForm());
+	    		}else if(edge.getSource().index()>edge.getTarget().index()) {
+	    			sourceWord.setBaseform(sourceWord.getBaseform().substring(0, sourceWord.getBaseform().lastIndexOf(" ")+1)+targetWord.getBaseform()+" "+sourceWord.getBaseform().substring(sourceWord.getBaseform().lastIndexOf(" ")+1));
+	    			sourceWord.setOriginalForm(sourceWord.getOriginalForm().substring(0, sourceWord.getOriginalForm().lastIndexOf(" ")+1)+targetWord.getOriginalForm()+" "+sourceWord.getOriginalForm().substring(sourceWord.getOriginalForm().lastIndexOf(" ")+1));
 	    		}else {
 	    			sourceWord.setBaseform(sourceWord.getBaseform()+" "+targetWord.getBaseform());
 	    			sourceWord.setOriginalForm(sourceWord.getOriginalForm()+" "+targetWord.getOriginalForm());

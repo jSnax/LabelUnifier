@@ -10,6 +10,7 @@ public class testPreProcessing {
 	public static void main (String args[]) throws JWNLException, ClassNotFoundException, IOException {
 	
 		String[] test=new String[] {
+				"School university teacher",
 				"This will survive.",
 				// label as sentence vs label as label as is
 				"He checks the invoice.",
