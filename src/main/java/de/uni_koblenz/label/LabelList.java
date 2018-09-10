@@ -124,7 +124,7 @@ public class LabelList implements java.io.Serializable{
             for (Sentence s : l.getSentenceArray()) {
                 // iteration over all words in sentence
                 for (Word w : s.getWordsarray()) {
-                    if ((w.getPartOfSpeech().getJwnlType() != null) && (!banList.isForbidden(w.getBaseform()))){
+                    if ((w.getPartOfSpeech().getJwnlType() != null) && (!banList.isForbiddenWord(w))){
                     	// TODO: Exception for "will" as a verb or just refining the function as whole, e.g. stop using contains below
                     	// Changed to: Incorporate list of forbidden words
                         tempWord = dictionary.getIndexWord(w.getPartOfSpeech().getJwnlType(), w.getBaseform());
@@ -145,7 +145,7 @@ public class LabelList implements java.io.Serializable{
                                         	// TODO: Change back to old if-clause right above this comment if needed
                                         	// TODO: Check whether banList works below
                                         	if (!w.isSynonym(word.getLemma()))
-                                            	if (!banList.isForbidden(word.getLemma())){
+                                            	if (!banList.isForbiddenString(word.getLemma())){
                                                 	w.addSynonym(word.getLemma());
                                             	}
                                                 // Go through the synonym list and add each synonym to synonym list for word j, unless it's already in there
@@ -164,7 +164,7 @@ public class LabelList implements java.io.Serializable{
                                     	// TODO: Change back to old if-clause right above this comment if needed
                                     	// TODO: Check whether banList works below
                                     	if (!w.isSynonym(word.getLemma()))
-                                        	if (!banList.isForbidden(word.getLemma())){
+                                        	if (!banList.isForbiddenString(word.getLemma())){
                                         		w.addSynonym(word.getLemma());
                                         	}
                                         	

@@ -45,7 +45,9 @@ public class QuickTesting {
 				"Company pays bill",
 				"Bill is payed by company",
 				"Employer pays salary from savings",
-				"Rich Employer pays big salary from huge savings quickly"
+				"Rich Employer pays big salary from huge savings quickly",
+				"Compare wills",
+				"This will survive"
 		};
 		
 

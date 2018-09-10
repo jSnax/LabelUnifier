@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sf.extjwnl.data.POS;
+
 public class ForbiddenWords {
 	List<String> AllWords;   
 
@@ -60,7 +62,22 @@ public class ForbiddenWords {
 		this.AllWords = domainWords;
 	}
 	
-	public boolean isForbidden(String comparingWord){
+	public boolean isForbiddenWord(Word comparingWord){
+		int i = 0;
+		boolean forbidden = false;
+		if (comparingWord.getPartOfSpeech().getJwnlType() != POS.VERB){
+			return (forbidden);
+		}
+		while (i < this.getAllWords().size() && !forbidden){
+			if (this.getAllWords().get(i).equals(comparingWord.getBaseform())){
+				forbidden = true;
+			}
+			i++;
+		}
+		return forbidden;
+	}
+	
+	public boolean isForbiddenString(String comparingWord){
 		int i = 0;
 		boolean forbidden = false;
 		while (i < this.getAllWords().size() && !forbidden){
