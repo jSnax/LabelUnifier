@@ -157,6 +157,7 @@ public class Word implements java.io.Serializable{
         		this.setPartOfSpeech(PartOfSpeechTypes.SYMBOL);
         	}else {
         		System.out.println("No POS enum found for: " + baseform + ":" + pos);
+        		this.setPartOfSpeech(PartOfSpeechTypes.NONE);
         	}
         }
     }
