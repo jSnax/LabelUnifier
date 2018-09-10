@@ -291,7 +291,18 @@ public class Word implements java.io.Serializable{
 		this.alreadyUsedForStructure = alreadyUsedForStructure;
 	}
 
-
+	
+	public boolean isSynonym(String comparingWord){
+		int i = 0;
+		boolean hasThatSynonym = false;
+		while (i < this.getSynonyms().size() && !hasThatSynonym){
+			if (this.getSynonyms().get(i).equals(comparingWord)){
+				hasThatSynonym = true;
+			}
+			i++;
+		}
+		return hasThatSynonym;
+	}
 
 }
 	
