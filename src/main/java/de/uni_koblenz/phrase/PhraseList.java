@@ -202,7 +202,7 @@ public class PhraseList {
 			//System.out.println(allBuiltClusters.get(i).getMatchingLabels().get(2));
 			//System.out.println(allBuiltClusters.get(i).getMatchingLabels().get(3));
 			System.out.println("\n");
-			finalPhrasesAndTheirLabels.add("The new label is: " +  allBuiltClusters.get(i).getBuiltPhrase() + "\n" + "The labels that were transformed into it:");
+			finalPhrasesAndTheirLabels.add("These initial labels:");
 			List<Integer> alreadyChecked = new ArrayList<Integer>();
 			ArrayList<String> comp = new ArrayList<String>();
 			for (Label l : labelList.getInputLabels()) {
@@ -214,7 +214,7 @@ public class PhraseList {
 				for(int k = 0; k < comp.size(); k++){
 					if(temp.equals(comp.get(k)) && !alreadyChecked.contains(k)){
 						writer += "Label ";
-						writer += k + " ";
+						writer += k;
 						alreadyChecked.add(k);
 						break;
 					}
@@ -222,7 +222,9 @@ public class PhraseList {
 				writer += " (" + allBuiltClusters.get(i).getMatchingLabels().get(j) + ")";
 				finalPhrasesAndTheirLabels.add(writer);
 			}
-			finalPhrasesAndTheirLabels.add("\n");	
+			finalPhrasesAndTheirLabels.add("were transformed into this new label: \"" +  allBuiltClusters.get(i).getBuiltPhrase() + "\"");
+			finalPhrasesAndTheirLabels.add("\n");
+			
 		}
 	}
 	public void writeToFile() throws Exception{
