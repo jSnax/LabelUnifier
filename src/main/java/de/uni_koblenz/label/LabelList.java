@@ -5,6 +5,7 @@ import java.util.List;
  
 import de.uni_koblenz.cluster.PhraseCluster;
 import de.uni_koblenz.cluster.WordCluster;
+import de.uni_koblenz.enums.PartOfSpeechTypes;
 import de.uni_koblenz.phrase.Phrase;
 import de.uni_koblenz.phrase.PhraseStructure;
 import net.sf.extjwnl.JWNLException;
@@ -124,9 +125,8 @@ public class LabelList implements java.io.Serializable{
             for (Sentence s : l.getSentenceArray()) {
                 // iteration over all words in sentence
                 for (Word w : s.getWordsarray()) {
-                    if ((w.getPartOfSpeech().getJwnlType() != null) && (!banList.isForbiddenWord(w))){
-                    	// TODO: Exception for "will" as a verb or just refining the function as whole, e.g. stop using contains below
-                    	// Changed to: Incorporate list of forbidden words
+                    if ((w.getPartOfSpeech().getJwnlType() != null) && (!banList.isForbiddenWord(w)) && (w.getPartOfSpeech() != PartOfSpeechTypes.NONE)){
+                    	// TODO: Check whether this catches all exceptions already
                         tempWord = dictionary.getIndexWord(w.getPartOfSpeech().getJwnlType(), w.getBaseform());
                         // Transform baseform of Word j in Label i into an indexWord so extjwnl can use it
                         try{
