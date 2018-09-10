@@ -1,6 +1,7 @@
 import java.io.IOException;
 
 import de.uni_koblenz.cluster.WordCluster;
+import de.uni_koblenz.label.ForbiddenWords;
 import de.uni_koblenz.label.LabelList;
 import net.sf.extjwnl.JWNLException;
 import net.sf.extjwnl.dictionary.Dictionary;
@@ -67,7 +68,8 @@ public class testMatchingONLY {
 		 *  ORIGINAL CODE FROM MAIN 
 		 */
 		// Simply print the two labels
-		testList.findSynsets();
+		ForbiddenWords bannedList = new ForbiddenWords();
+		testList.findSynsets(bannedList);
 		// Fill Synonym lists for each word
 		System.out.println("Printing Synonyms:");
 		for (int i = 0; i < testList.getInputLabels().size(); i++){
@@ -90,7 +92,7 @@ public class testMatchingONLY {
 		// Prints Wordclusters
 		System.out.println("Printing LabelClusters");
 
-		safetyList.findSynsets();
+		safetyList.findSynsets(bannedList);
 		// TEST DOESN'T WORK AS EXPECTED RIGHT NOW
 		// testList references same object as safetyList, so both Lists are empty at this point
 		/*List<PhraseCluster> AllLabelClusters = new ArrayList<PhraseCluster>();

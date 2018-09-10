@@ -23,8 +23,6 @@ import simplenlg.realiser.english.Realiser;
 
 import java.io.IOException;
 
-import de.uni_koblenz.label.Label;
-import de.uni_koblenz.label.LabelList;
 import net.sf.extjwnl.JWNLException;
 
 import java.nio.charset.Charset;
@@ -89,7 +87,8 @@ public class shortPresentation {
 	for (int i = 0; i < 3; i++){
 		System.out.println("");
 	}
-	testList.findSynsets();
+	ForbiddenWords bannedList = new ForbiddenWords();
+	testList.findSynsets(bannedList);
 	System.out.println("Printing Synsets:");
 	for (int i = 0; i < testList.getInputLabels().size(); i++){
 		System.out.println("START OF LABEL " + i);		

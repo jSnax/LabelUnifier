@@ -36,5 +36,5 @@ Phrase 0: Employer payed salary from savings.
 
 Label 9 was: Rich Employer pays big salary from huge savings quickly.
 Possible Phrases:
-Phrase 0: Rich employer quickly payed big salary from huge savings.
+Phrase 0: Rich employer quickly payed big salary from big savings.
 

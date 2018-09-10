@@ -1,50 +1,50 @@
-The current Phrase is: Employee will check beautiful invoice.
-The matching labels are:
-Employee checked beautiful invoice.
+The new label is: Employee will check beautiful invoice.
+The labels that were transformed into it:
+Label 0  (Employee checked beautiful invoice.)
 
 
-The current Phrase is: Employee will check small invoice.
-The matching labels are:
-Employee verifies small invoice.
+The new label is: Employee will check small invoice.
+The labels that were transformed into it:
+Label 1  (Employee verifies small invoice.)
 
 
-The current Phrase is: Employees checked invoices.
-The matching labels are:
-Employees check bills.
+The new label is: Employees checked invoices.
+The labels that were transformed into it:
+Label 2  (Employees check bills.)
 
 
-The current Phrase is: Company pays bill.
-The matching labels are:
-Company pays bill.
+The new label is: Company pays bill.
+The labels that were transformed into it:
+Label 3  (Company pays bill.)
 
 
-The current Phrase is: Bill is payed by company.
-The matching labels are:
-Bill is payed by company.
+The new label is: Bill is payed by company.
+The labels that were transformed into it:
+Label 4  (Bill is payed by company.)
 
 
-The current Phrase is: Verify bill.
-The matching labels are:
-Verify bill.
+The new label is: Verify bill.
+The labels that were transformed into it:
+Label 5  (Verify bill.)
 
 
-The current Phrase is: Bill is taken from box.
-The matching labels are:
-Bill is taken from box.
+The new label is: Bill is taken from box.
+The labels that were transformed into it:
+Label 6  (Bill is taken from box.)
 
 
-The current Phrase is: Take bill from box.
-The matching labels are:
-Take bill from box.
+The new label is: Take bill from box.
+The labels that were transformed into it:
+Label 7  (Take bill from box.)
 
 
-The current Phrase is: Employer payed salary from savings.
-The matching labels are:
-Employer pays salary from savings.
+The new label is: Employer payed salary from savings.
+The labels that were transformed into it:
+Label 8  (Employer pays salary from savings.)
 
 
-The current Phrase is: null
-The matching labels are:
-Rich Employer pays big salary from huge savings quickly.
+The new label is: null
+The labels that were transformed into it:
+Label 9  (Rich Employer pays big salary from huge savings quickly.)
 
 
