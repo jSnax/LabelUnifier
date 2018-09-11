@@ -1,50 +1,44 @@
-The new label is: Employee will check beautiful invoice.
-The labels that were transformed into it:
-Label 0  (Employee checked beautiful invoice.)
+These initial labels:
+Label 0 (Employee checked tiny invoice.)
+Label 1 (Employee verifies small invoice.)
+were transformed into this new label: "Employee checked tiny invoice."
 
 
-The new label is: Employee will check small invoice.
-The labels that were transformed into it:
-Label 1  (Employee verifies small invoice.)
+These initial labels:
+Label 2 (Employees check bills.)
+were transformed into this new label: "Employees check bills."
 
 
-The new label is: Employees checked invoices.
-The labels that were transformed into it:
-Label 2  (Employees check bills.)
+These initial labels:
+Label 3 (Company pays bill.)
+Label 4 (Bill is payed by company.)
+were transformed into this new label: "Did company pay invoice?"
 
 
-The new label is: Company pays bill.
-The labels that were transformed into it:
-Label 3  (Company pays bill.)
+These initial labels:
+Label 5 (Verify bill.)
+Label 6 (Bill is taken from box.)
+Label 7 (Take bill from box.)
+were transformed into this new label: "Checks invoice."
 
 
-The new label is: Bill is payed by company.
-The labels that were transformed into it:
-Label 4  (Bill is payed by company.)
+These initial labels:
+Label 8 (Employer pays salary from savings.)
+were transformed into this new label: "Did employer pay salary?"
 
 
-The new label is: Verify bill.
-The labels that were transformed into it:
-Label 5  (Verify bill.)
+These initial labels:
+Label 9 (Rich Employer pays big salary from huge savings quickly.)
+were transformed into this new label: "Rich employer quickly payed big salary from big savings."
 
 
-The new label is: Bill is taken from box.
-The labels that were transformed into it:
-Label 6  (Bill is taken from box.)
+These initial labels:
+Label 10 (Cat feeds cute dog well.)
+were transformed into this new label: "Cat fed dog well."
 
 
-The new label is: Take bill from box.
-The labels that were transformed into it:
-Label 7  (Take bill from box.)
-
-
-The new label is: Employer payed salary from savings.
-The labels that were transformed into it:
-Label 8  (Employer pays salary from savings.)
-
-
-The new label is: null
-The labels that were transformed into it:
-Label 9  (Rich Employer pays big salary from huge savings quickly.)
+These initial labels:
+Label 11 (Dog feeds charming cat nicely.)
+were transformed into this new label: "null"
 
 

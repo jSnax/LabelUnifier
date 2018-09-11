@@ -50,7 +50,7 @@ public class shortPresentation {
 	Dictionary dictionary = Dictionary.getDefaultResourceInstance();
 	
 	String[] input=new String[] {
-			"Employee checked beautiful invoice",
+			"Employee checked tiny invoice",
 			"Employee verifies small invoice",
 			"Employees check bills",
 			"Company pays bill",
@@ -59,7 +59,9 @@ public class shortPresentation {
 			"bill is taken from box",
 			"take bill from box",
 			"Employer pays salary from savings",
-			"Rich Employer pays big salary from huge savings quickly"
+			"Rich Employer pays big salary from huge savings quickly",
+			"Cat feeds cute dog well",
+			"Dog feeds charming cat nicely"
 			
 	};
 	
@@ -131,7 +133,7 @@ public class shortPresentation {
 		System.out.println("End of Generalized Cluster " +i);
 	}
 	PhraseStructureList completeList = new PhraseStructureList();
-	PhraseStructure Structure = new PhraseStructure();
+	/*PhraseStructure Structure = new PhraseStructure();
 	PhraseStructure Structure2 = new PhraseStructure();
 	PhraseStructure Structure3 = new PhraseStructure();
 	PhraseStructure Structure4 = new PhraseStructure();
@@ -175,8 +177,8 @@ public class shortPresentation {
 	allStructures.add(Structure2);
 	allStructures.add(Structure3);
 	allStructures.add(Structure4);
-//	allStructures.add(Structure5);
-	completeList.setAllStructures(allStructures);
+	allStructures.add(Structure5);
+	completeList.setAllStructures(allStructures);*/
 	ArrayList<ArrayList<Phrase>> PhraseListList = new ArrayList<ArrayList<Phrase>>();
 
 	completeList.sortStructures();

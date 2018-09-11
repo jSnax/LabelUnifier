@@ -1,40 +1,54 @@
-Label 0 was: Employee checked beautiful invoice.
+Label 0 was: Employee checked tiny invoice.
 Possible Phrases:
-Phrase 0: Employee will check beautiful invoice.
+Phrase 0: Employee checked tiny invoice.
+Phrase 1: Did employee check invoice?
 
 Label 1 was: Employee verifies small invoice.
 Possible Phrases:
-Phrase 0: Employee will check small invoice.
+Phrase 0: Employee checked tiny invoice.
+Phrase 1: Did employee check invoice?
 
 Label 2 was: Employees check bills.
 Possible Phrases:
-Phrase 0: Employees checked invoices.
+Phrase 0: Employees check bills.
 
 Label 3 was: Company pays bill.
 Possible Phrases:
-Phrase 0: Company pays bill.
+Phrase 0: Did company pay invoice?
 
 Label 4 was: Bill is payed by company.
 Possible Phrases:
-Phrase 0: Bill is payed by company.
+Phrase 0: Did company pay invoice?
 
 Label 5 was: Verify bill.
 Possible Phrases:
-Phrase 0: Verify bill.
+Phrase 0: Checks invoice.
 
 Label 6 was: Bill is taken from box.
 Possible Phrases:
-Phrase 0: Bill is taken from box.
+Phrase 0: Checks invoice.
 
 Label 7 was: Take bill from box.
 Possible Phrases:
-Phrase 0: Take bill from box.
+Phrase 0: Checks invoice.
 
 Label 8 was: Employer pays salary from savings.
 Possible Phrases:
-Phrase 0: Employer payed salary from savings.
+Phrase 0: Did employer pay salary?
 
 Label 9 was: Rich Employer pays big salary from huge savings quickly.
 Possible Phrases:
 Phrase 0: Rich employer quickly payed big salary from big savings.
+
+Label 10 was: Cat feeds cute dog well.
+Possible Phrases:
+Phrase 0: Cat fed dog well.
+Phrase 1: Cat fed dog cute.
+Phrase 2: Did cat feed dog?
+
+Label 11 was: Dog feeds charming cat nicely.
+Possible Phrases:
+Phrase 0: Dog nicely fed cat.
+Phrase 1: Dog fed charming cat.
+Phrase 2: Did dog feed cat?
 
