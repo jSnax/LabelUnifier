@@ -2,11 +2,13 @@ Label 0 was: Employee checked tiny invoice.
 Possible Phrases:
 Phrase 0: Employee checked tiny invoice.
 Phrase 1: Did employee check invoice?
+Phrase 2: Tiny invoice was checked by employee.
 
 Label 1 was: Employee verifies small invoice.
 Possible Phrases:
 Phrase 0: Employee checked tiny invoice.
 Phrase 1: Did employee check invoice?
+Phrase 2: Tiny invoice was checked by employee.
 
 Label 2 was: Employees check bills.
 Possible Phrases:
@@ -45,10 +47,19 @@ Possible Phrases:
 Phrase 0: Cat fed dog well.
 Phrase 1: Cat fed dog cute.
 Phrase 2: Did cat feed dog?
+Phrase 3: Dog cute was fed by cat.
 
-Label 11 was: Dog feeds charming cat nicely.
+Label 11 was: Cat feeds sweet dog well.
+Possible Phrases:
+Phrase 0: Cat fed dog well.
+Phrase 1: Cat fed sweet dog.
+Phrase 2: Did cat feed dog?
+Phrase 3: Sweet dog was fed by cat.
+
+Label 12 was: Dog feeds charming cat nicely.
 Possible Phrases:
 Phrase 0: Dog nicely fed cat.
 Phrase 1: Dog fed charming cat.
 Phrase 2: Did dog feed cat?
+Phrase 3: Charming cat was fed by dog.
 

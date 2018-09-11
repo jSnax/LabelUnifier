@@ -61,6 +61,7 @@ public class shortPresentation {
 			"Employer pays salary from savings",
 			"Rich Employer pays big salary from huge savings quickly",
 			"Cat feeds cute dog well",
+			"Cat feeds sweet dog well",
 			"Dog feeds charming cat nicely"
 			
 	};
@@ -75,7 +76,8 @@ public class shortPresentation {
 	// Create DomainThesaurus
 	DomainThesaurus thesaurus = new DomainThesaurus();
 	// Set Input Labels to previously created Label list
-	System.out.println("Printing Labels:");
+	
+	/*System.out.println("Printing Labels:");
 	for (int i = 0; i < testList.getInputLabels().size(); i++){
 		System.out.println("START OF LABEL " + i);		
 		for (int k = 0; k < testList.getInputLabels().get(i).getSentenceArray().size(); k++) {
@@ -88,7 +90,8 @@ public class shortPresentation {
 	// Simply print the labels
 	for (int i = 0; i < 3; i++){
 		System.out.println("");
-	}
+	}*/
+	
 	ForbiddenWords bannedList = new ForbiddenWords();
 	testList.findSynsets(bannedList);
 	System.out.println("Printing Synsets:");

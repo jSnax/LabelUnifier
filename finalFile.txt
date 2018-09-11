@@ -34,11 +34,12 @@ were transformed into this new label: "Rich employer quickly payed big salary fr
 
 These initial labels:
 Label 10 (Cat feeds cute dog well.)
+Label 11 (Cat feeds sweet dog well.)
 were transformed into this new label: "Cat fed dog well."
 
 
 These initial labels:
-Label 11 (Dog feeds charming cat nicely.)
+Label 12 (Dog feeds charming cat nicely.)
 were transformed into this new label: "null"
 
 
