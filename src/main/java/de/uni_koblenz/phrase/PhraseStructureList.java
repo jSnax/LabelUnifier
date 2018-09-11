@@ -106,6 +106,18 @@ public class PhraseStructureList {
 					case VERB_SIMPLEFUTURE:
         				tempList.add(PhraseStructureTypes.VERB_SIMPLEFUTURE);
 						break;
+					case PREPOSITION:
+        				tempList.add(PhraseStructureTypes.PREPOSITION);
+						break;
+					case PREPOSITIONAL_OBJECT_SINGULAR:
+        				tempList.add(PhraseStructureTypes.PREPOSITIONAL_OBJECT_SINGULAR);
+						break;
+					case PREPOSITIONAL_OBJECT_PLURAL:
+        				tempList.add(PhraseStructureTypes.PREPOSITIONAL_OBJECT_PLURAL);
+						break;
+					case ADJECTIVE_FOR_PREPOSITIONAL_OBJECT:
+        				tempList.add(PhraseStructureTypes.ADJECTIVE_FOR_PREPOSITIONAL_OBJECT);
+						break;
 					default:
 						break;
         		}
