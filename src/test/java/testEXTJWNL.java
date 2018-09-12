@@ -1,8 +1,14 @@
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import net.sf.extjwnl.JWNLException;
 import net.sf.extjwnl.dictionary.Dictionary;
 
 import net.sf.extjwnl.data.IndexWord;
+import net.sf.extjwnl.data.IndexWordSet;
 import net.sf.extjwnl.data.POS;
 import net.sf.extjwnl.data.PointerUtils;
 import net.sf.extjwnl.data.Synset;
@@ -17,7 +23,7 @@ public class testEXTJWNL {
 	
 		System.out.println("Algorithm started");
 		Dictionary dict = Dictionary.getDefaultResourceInstance();	
-		IndexWord[] wordlist= {
+		/*IndexWord[] wordlist= {
 				dict.getIndexWord(POS.VERB, "check"),
 				dict.getIndexWord(POS.NOUN, "car")};
 		for(IndexWord indexword:wordlist) {
@@ -52,6 +58,47 @@ public class testEXTJWNL {
 			}
 		}
 		
-		System.out.println("Algorithm completed");
+		System.out.println("Algorithm completed");*/
+		
+		Dictionary wordnet = Dictionary.getDefaultResourceInstance();
+        IndexWordSet set = wordnet.lookupAllIndexWords("check");
+        IndexWord[] ws = set.getIndexWordArray(); 
+        POS p = ws[1].getPOS();
+        List<String> synonyms = new ArrayList<String>();
+        IndexWord indexWord = wordnet.lookupIndexWord(p, "check");
+        List<Synset> synSets = indexWord.getSenses();
+        for (Synset synset : synSets)
+        {
+           List<Word> words = synset.getWords();
+          
+           for (Word word : words)
+           {
+              synonyms.add(word.getLemma());
+           }
+        }
+        System.out.println(synonyms);
+        set = wordnet.lookupAllIndexWords("take");
+        ws = set.getIndexWordArray(); 
+        p = ws[1].getPOS();
+        List<String> synonyms2 = new ArrayList<String>();
+        indexWord = wordnet.lookupIndexWord(p, "take");
+        synSets = indexWord.getSenses();
+        for (Synset synset : synSets)
+        {
+           List<Word> words = synset.getWords();
+          
+           for (Word word : words)
+           {
+              synonyms2.add(word.getLemma());
+           }
+        }
+        System.out.println(synonyms2);
+        for (int i = 1; i < synonyms.size(); i++){
+        	for (int j = 1; j < synonyms2.size(); j++){
+        		if (synonyms.get(i).equals(synonyms2.get(j))){
+        			System.out.println(synonyms.get(i));
+        		}
+        	}
+        }
 	}
 }
