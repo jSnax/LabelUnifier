@@ -1,7 +1,11 @@
 These initial labels:
 Label 0 (Employee checked tiny invoice.)
-Label 1 (Employee verifies small invoice.)
 were transformed into this new label: "Employee checked tiny invoice."
+
+
+These initial labels:
+Label 1 (Employee verifies small invoice.)
+were transformed into this new label: "Employee checked small invoice."
 
 
 These initial labels:
@@ -29,13 +33,13 @@ were transformed into this new label: "Did employer pay salary?"
 
 These initial labels:
 Label 9 (Rich Employer pays big salary from huge savings quickly.)
-were transformed into this new label: "Rich employer quickly payed big salary from big savings."
+were transformed into this new label: "Rich employer quickly payed big salary from huge savings."
 
 
 These initial labels:
 Label 10 (Cat feeds cute dog well.)
 Label 11 (Cat feeds sweet dog well.)
-were transformed into this new label: "Cat fed dog well."
+were transformed into this new label: "Cat payed dog well."
 
 
 These initial labels:

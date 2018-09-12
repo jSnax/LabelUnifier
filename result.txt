@@ -6,9 +6,9 @@ Phrase 2: Tiny invoice was checked by employee.
 
 Label 1 was: Employee verifies small invoice.
 Possible Phrases:
-Phrase 0: Employee checked tiny invoice.
+Phrase 0: Employee checked small invoice.
 Phrase 1: Did employee check invoice?
-Phrase 2: Tiny invoice was checked by employee.
+Phrase 2: Small invoice was checked by employee.
 
 Label 2 was: Employees check bills.
 Possible Phrases:
@@ -40,26 +40,26 @@ Phrase 0: Did employer pay salary?
 
 Label 9 was: Rich Employer pays big salary from huge savings quickly.
 Possible Phrases:
-Phrase 0: Rich employer quickly payed big salary from big savings.
+Phrase 0: Rich employer quickly payed big salary from huge savings.
 
 Label 10 was: Cat feeds cute dog well.
 Possible Phrases:
-Phrase 0: Cat fed dog well.
-Phrase 1: Cat fed dog cute.
-Phrase 2: Did cat feed dog?
-Phrase 3: Dog cute was fed by cat.
+Phrase 0: Cat payed dog well.
+Phrase 1: Cat payed dog cute.
+Phrase 2: Did cat pay dog?
+Phrase 3: Dog cute was payed by cat.
 
 Label 11 was: Cat feeds sweet dog well.
 Possible Phrases:
-Phrase 0: Cat fed dog well.
-Phrase 1: Cat fed sweet dog.
-Phrase 2: Did cat feed dog?
-Phrase 3: Sweet dog was fed by cat.
+Phrase 0: Cat payed dog well.
+Phrase 1: Cat payed sweet dog.
+Phrase 2: Did cat pay dog?
+Phrase 3: Sweet dog was payed by cat.
 
 Label 12 was: Dog feeds charming cat nicely.
 Possible Phrases:
-Phrase 0: Dog nicely fed cat.
-Phrase 1: Dog fed charming cat.
-Phrase 2: Did dog feed cat?
-Phrase 3: Charming cat was fed by dog.
+Phrase 0: Dog nicely payed cat.
+Phrase 1: Dog payed charming cat.
+Phrase 2: Did dog pay cat?
+Phrase 3: Charming cat was payed by dog.
 

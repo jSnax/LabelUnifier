@@ -192,6 +192,95 @@ public class LabelList implements java.io.Serializable{
        
     }
 
+    // Different function for finding Synonyms. Since it's not strictly better than the other method, it's not used right now.
+    // Difference between the two methods is that findSynsets searches for synonyms by taking the hypernyms of words and then returning all their hyponyms as synonyms
+    // While this only takes the different "meanings" of words as synonyms. Both methods have shortcomings, namely that
+    // The first one finds way too many synonyms and that this one does not find all synonyms
+    // Both methods return false positives still
+    public void findSynsets2(ForbiddenWords banList) throws JWNLException{
+        Dictionary dictionary = Dictionary.getDefaultResourceInstance();
+        net.sf.extjwnl.data.IndexWord tempWord;
+        List<net.sf.extjwnl.data.Synset> tempSyn;
+       
+        //shorter version of the for loops below ##############################
+       
+        // iteration over all labels
+        for (Label l : this.getInputLabels()) {
+            // iteration over all sentences in label
+            for (Sentence s : l.getSentenceArray()) {
+                // iteration over all words in sentence
+                for (Word w : s.getWordsarray()) {
+                    w.setSynonyms(new ArrayList<String>());
+                    w.addSynonym(w.getBaseform());
+                    if ((w.getPartOfSpeech().getJwnlType() != null) && (!banList.isForbiddenWord(w)) && (w.getPartOfSpeech() != PartOfSpeechTypes.NONE)){
+                    	// TODO: Check whether this catches all exceptions already
+                        tempWord = dictionary.lookupIndexWord(w.getPartOfSpeech().getJwnlType(), w.getBaseform());
+                        // Transform baseform of Word j in Label i into an indexWord so extjwnl can use it
+                        try{
+                        	tempSyn = tempWord.getSenses();
+                        	// Synset for Word j
+                        	for (net.sf.extjwnl.data.Synset synset : tempSyn){
+                        		List<net.sf.extjwnl.data.Word> words = synset.getWords();
+                        		for (net.sf.extjwnl.data.Word word : words){
+                        			w.addSynonym(word.getLemma());
+                        		}
+                        	}
+                        }
+                        catch (NullPointerException q){
+                           }
+                        	/*tempSyn = tempWord.getSenses();
+                            // Synset for Word j
+                            w.setSynonyms(new ArrayList<String>());
+                            // pre-create the Synonym list for Word j
+                            // CAUTION: This will override any pre-existing synonym list, so this method may only be called once
+                            for (net.sf.extjwnl.data.Synset syn : tempSyn) {
+                                // Iterate over all meanings in the synset, z refers to the current meaning
+                                if (w.getPartOfSpeech().getJwnlType() != POS.ADJECTIVE) {
+                                    nodelist=PointerUtils.getCoordinateTerms(syn);
+                                    for(PointerTargetNode node:nodelist) {
+                                        for(net.sf.extjwnl.data.Word word:node.getSynset().getWords()) {
+                                            //if (!w.getSynonyms().contains(word.getLemma()))
+                                        	// TODO: Change back to old if-clause right above this comment if needed
+                                        	// TODO: Check whether banList works below
+                                        	if (!w.isSynonym(word.getLemma()))
+                                            	if (!banList.isForbiddenString(word.getLemma())){
+                                                	w.addSynonym(word.getLemma());
+                                            	}
+                                                // Go through the synonym list and add each synonym to synonym list for word j, unless it's already in there
+                                        }
+                                    }
+                                    nodelist=PointerUtils.getDirectHypernyms(syn);
+                                }
+                                else {
+                                    nodelist=PointerUtils.getSynonyms(syn);
+                                }
+                                // Copy all synonyms to nodelist.
+                                // For nouns and verbs, a combination of getDirectHypernyms and getCoordinateTerms has to be used since getSynonyms only works on adjectives
+                                for(PointerTargetNode node:nodelist) {
+                                    for(net.sf.extjwnl.data.Word word:node.getSynset().getWords()) {
+                                        //if (!w.getSynonyms().contains(word.getLemma()))
+                                    	// TODO: Change back to old if-clause right above this comment if needed
+                                    	// TODO: Check whether banList works below
+                                    	if (!w.isSynonym(word.getLemma()))
+                                        	if (!banList.isForbiddenString(word.getLemma())){
+                                        		w.addSynonym(word.getLemma());
+                                        	}
+                                        	
+                                            // Go through the synonym list and add each synonym to synonym list for word j, unless it's already in there
+                                    }
+                                }
+                            }*/
+
+
+                    }
+                }
+            }
+        }
+       
+       
+  
+       
+    }
     
     // Aktuellste Version von matchSynonyms
     public List<WordCluster> matchSynonyms (){
@@ -235,6 +324,68 @@ public class LabelList implements java.io.Serializable{
 		        					w.setClusterPosition(position);
 		        					// Most basic form of matching. If POS match and one word is a synonym of the other, they have the same meaning
 		        					//TODO: Add "will" as a verb to exceptions
+		        				}
+		        			}
+		        		}
+		        	}
+		        }
+		        AllClusters.add(Cluster);
+	    	}
+	    	else WordsLeft = false;
+	    	position++;
+    	}
+    	return(AllClusters);
+    }
+    
+    // Alternative Version of Matching, compatible with findSynsets2.
+    // Difference to matchSynonyms is that that instead of checking whether Word A is a synonym of Word B or vice versa,
+    // This checks whether the synonym list of either two compared words have any common word amongst them
+    public List<WordCluster> matchSynonyms2 (){
+    	boolean WordsLeft = true;
+    	int position = 0;
+    	List<WordCluster> AllClusters = new ArrayList<WordCluster>();
+    	while (WordsLeft){
+    		Word definingWord = new Word();
+    		WordCluster Cluster = new WordCluster();
+	    	boolean searching = true;
+	    	int counterLabels = 0;
+	    	int counterSentences = 0;
+	    	int counterWords = 0;
+	    	while (searching && counterLabels < this.getInputLabelsSize()){
+	    		counterSentences = 0;
+	    		while (searching && counterSentences < this.getSentenceArraySize(counterLabels)){
+	    			counterWords = 0;
+	    			while (searching && counterWords < this.getWordsarraySize(counterLabels, counterSentences)){
+	    				if (this.getInputLabels().get(counterLabels).getSentenceArray().get(counterSentences).getWordsarray().get(counterWords).getClusterPosition() == null){
+	    					definingWord = this.getInputLabels().get(counterLabels).getSentenceArray().get(counterSentences).getWordsarray().get(counterWords);
+	    					definingWord.setClusterPosition(position);
+	    					Cluster.matchingWords.add(definingWord);
+	    					searching = false;
+	    				}
+	    				counterWords++;
+	    			}
+	    			counterSentences++;
+	    		}
+	    		counterLabels++;
+	    	}
+	    	if (definingWord.getBaseform() != null){
+		        for (Label l : this.getInputLabels()) {
+		        	for (Sentence s : l.getSentenceArray()) { 
+		        		for (Word w : s.getWordsarray()) {   			   
+		        			if (definingWord.getPartOfSpeech().getJwnlType() == w.getPartOfSpeech().getJwnlType() && w.getClusterPosition() == null) {    				   
+		        				boolean found = false;
+		        				int i = 0;
+		        				while (i < definingWord.getSynonyms().size() && !found){
+		        					int j = 0;
+			        				while (j < w.getSynonyms().size() && !found){
+			        					if (definingWord.getSynonyms().get(i).equals(w.getSynonyms().get(j))){
+	    		        					Cluster.matchingWords.add(w);
+	    		        					w.setClusterPosition(position);
+	    		        					found = true;
+			        					}
+			        					j++;
+			        				}
+			        				i++;
 		        				}
 		        			}
 		        		}
