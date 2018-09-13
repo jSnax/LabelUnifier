@@ -62,9 +62,9 @@ public class testPassiveHandling {
 			if(isPassive(w)==true) {
 			
 				if((w.get(i).getPartOfSpeech()!=null)
-						&& (w.get(i).getPartOfSpeech().getJwnlType()==POS.NOUN || w.get(i).getPartOfSpeech()==PartOfSpeechTypes.PERSONAL_PRONOUN)){
-					if(i<=3) {
-						w.get(i).setRole(RoleLeopold.BUSINESS_OBJECT); }
+						&& (w.get(i).getPartOfSpeech().getJwnlType()==POS.NOUN || w.get(i).getPartOfSpeech()==PartOfSpeechTypes.PERSONAL_PRONOUN)
+						&& w.get(i).getRole().equals(RoleLeopold.BUSINESS_OBJECT)){
+
 					if(i==1) {
 						if(w.get(i-1).getOriginalForm().equals("by")) {
 							w.get(i).setRole(RoleLeopold.SUBJECT); }

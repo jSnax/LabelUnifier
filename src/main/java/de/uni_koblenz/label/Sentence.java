@@ -83,6 +83,9 @@ public class Sentence implements java.io.Serializable{
 		this.contentAsString = contentAsString;
 	}
 
+	/*
+	 * method to check is a sentence is given in passive form
+	 */
 	public static boolean isPassive(List<Word> w){
 
 		for (int i = 0; i < w.size(); i++) {
@@ -97,17 +100,20 @@ public class Sentence implements java.io.Serializable{
 			}
 		return false;		
 	}
-
+	
+	/*
+	 * method to switch the subject with the business object if the sentence is in a passive form
+	 */
 	public static void passiveHandling(List<Word> w) {
 	
 		for(int i = 0; i < w.size(); i++) {
-		
+			
 			if(isPassive(w)==true) {
 			
 				if((w.get(i).getPartOfSpeech()!=null)
-						&& (w.get(i).getPartOfSpeech().getJwnlType()==POS.NOUN || w.get(i).getPartOfSpeech()==PartOfSpeechTypes.PERSONAL_PRONOUN)){
-					if(i<=3) {
-						w.get(i).setRole(RoleLeopold.BUSINESS_OBJECT); }
+						&& (w.get(i).getPartOfSpeech().getJwnlType()==POS.NOUN || w.get(i).getPartOfSpeech()==PartOfSpeechTypes.PERSONAL_PRONOUN)
+						&& w.get(i).getRole().equals(RoleLeopold.BUSINESS_OBJECT)){
+
 					if(i==1) {
 						if(w.get(i-1).getOriginalForm().equals("by")) {
 							w.get(i).setRole(RoleLeopold.SUBJECT); }
@@ -203,7 +209,7 @@ public class Sentence implements java.io.Serializable{
     	// get root as Word
 		Word root=wordsarray.get(asCoreSentence.dependencyParse().getFirstRoot().index()-1);
 		
-		RelationName[] subjects= {RelationName.SUBJECT,RelationName.NOMINAL_SUBJECT};
+		RelationName[] subjects= {RelationName.SUBJECT,RelationName.NOMINAL_SUBJECT,RelationName.NOMINAL_PASSIVE_SUBJECT,RelationName.CONTROLLING_NOMINAL_PASSIVE_SUBJECT};
 		RelationName[] objects= {RelationName.DIRECT_OBJECT,RelationName.OBJECT};
 
         // check if root of dependency tree is a verb
