@@ -38,7 +38,7 @@ public class DomainThesaurus {
         	br = new BufferedReader(new FileReader(dtFile));
         	
         	while ((line = br.readLine()) != null) {			
-			
+        	//new StringArray that will contain the DomainThesaurus elements after splitting them
 			String[] phraseElement = line.split(csvSplitBy);    		  		
         		
 				for(int i = 0; i < phraseElement.length; i++){
@@ -65,7 +65,7 @@ public class DomainThesaurus {
                 }
             }
         }
-		//finally, set the array of words split from the user's DomainThesaurus and added to domainWords as the List AllWords
+		//finally, set the array of words split from the user's DomainThesaurus and add to domainWords as the List AllWords
 		this.AllWords = domainWords;
 	}
 }

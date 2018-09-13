@@ -32,8 +32,6 @@ public class PhraseStructureList {
         String line = "";
         // split phraseStructureList tsvFile by comma
         String tsvSplitBy = ", ";
-        // create new ArrayList of PhraseStructureTypes called tempList, which will be used/filled later
-		//List<PhraseStructureTypes> tempList = new ArrayList<PhraseStructureTypes>();
 		// create new ArrayList of PhraseStructure called structureList, which will be used/filled later
 		List<PhraseStructure> structureList = new ArrayList<PhraseStructure>();
         try {
@@ -131,7 +129,8 @@ public class PhraseStructureList {
         		}
         			
         	}
-        	// finally set        	
+        	// finally set all elements from templist into the PhraseStructure structure
+        	// then set the full PhraseStructure structure into the list of PhraseStructures structureList
         	structure.setElements(tempList);
         	structureList.add(structure);
         	}
