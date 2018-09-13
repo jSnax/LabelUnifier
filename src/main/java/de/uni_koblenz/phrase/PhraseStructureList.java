@@ -26,31 +26,39 @@ public class PhraseStructureList {
     	// the file source used above has to be altered to suit the actual location
     	// Once we have the JAR, refer to the link below for possible fixes
     	// https://stackoverflow.com/questions/3627426/loading-a-file-relative-to-the-executing-jar-file
-        BufferedReader br = null;
+        //...
+    	// iterate new BufferedReader in order to read tsvFile
+    	BufferedReader br = null;
         String line = "";
-        String tsvSplitBy = ", ";  
-		List<PhraseStructureTypes> tempList = new ArrayList<PhraseStructureTypes>();
+        // split phraseStructureList tsvFile by comma
+        String tsvSplitBy = ", ";
+        // create new ArrayList of PhraseStructureTypes called tempList, which will be used/filled later
+		//List<PhraseStructureTypes> tempList = new ArrayList<PhraseStructureTypes>();
+		// create new ArrayList of PhraseStructure called structureList, which will be used/filled later
 		List<PhraseStructure> structureList = new ArrayList<PhraseStructure>();
         try {
         	
         	br = new BufferedReader(new FileReader(tsvFile));
         	while ((line = br.readLine()) != null) {
-        	
+        	//new StringArray that will contain the PhraseStructure elements after splitting them
         	String[] phraseElement = line.split(tsvSplitBy);
+        	//only use PhraseStructures if user has confirmed their intended use by choosing Yes ('y')
         	if(phraseElement[0].toCharArray()[0] == 'y') {
         		PhraseStructure structure = new PhraseStructure();
-        		tempList = new ArrayList<PhraseStructureTypes>();
+        		List<PhraseStructureTypes> tempList = new ArrayList<PhraseStructureTypes>();
+        		// iterate over each phraseElement in order to set the matching phraseStructureType into a list later
         		for(int i = 1; i < phraseElement.length; i++) {
         			String PhraseString = phraseElement[i];
-        			PhraseStructureTypes pstypes = PhraseStructureTypes.VERB_BASE;
+        			// initially set pstypes, will be given a value in row 55
+        			PhraseStructureTypes pstypes;
         			try{
+        			// set the value of phraseElement[i] which is the String PhaseString as a PhraseStructureType in order to make switching possible
         			pstypes = PhraseStructureTypes.valueOf(PhraseString);
         			}catch (IllegalArgumentException e) {
         				System.out.println(PhraseString);
         	            throw new Exception("The element above is not a proper PhraseStructureType.");
         			}
-        			// Man kann nicht über einen String switchen...
-        			// Ist richtig, aber durch den Befehl in der vorigen Codezeile wird der String zu einem PhraseStructureTypes umgewandelt
+        			//switch over all possible phraseStructureTypes and add the matching type to tempList
         			switch(pstypes) {
         			case VERB_IMPERATIVE: 
         				tempList.add(PhraseStructureTypes.VERB_IMPERATIVE);
@@ -123,7 +131,7 @@ public class PhraseStructureList {
         		}
         			
         	}
-        	        	
+        	// finally set        	
         	structure.setElements(tempList);
         	structureList.add(structure);
         	}

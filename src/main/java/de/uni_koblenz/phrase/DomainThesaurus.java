@@ -9,7 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DomainThesaurus {
-		List<String> AllWords;   
+	// create empty list AllWords which will be filled with the DomainThesaurus words later
+	List<String> AllWords;   
 
 	public List<String> getAllWords() {
 			return AllWords;
@@ -21,10 +22,15 @@ public class DomainThesaurus {
 
 	public DomainThesaurus() {
 		
+		// read from custom file DomainThesaurus those words which override their respective synonyms (like "check" vs verify or "invoice" vs bill)
+		// user needs to change the file address to his own local address of course
 		String dtFile = "src/test/resources/Structures_And_Thesaurus/DomainThesaurus.txt"; 
-        BufferedReader br = null;
+        // iterate a BufferedReader to read dtFile
+		BufferedReader br = null;
         String line = "";
+        // split the words by using commas between words
         String csvSplitBy = ",";
+        // create a new ArrayList<String> in order to insert the split words from dtFile
         List<String> domainWords = new ArrayList<String>();
 		
 		try {
@@ -37,6 +43,7 @@ public class DomainThesaurus {
         		
 				for(int i = 0; i < phraseElement.length; i++){
 					if (i != 0){
+						//removes the comma from a word after the split so it's not inserted into phraseElement as ",word"
 						domainWords.add(i, (phraseElement[i].substring(1)));
 					}
 					else {
@@ -58,6 +65,7 @@ public class DomainThesaurus {
                 }
             }
         }
+		//finally, set the array of words split from the user's DomainThesaurus and added to domainWords as the List AllWords
 		this.AllWords = domainWords;
 	}
 }
