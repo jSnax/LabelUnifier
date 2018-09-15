@@ -7,7 +7,6 @@ import de.uni_koblenz.cluster.*;
 import de.uni_koblenz.enums.*;
 import de.uni_koblenz.label.*;
 import de.uni_koblenz.phrase.*;
-import de.uni_koblenz.phrase.PhraseStructure;
 import net.sf.extjwnl.JWNLException;
 import net.sf.extjwnl.data.POS;
 import net.sf.extjwnl.data.PointerUtils;
@@ -43,7 +42,7 @@ import de.uni_koblenz.phrase.*;
 public class timTest {
 	public static void main (String args[]) throws Exception {
 		
-	System.out.println("Started.");
+	/*System.out.println("Started.");
 	Lexicon lexicon = Lexicon.getDefaultLexicon();
 	NLGFactory nlgFactory = new NLGFactory(lexicon);
 	SPhraseSpec p = nlgFactory.createClause();
@@ -97,6 +96,12 @@ public class timTest {
 	System.out.println("Separated Phrases:");
 	for (int i = 0; i < p1.size(); i++){
 		System.out.println(p1.get(i).getseparatedContent());
+	}*/
+	PhraseStructureList completeList = new PhraseStructureList();
+	completeList.sortStructures();
+	for (int i = 0; i < completeList.getAllStructures().size(); i++){
+		System.out.println(completeList.getAllStructures().get(i).getElements());
 	}
+
 	}
 }

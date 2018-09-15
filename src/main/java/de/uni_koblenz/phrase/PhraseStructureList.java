@@ -162,7 +162,7 @@ public class PhraseStructureList {
 	public void sortStructures (){
 		for (int i = 0; i < this.AllStructures.size(); i++) {
 			for (int j =i+1; j < this.AllStructures.size() ; j++) {
-				if ( this.AllStructures.get(j).getElements().size() > this.AllStructures.get(i).getElements().size()) {
+				if ( this.AllStructures.get(j).getTrueSize() > this.AllStructures.get(i).getTrueSize()) {
 					List<PhraseStructureTypes> k = this.AllStructures.get(i).getElements();
 					this.AllStructures.get(i).elements = this.AllStructures.get(j).getElements();
 					this.AllStructures.get(j).elements = k;

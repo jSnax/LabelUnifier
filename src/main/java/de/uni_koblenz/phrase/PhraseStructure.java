@@ -17,7 +17,6 @@ public class PhraseStructure {
 
 	String phraseElements;
 	List<PhraseStructureTypes> elements = new ArrayList<PhraseStructureTypes>();
-	Phrase[] generatedPhrase;
 
 	
 	public PhraseStructure() {
@@ -27,14 +26,7 @@ public class PhraseStructure {
 	public void setPhraseElements(String phraseElements) {
 		this.phraseElements = phraseElements;
 	}
-	
-	public Phrase[] getGeneratedPhrase() {
-		return generatedPhrase;
-	}
-	
-	public void setGeneratedPhrase(Phrase[] generatedPhrase) {
-		this.generatedPhrase = generatedPhrase;
-	}
+
 	
 	public List<PhraseStructureTypes> getElements() {
 		return elements;
@@ -43,6 +35,14 @@ public class PhraseStructure {
 	public void setElements(List<PhraseStructureTypes> elements) {
 		this.elements = elements;
 	}
+	
+	public int getTrueSize() {
+		if (this.getElements().contains(PhraseStructureTypes.PUNCTUATION_PERIOD) || this.getElements().contains(PhraseStructureTypes.PUNCTUATION_QUESTIONMARK)){
+			return (this.getElements().size()-1);
+		}
+		else return (this.getElements().size());
+	}
+	
 	
 	public boolean isProperSentence(){
 		boolean hasSubject = false;
