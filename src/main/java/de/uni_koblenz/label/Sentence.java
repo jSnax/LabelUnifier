@@ -327,7 +327,7 @@ public class Sentence implements java.io.Serializable{
 					switch(tempType){
 					// In this switch case, each PhraseStructureType is handled differently. Explanations for similiarily handled Types
 					// are found in the first case they appear
-					case DETERMINER_DEFINITEARTICLE:
+					case DetDef:
 						while (iterator < Structure.getElements().size() -1 && !found){
 							if (Structure.getElements().get(iterator+1).getdeterminer()=="Object"){
 								object.setDeterminer("the");
@@ -342,7 +342,7 @@ public class Sentence implements java.io.Serializable{
 						// This while-loop checks whether the Article is supposed to be attached to a Subject or an Object
 						if (!found) error = true;
 						break;
-					case DETERMINER_INDEFINITEARTICLE:
+					case DetIndef:
 						while (iterator < Structure.getElements().size() -1 && !found){
 							if (Structure.getElements().get(iterator+1).getdeterminer()=="Object"){
 								object.setDeterminer("a");
@@ -356,7 +356,7 @@ public class Sentence implements java.io.Serializable{
 						}
 						if (!found) error = true;
 						break;
-					case NOUN_PLURAL_OBJECT:
+					case NPO:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							//old: if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "BUSINESS_OBJECT"){
 							if ((this.POSofTempWord(j) == "NNS" || this.POSofTempWord(j) == "NNPS") && this.RoleOfTempWord(j) == "BUSINESS_OBJECT" && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
@@ -377,7 +377,7 @@ public class Sentence implements java.io.Serializable{
 						// Here, the needed variables for the SimpleNLG-engine are set. Also, if the while-loop above did not successfully 
 						// find a word that matches the three criteria above, "error" is set to true which will skip to the next PhraseStructure
 						break;
-					case NOUN_PLURAL_SUBJECT:
+					case NPS:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							//old:	if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "SUBJECT"){
 							if ((this.POSofTempWord(j) == "NNS" || this.POSofTempWord(j) == "NNPS") && this.RoleOfTempWord(j) == "SUBJECT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
@@ -393,7 +393,7 @@ public class Sentence implements java.io.Serializable{
 						if (tempString == "") error = true;
 						// See Noun Plural Object
 						break;
-					case NOUN_SINGULAR_OBJECT:
+					case NSO:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							//old: if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "BUSINESS_OBJECT"){
 							if ((this.POSofTempWord(j) == "NN" || this.POSofTempWord(j) == "NNP") && this.RoleOfTempWord(j) == "BUSINESS_OBJECT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
@@ -408,7 +408,7 @@ public class Sentence implements java.io.Serializable{
 						if (tempString == "") error = true;
 						// See Noun Plural Object
 						break;
-					case NOUN_SINGULAR_SUBJECT:
+					case NSS:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 						//old:	if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "SUBJECT"){
 							if ((this.POSofTempWord(j) == "NN" || this.POSofTempWord(j) == "NNP") && this.RoleOfTempWord(j) == "SUBJECT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
@@ -423,16 +423,16 @@ public class Sentence implements java.io.Serializable{
 						if (tempString == "") error = true;
 						// See Noun Plural Object
 						break;
-					case PUNCTUATION_PERIOD:
+					case PP:
 						// Since SimpleNLG creates Periods anyway, this PartOfSpeechType needs no code to function.
 						break;
-					case PUNCTUATION_QUESTIONMARK:
+					case PQ:
 						if (!(Structure.isProperSentence())) error = true;
 						p.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.YES_NO);	
 						// SimpleNLG can't really handle questions that don't have a Subject, Verb AND Object. Therefore, error is set true if not all of those can be found in the given PhraseStructure
 						//TODO: Maybe catch this while processing the PhraseStructure Input List?
 					    break;
-					case VERB_BASE:
+					case VB:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 						//old:	if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
 							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
@@ -448,7 +448,7 @@ public class Sentence implements java.io.Serializable{
 				        if (tempString == "") error = true;
 				        // Setting SimpleNLG variables for verbs and setting "error" true if no verb was found
 						break;
-					case VERB_IMPERATIVE:
+					case VI:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							//old: if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
 							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
@@ -464,7 +464,7 @@ public class Sentence implements java.io.Serializable{
 						if (tempString == "") error = true;
 						// See Verb Base
 						break;
-					case VERB_PRESENT_PARTICIPLE:
+					case VPrP:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							//old: if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
 							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
@@ -480,7 +480,7 @@ public class Sentence implements java.io.Serializable{
 						if (tempString == "") error = true;
 						// See Verb Base
 						break;
-					case VERB_PASSIVE:
+					case VP:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 						//old:	if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
 							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
@@ -498,7 +498,7 @@ public class Sentence implements java.io.Serializable{
 						// See Verb Base
 						// Also, passive is set to true here since generating passive sentences requires some more work further below
 						break;
-					case VERB_PASSIVE_PAST:
+					case VPP:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							tempString = this.BaseOfTempWord(j);
@@ -515,7 +515,7 @@ public class Sentence implements java.io.Serializable{
 						// See Verb Base
 						// Also, passive is set to true here since generating passive sentences requires some more work further below
 						break;
-					case VERB_SIMPLEPAST:
+					case VSP:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							tempString = this.BaseOfTempWord(j);
@@ -529,7 +529,7 @@ public class Sentence implements java.io.Serializable{
 						if (tempString == "") error = true;
 						// See Verb Base
 						break;
-					case VERB_SIMPLEFUTURE:
+					case VSF:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							tempString = this.BaseOfTempWord(j);
@@ -543,7 +543,7 @@ public class Sentence implements java.io.Serializable{
 						if (tempString == "") error = true;
 						// With the exception of special handling for future, see Verb Base
 						break;
-					case ADJECTIVE_FOR_OBJECT:
+					case AO:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							if (this.jwnlPOSofTempWord(j) == POS.ADJECTIVE && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							tempString = this.BaseOfTempWord(j);
@@ -556,7 +556,7 @@ public class Sentence implements java.io.Serializable{
 						if (tempString == "") error = true;
 						// See cases above
 						break;
-					case ADJECTIVE_FOR_SUBJECT:
+					case AS:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							if (this.jwnlPOSofTempWord(j) == POS.ADJECTIVE && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							tempString = this.BaseOfTempWord(j);
@@ -568,7 +568,7 @@ public class Sentence implements java.io.Serializable{
 						if (tempString == "") error = true;
 						// See cases above
 						break;
-					case ADJECTIVE_FOR_PREPOSITIONAL_OBJECT:
+					case APO:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							if (this.jwnlPOSofTempWord(j) == POS.ADJECTIVE && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							tempString = this.BaseOfTempWord(j);
@@ -580,7 +580,7 @@ public class Sentence implements java.io.Serializable{
 						if (tempString == "") error = true;
 						// See cases above
 						break;
-					case ADVERB:
+					case ADV:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							if (this.jwnlPOSofTempWord(j) == POS.ADVERB && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							tempString = this.BaseOfTempWord(j);
@@ -593,7 +593,7 @@ public class Sentence implements java.io.Serializable{
 						if (tempString == "") error = true;
 						// See cases above
 						break;
-					case PREPOSITION:
+					case Prep:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							if (this.getWordsarray().get(j).getPartOfSpeech() == PartOfSpeechTypes.PREPOSITION_SUBORDINATING_CONJUNCTION && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							tempString = this.BaseOfTempWord(j);
@@ -607,7 +607,7 @@ public class Sentence implements java.io.Serializable{
 						if (tempString == "") error = true;
 						// See cases above
 						break;
-					case PREPOSITIONAL_OBJECT_SINGULAR:
+					case POS:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							if ((this.POSofTempWord(j) == "NN" || this.POSofTempWord(j) == "NNP") && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							tempString = this.BaseOfTempWord(j);
@@ -620,7 +620,7 @@ public class Sentence implements java.io.Serializable{
 						if (tempString == "") error = true;
 						// See Noun Plural Object
 						break;
-					case PREPOSITIONAL_OBJECT_PLURAL:
+					case POP:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							if ((this.POSofTempWord(j) == "NNS" || this.POSofTempWord(j) == "NNPS") && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							tempString = this.BaseOfTempWord(j);

@@ -58,71 +58,71 @@ public class PhraseStructureList {
         			}
         			//switch over all possible phraseStructureTypes and add the matching type to tempList
         			switch(pstypes) {
-        			case VERB_IMPERATIVE: 
-        				tempList.add(PhraseStructureTypes.VERB_IMPERATIVE);
+        			case VI: 
+        				tempList.add(PhraseStructureTypes.VI);
         				break;
-        			case VERB_BASE: 
-        				tempList.add(PhraseStructureTypes.VERB_BASE);
+        			case VB: 
+        				tempList.add(PhraseStructureTypes.VB);
         				break;	
-        			case VERB_PASSIVE: 
-        				tempList.add(PhraseStructureTypes.VERB_PASSIVE);
+        			case VP: 
+        				tempList.add(PhraseStructureTypes.VP);
         				break;
-        			case VERB_PASSIVE_PAST: 
-        				tempList.add(PhraseStructureTypes.VERB_PASSIVE_PAST);
+        			case VPP: 
+        				tempList.add(PhraseStructureTypes.VPP);
         				break;
-        			case VERB_PRESENT_PARTICIPLE: 
-        				tempList.add(PhraseStructureTypes.VERB_PRESENT_PARTICIPLE);
+        			case VPrP: 
+        				tempList.add(PhraseStructureTypes.VPrP);
         				break;
-        			case VERB_SIMPLEPAST: 
-        				tempList.add(PhraseStructureTypes.VERB_SIMPLEPAST);
+        			case VSP: 
+        				tempList.add(PhraseStructureTypes.VSP);
         				break;
-        			case NOUN_SINGULAR_OBJECT: 
-        				tempList.add(PhraseStructureTypes.NOUN_SINGULAR_OBJECT);
+        			case NSO: 
+        				tempList.add(PhraseStructureTypes.NSO);
         				break;
-        			case NOUN_SINGULAR_SUBJECT: 
-        				tempList.add(PhraseStructureTypes.NOUN_SINGULAR_SUBJECT);
+        			case NSS: 
+        				tempList.add(PhraseStructureTypes.NSS);
         				break;
-        			case NOUN_PLURAL_OBJECT: 
-        				tempList.add(PhraseStructureTypes.NOUN_PLURAL_OBJECT);
+        			case NPO: 
+        				tempList.add(PhraseStructureTypes.NPO);
         				break;
-        			case NOUN_PLURAL_SUBJECT: 
-        				tempList.add(PhraseStructureTypes.NOUN_PLURAL_SUBJECT);
+        			case NPS: 
+        				tempList.add(PhraseStructureTypes.NPS);
         				break;
-        			case DETERMINER_DEFINITEARTICLE: 
-        				tempList.add(PhraseStructureTypes.DETERMINER_DEFINITEARTICLE);
+        			case DetDef: 
+        				tempList.add(PhraseStructureTypes.DetDef);
         				break;
-        			case DETERMINER_INDEFINITEARTICLE: 
-        				tempList.add(PhraseStructureTypes.DETERMINER_INDEFINITEARTICLE);
+        			case DetIndef: 
+        				tempList.add(PhraseStructureTypes.DetIndef);
         				break;
-        			case PUNCTUATION_PERIOD: 
-        				tempList.add(PhraseStructureTypes.PUNCTUATION_PERIOD);
+        			case PP: 
+        				tempList.add(PhraseStructureTypes.PP);
         				break;
-        			case PUNCTUATION_QUESTIONMARK: 
-        				tempList.add(PhraseStructureTypes.PUNCTUATION_QUESTIONMARK);
+        			case PQ: 
+        				tempList.add(PhraseStructureTypes.PQ);
         				break;
-        			case ADJECTIVE_FOR_OBJECT: 
-        				tempList.add(PhraseStructureTypes.ADJECTIVE_FOR_OBJECT);
+        			case AO: 
+        				tempList.add(PhraseStructureTypes.AO);
         				break;
-        			case ADJECTIVE_FOR_SUBJECT: 
-        				tempList.add(PhraseStructureTypes.ADJECTIVE_FOR_SUBJECT);
+        			case AS: 
+        				tempList.add(PhraseStructureTypes.AS);
         				break;
-        			case ADVERB: 
-        				tempList.add(PhraseStructureTypes.ADVERB);
+        			case ADV: 
+        				tempList.add(PhraseStructureTypes.ADV);
         				break;
-					case VERB_SIMPLEFUTURE:
-        				tempList.add(PhraseStructureTypes.VERB_SIMPLEFUTURE);
+					case VSF:
+        				tempList.add(PhraseStructureTypes.VSF);
 						break;
-					case PREPOSITION:
-        				tempList.add(PhraseStructureTypes.PREPOSITION);
+					case Prep:
+        				tempList.add(PhraseStructureTypes.Prep);
 						break;
-					case PREPOSITIONAL_OBJECT_SINGULAR:
-        				tempList.add(PhraseStructureTypes.PREPOSITIONAL_OBJECT_SINGULAR);
+					case POS:
+        				tempList.add(PhraseStructureTypes.POS);
 						break;
-					case PREPOSITIONAL_OBJECT_PLURAL:
-        				tempList.add(PhraseStructureTypes.PREPOSITIONAL_OBJECT_PLURAL);
+					case POP:
+        				tempList.add(PhraseStructureTypes.POP);
 						break;
-					case ADJECTIVE_FOR_PREPOSITIONAL_OBJECT:
-        				tempList.add(PhraseStructureTypes.ADJECTIVE_FOR_PREPOSITIONAL_OBJECT);
+					case APO:
+        				tempList.add(PhraseStructureTypes.APO);
 						break;
 					default:
 						break;

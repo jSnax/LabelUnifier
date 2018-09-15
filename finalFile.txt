@@ -11,7 +11,7 @@ were transformed into this new label: "Employees check bills."
 
 These initial labels:
 Label 3 (Company pays bill.)
-were transformed into this new label: "Did company pay invoice?"
+were transformed into this new label: "Company pays invoice."
 
 
 These initial labels:
@@ -33,7 +33,7 @@ were transformed into this new label: "Bill is taken from box."
 
 These initial labels:
 Label 8 (Employer pays salary from savings.)
-were transformed into this new label: "Did employer pay salary?"
+were transformed into this new label: "Employer pays salary."
 
 
 These initial labels:

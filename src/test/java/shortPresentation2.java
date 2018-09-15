@@ -176,7 +176,7 @@ public class shortPresentation2 {
 		System.out.println("End of Generalized Cluster " +i);
 	}
 	PhraseStructureList completeList = new PhraseStructureList();
-	PhraseStructure Structure = new PhraseStructure();
+	/*PhraseStructure Structure = new PhraseStructure();
 	PhraseStructure Structure2 = new PhraseStructure();
 	PhraseStructure Structure3 = new PhraseStructure();
 	PhraseStructure Structure4 = new PhraseStructure();
@@ -212,7 +212,7 @@ public class shortPresentation2 {
 	allStructures.add(Structure3);
 	allStructures.add(Structure4);
 	allStructures.add(Structure5);
-	completeList.setAllStructures(allStructures);
+	completeList.setAllStructures(allStructures);*/
 	ArrayList<ArrayList<Phrase>> PhraseListList = new ArrayList<ArrayList<Phrase>>();
 
 	completeList.sortStructures();

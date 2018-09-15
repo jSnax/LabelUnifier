@@ -37,7 +37,7 @@ public class PhraseStructure {
 	}
 	
 	public int getTrueSize() {
-		if (this.getElements().contains(PhraseStructureTypes.PUNCTUATION_PERIOD) || this.getElements().contains(PhraseStructureTypes.PUNCTUATION_QUESTIONMARK)){
+		if (this.getElements().contains(PhraseStructureTypes.PP) || this.getElements().contains(PhraseStructureTypes.PQ)){
 			return (this.getElements().size()-1);
 		}
 		else return (this.getElements().size());
