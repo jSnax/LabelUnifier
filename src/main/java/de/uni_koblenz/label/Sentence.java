@@ -563,6 +563,8 @@ public class Sentence implements java.io.Serializable{
 						else if (prepObjectPosition < objectPosition){
 							j = prepObjectPosition + 1;
 						}
+						// For adjectives, it is necessary to filter whether they belong to subject, object or prepositional object
+						// Hence, we only search for them starting from the last found noun and until the current noun
 						while (tempString == "" && j < tempSentence.getWordsarray().size() && j < objectPosition){
 							if (this.jwnlPOSofTempWord(j) == POS.ADJECTIVE && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							tempString = this.BaseOfTempWord(j);
@@ -570,7 +572,7 @@ public class Sentence implements java.io.Serializable{
 							}
 							j++;
 						}
-						// while-loop like above, searches for Adjective and Optional Information Fragment however
+						// while-loop ends at position of the object here, searches for Adjective and Optional Information Fragment however
 						object.addModifier(tempString);
 						if (tempString == "") error = true;
 						// See cases above
@@ -588,6 +590,7 @@ public class Sentence implements java.io.Serializable{
 						else if (prepObjectPosition < subjectPosition){
 							j = prepObjectPosition + 1;
 						}
+						// See cases above
 						while (tempString == "" && j < tempSentence.getWordsarray().size() && j < subjectPosition){
 							if (this.jwnlPOSofTempWord(j) == POS.ADJECTIVE && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							tempString = this.BaseOfTempWord(j);
@@ -612,6 +615,7 @@ public class Sentence implements java.io.Serializable{
 						else if (objectPosition < prepObjectPosition){
 							j = objectPosition + 1;
 						}
+						// See cases above
 						while (tempString == "" && j < tempSentence.getWordsarray().size() && j < prepObjectPosition){
 							if (this.jwnlPOSofTempWord(j) == POS.ADJECTIVE && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							tempString = this.BaseOfTempWord(j);
