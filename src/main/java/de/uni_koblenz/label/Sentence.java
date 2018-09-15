@@ -296,6 +296,9 @@ public class Sentence implements java.io.Serializable{
 			int maximumStructureUsed = 0;
 			// Creating lots of variables that will be used later in this function
 			while ((counter < allStructures.size()) && (allStructures.get(counter).getElements().size() >= maximumStructureUsed)){
+				int subjectPosition = 500;
+				int objectPosition = 500;
+				int prepObjectPosition = 500;
 				// This while loop stops when either all possible PhraseStructures were tried out for the current Sentence
 				// or when a fitting PhraseStructure was already found and all remaining PhraseStructures are of lesser size
 				for (int usageCounter = 0; usageCounter < this.getWordsarray().size(); usageCounter++){
@@ -362,6 +365,7 @@ public class Sentence implements java.io.Serializable{
 							if ((this.POSofTempWord(j) == "NNS" || this.POSofTempWord(j) == "NNPS") && this.RoleOfTempWord(j) == "BUSINESS_OBJECT" && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 								//old: tempString = tempSentence.getWordsarray().get(j).getBaseform();
 								tempString = this.BaseOfTempWord(j);
+								objectPosition = j;
 								this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
 							j++;
@@ -383,6 +387,7 @@ public class Sentence implements java.io.Serializable{
 							if ((this.POSofTempWord(j) == "NNS" || this.POSofTempWord(j) == "NNPS") && this.RoleOfTempWord(j) == "SUBJECT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 								//old: tempString = tempSentence.getWordsarray().get(j).getBaseform();
 								tempString = this.BaseOfTempWord(j);
+								subjectPosition = j;
 								this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
 							j++;
@@ -399,6 +404,7 @@ public class Sentence implements java.io.Serializable{
 							if ((this.POSofTempWord(j) == "NN" || this.POSofTempWord(j) == "NNP") && this.RoleOfTempWord(j) == "BUSINESS_OBJECT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							//old:	tempString = tempSentence.getWordsarray().get(j).getBaseform();
 								tempString = this.BaseOfTempWord(j);
+								objectPosition = j;
 								this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
 							j++;
@@ -414,6 +420,7 @@ public class Sentence implements java.io.Serializable{
 							if ((this.POSofTempWord(j) == "NN" || this.POSofTempWord(j) == "NNP") && this.RoleOfTempWord(j) == "SUBJECT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							//old:	tempString = tempSentence.getWordsarray().get(j).getBaseform();
 							tempString = this.BaseOfTempWord(j);
+							subjectPosition = j;
 							this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
 							j++;
@@ -544,7 +551,19 @@ public class Sentence implements java.io.Serializable{
 						// With the exception of special handling for future, see Verb Base
 						break;
 					case AO:
-						while (tempString == "" && j < tempSentence.getWordsarray().size()){
+						if (subjectPosition < objectPosition){
+							if (prepObjectPosition < objectPosition){
+								if (subjectPosition < prepObjectPosition){
+									j = prepObjectPosition + 1;
+								}
+								else j = subjectPosition + 1;
+							}
+							else j = subjectPosition + 1;
+							}
+						else if (prepObjectPosition < objectPosition){
+							j = prepObjectPosition + 1;
+						}
+						while (tempString == "" && j < tempSentence.getWordsarray().size() && j < objectPosition){
 							if (this.jwnlPOSofTempWord(j) == POS.ADJECTIVE && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							tempString = this.BaseOfTempWord(j);
 							this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
@@ -557,7 +576,19 @@ public class Sentence implements java.io.Serializable{
 						// See cases above
 						break;
 					case AS:
-						while (tempString == "" && j < tempSentence.getWordsarray().size()){
+						if (objectPosition < subjectPosition){
+							if (prepObjectPosition < subjectPosition){
+								if (objectPosition < prepObjectPosition){
+									j = prepObjectPosition + 1;
+								}
+								else j = objectPosition + 1;
+							}
+							else j = objectPosition + 1;
+							}
+						else if (prepObjectPosition < subjectPosition){
+							j = prepObjectPosition + 1;
+						}
+						while (tempString == "" && j < tempSentence.getWordsarray().size() && j < subjectPosition){
 							if (this.jwnlPOSofTempWord(j) == POS.ADJECTIVE && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							tempString = this.BaseOfTempWord(j);
 							this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
@@ -569,7 +600,19 @@ public class Sentence implements java.io.Serializable{
 						// See cases above
 						break;
 					case APO:
-						while (tempString == "" && j < tempSentence.getWordsarray().size()){
+						if (subjectPosition < prepObjectPosition){
+							if (objectPosition < prepObjectPosition){
+								if (subjectPosition < objectPosition){
+									j = objectPosition + 1;
+								}
+								else j = subjectPosition + 1;
+							}
+							else j = subjectPosition + 1;
+							}
+						else if (objectPosition < prepObjectPosition){
+							j = objectPosition + 1;
+						}
+						while (tempString == "" && j < tempSentence.getWordsarray().size() && j < prepObjectPosition){
 							if (this.jwnlPOSofTempWord(j) == POS.ADJECTIVE && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							tempString = this.BaseOfTempWord(j);
 							this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
@@ -611,6 +654,7 @@ public class Sentence implements java.io.Serializable{
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							if ((this.POSofTempWord(j) == "NN" || this.POSofTempWord(j) == "NNP") && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							tempString = this.BaseOfTempWord(j);
+							prepObjectPosition = j;
 							this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
 							j++;
@@ -624,6 +668,7 @@ public class Sentence implements java.io.Serializable{
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
 							if ((this.POSofTempWord(j) == "NNS" || this.POSofTempWord(j) == "NNPS") && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							tempString = this.BaseOfTempWord(j);
+							prepObjectPosition = j;
 							this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
 							j++;

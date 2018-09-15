@@ -7,3 +7,5 @@ y, NSS, VSP, NSO, ADV
 y, NSS, VSP, NSO, AO
 y, VSP, NSS, NSO, PQ
 y, VPP, NSS, NSO, AO
+y, VB, NSS, NSO, AO
+y, VB, NSS, NSO, AS, AS

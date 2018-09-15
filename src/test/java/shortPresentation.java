@@ -63,7 +63,8 @@ public class shortPresentation {
 			"Cat feeds cute dog well",
 			"Cat feeds sweet dog well",
 			"Dog feeds charming cat nicely",
-			"take bill"
+			"take bill",
+			"Big cat feeds small dog"
 			
 	};
 	
