@@ -95,7 +95,7 @@ public class shortPresentation {
 	
 	ForbiddenWords bannedList = new ForbiddenWords();
 	testList.findSynsets(bannedList);
-	/*System.out.println("Printing Synsets:");
+	System.out.println("Printing Synsets:");
 	for (int i = 0; i < testList.getInputLabels().size(); i++){
 		System.out.println("START OF LABEL " + i);		
 		for (int k = 0; k < testList.getInputLabels().get(i).getSentenceArray().size(); k++) {
@@ -108,7 +108,7 @@ public class shortPresentation {
 	for (int i = 0; i < 3; i++){
 		System.out.println("");
 	}
-	*/
+	
 	System.out.println("Printing Wordclusters");
 	List<WordCluster> AllClusters = testList.matchSynonyms();
 	for (int i = 0; i < AllClusters.size(); i++){

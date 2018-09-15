@@ -125,6 +125,8 @@ public class LabelList implements java.io.Serializable{
             for (Sentence s : l.getSentenceArray()) {
                 // iteration over all words in sentence
                 for (Word w : s.getWordsarray()) {
+                	w.setSynonyms(new ArrayList<String>());
+                    w.addSynonym(w.getBaseform());
                     if ((w.getPartOfSpeech().getJwnlType() != null) && (!banList.isForbiddenWord(w)) && (w.getPartOfSpeech() != PartOfSpeechTypes.NONE)){
                     	// TODO: Check whether this catches all exceptions already
                         tempWord = dictionary.getIndexWord(w.getPartOfSpeech().getJwnlType(), w.getBaseform());
@@ -132,7 +134,6 @@ public class LabelList implements java.io.Serializable{
                         try{
                             tempSyn = tempWord.getSenses();
                             // Sysnte for Word j
-                            w.setSynonyms(new ArrayList<String>());
                             // pre-create the Synonym list for Word j
                             // CAUTION: This will override any pre-existing synonym list, so this method may only be called once
                             for (net.sf.extjwnl.data.Synset syn : tempSyn) {
@@ -174,14 +175,8 @@ public class LabelList implements java.io.Serializable{
                             }
                         }
                         catch (NullPointerException q){
-                        	w.setSynonyms(new ArrayList<String>());
-                        	w.addSynonym(w.getBaseform());
                         }
 
-                    }
-                    else{
-                        w.setSynonyms(new ArrayList<String>());
-                        w.addSynonym(w.getBaseform());
                     }
                 }
             }
