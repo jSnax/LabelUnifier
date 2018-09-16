@@ -96,7 +96,7 @@ public class shortPresentation {
 	
 	ForbiddenWords bannedList = new ForbiddenWords();
 	testList.findSynsets(bannedList);
-	System.out.println("Printing Synsets:");
+	/*System.out.println("Printing Synsets:");
 	for (int i = 0; i < testList.getInputLabels().size(); i++){
 		System.out.println("START OF LABEL " + i);		
 		for (int k = 0; k < testList.getInputLabels().get(i).getSentenceArray().size(); k++) {
@@ -108,7 +108,7 @@ public class shortPresentation {
 	}
 	for (int i = 0; i < 3; i++){
 		System.out.println("");
-	}
+	}*/
 	
 	System.out.println("Printing Wordclusters");
 	List<WordCluster> AllClusters = testList.matchSynonyms();
@@ -138,58 +138,11 @@ public class shortPresentation {
 		System.out.println("End of Generalized Cluster " +i);
 	}
 	PhraseStructureList completeList = new PhraseStructureList();
-	/*PhraseStructure Structure = new PhraseStructure();
-	PhraseStructure Structure2 = new PhraseStructure();
-	PhraseStructure Structure3 = new PhraseStructure();
-	PhraseStructure Structure4 = new PhraseStructure();
-	PhraseStructure Structure5 = new PhraseStructure();
-	List<PhraseStructure> allStructures = new ArrayList<PhraseStructure>(); 
-	List<PhraseStructureTypes> tempList = new ArrayList<PhraseStructureTypes>();
-	List<PhraseStructureTypes> tempList2 = new ArrayList<PhraseStructureTypes>();
-	List<PhraseStructureTypes> tempList3 = new ArrayList<PhraseStructureTypes>();
-	List<PhraseStructureTypes> tempList4 = new ArrayList<PhraseStructureTypes>();
-	List<PhraseStructureTypes> tempList5 = new ArrayList<PhraseStructureTypes>();
-	tempList.add(PhraseStructureTypes.NOUN_SINGULAR_SUBJECT);
-	tempList.add(PhraseStructureTypes.VERB_SIMPLEFUTURE);
-	tempList.add(PhraseStructureTypes.NOUN_SINGULAR_OBJECT);
-	tempList.add(PhraseStructureTypes.ADJECTIVE_FOR_OBJECT);
-	Structure.setElements(tempList);
-	tempList2.add(PhraseStructureTypes.NOUN_PLURAL_SUBJECT);
-	tempList2.add(PhraseStructureTypes.VERB_SIMPLEPAST);
-	tempList2.add(PhraseStructureTypes.NOUN_PLURAL_OBJECT);
-	Structure2.setElements(tempList2);
-	tempList3.add(PhraseStructureTypes.NOUN_SINGULAR_SUBJECT);
-	//tempList3.add(PhraseStructureTypes.ADJECTIVE_FOR_SUBJECT);
-	tempList3.add(PhraseStructureTypes.VERB_SIMPLEPAST);
-	tempList3.add(PhraseStructureTypes.NOUN_SINGULAR_OBJECT);
-	tempList3.add(PhraseStructureTypes.ADJECTIVE_FOR_OBJECT);
-	tempList3.add(PhraseStructureTypes.PREPOSITION);
-	tempList3.add(PhraseStructureTypes.PREPOSITIONAL_OBJECT_PLURAL);
-	tempList3.add(PhraseStructureTypes.ADJECTIVE_FOR_PREPOSITIONAL_OBJECT);
-	tempList3.add(PhraseStructureTypes.ADVERB);
-	Structure3.setElements(tempList3);
-	tempList4.add(PhraseStructureTypes.NOUN_SINGULAR_SUBJECT);
-	tempList4.add(PhraseStructureTypes.VERB_SIMPLEPAST);
-	tempList4.add(PhraseStructureTypes.NOUN_SINGULAR_OBJECT);
-	tempList4.add(PhraseStructureTypes.PREPOSITION);
-	tempList4.add(PhraseStructureTypes.PREPOSITIONAL_OBJECT_PLURAL);
-	Structure4.setElements(tempList4);
-	tempList5.add(PhraseStructureTypes.VERB_PASSIVE_PAST);
-	tempList5.add(PhraseStructureTypes.NOUN_SINGULAR_SUBJECT);
-	tempList5.add(PhraseStructureTypes.PUNCTUATION_QUESTIONMARK);
-	Structure5.setElements(tempList5);
-	allStructures.add(Structure);
-	allStructures.add(Structure2);
-	allStructures.add(Structure3);
-	allStructures.add(Structure4);
-	allStructures.add(Structure5);
-	completeList.setAllStructures(allStructures);*/
+	
 	ArrayList<ArrayList<Phrase>> PhraseListList = new ArrayList<ArrayList<Phrase>>();
 
 	completeList.sortStructures();
 	
-	//testList.getInputLabels().get(4).getSentenceArray().get(0).getWordsarray().get(4).setRole(RoleLeopold.SUBJECT);
-	//testList.getInputLabels().get(4).getSentenceArray().get(0).getWordsarray().get(0).setRole(RoleLeopold.BUSINESS_OBJECT);
 	for (int i = 0; i < testList.getInputLabels().size(); i++){
 		for (int j = 0; j < testList.getInputLabels().get(i).getSentenceArray().size(); j++){
 			ArrayList<Phrase> tempPhrase = testList.getInputLabels().get(i).getSentenceArray().get(j).toPhrase(completeList, realiser, nlgFactory);

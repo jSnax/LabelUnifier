@@ -86,30 +86,6 @@ public class LabelList implements java.io.Serializable{
         return result;
     }
     
-    //shorter version of cloneList
-    public LabelList cloneList() {
-    	LabelList clone = new LabelList();
-    	List<Label> tempLabelList = new ArrayList<Label>();
-    	
-    	for (Label l : this.getInputLabels()) {
-    		Label tempLabel = new Label();
-    		List<Sentence> tempSentenceList = new ArrayList<Sentence>();  
-    		for (Sentence s : l.getSentenceArray()) {
-    			Sentence tempSentence = new Sentence();
-    			List<Word> tempWordList = new ArrayList<Word>();
-    			for (Word w : s.getWordsarray()) {
-    				tempWordList.add(w.cloneWord());
-    			}
-    			tempSentence.setWordsarray(tempWordList);
-    			tempSentenceList.add(tempSentence);
-    		}	
-    		tempLabel.setSentenceArray(tempSentenceList);
-    		tempLabelList.add(tempLabel);
-    	}
-    	clone.setInputLabels(tempLabelList);
-    	return(clone);
-    }
-    
    
     public void findSynsets(ForbiddenWords banList) throws JWNLException{
         Dictionary dictionary = Dictionary.getDefaultResourceInstance();
@@ -128,12 +104,11 @@ public class LabelList implements java.io.Serializable{
                 	w.setSynonyms(new ArrayList<String>());
                     w.addSynonym(w.getBaseform());
                     if ((w.getPartOfSpeech().getJwnlType() != null) && (!banList.isForbiddenWord(w)) && (w.getPartOfSpeech() != PartOfSpeechTypes.NONE)){
-                    	// TODO: Check whether this catches all exceptions already
                         tempWord = dictionary.getIndexWord(w.getPartOfSpeech().getJwnlType(), w.getBaseform());
                         // Transform baseform of Word j in Label i into an indexWord so extjwnl can use it
                         try{
                             tempSyn = tempWord.getSenses();
-                            // Sysnte for Word j
+                            // Synset for Word j
                             // pre-create the Synonym list for Word j
                             // CAUTION: This will override any pre-existing synonym list, so this method may only be called once
                             for (net.sf.extjwnl.data.Synset syn : tempSyn) {
@@ -312,13 +287,10 @@ public class LabelList implements java.io.Serializable{
 		        		//tempIndex = 0;
 		        		for (Word w : s.getWordsarray()) {   			   
 		        			if (definingWord.getPartOfSpeech().getJwnlType() == w.getPartOfSpeech().getJwnlType() && w.getClusterPosition() == null) {    				   
-		        				//if ((definingWord.getSynonyms().contains(w.getBaseform()) && w.getBaseform() != "be" && w.getBaseform()!= "have") || w.getSynonyms().contains(definingWord.getBaseform())) {
-		        				// TODO: Change back to old if-clause located above if needed
 		        				if (definingWord.isSynonym(w.getBaseform())  || w.isSynonym(definingWord.getBaseform())) {
 		        					Cluster.matchingWords.add(w);
 		        					w.setClusterPosition(position);
 		        					// Most basic form of matching. If POS match and one word is a synonym of the other, they have the same meaning
-		        					//TODO: Add "will" as a verb to exceptions
 		        				}
 		        			}
 		        		}
@@ -493,17 +465,6 @@ public class LabelList implements java.io.Serializable{
         return(ReturnList);
     }
     
-    /**public List<Phrase> generatePhraseList(LabelList remainingLabels, PhraseStructure Structure){
-        List<Phrase> ReturnList = new ArrayList<Phrase>();
-        for (int i = 0; i < remainingLabels.getInputLabels().size(); i++){
-//alt:   for (int j = 0; j < remainingLabels.getInputLabels().get(i).getSentenceArray().size(); j++){
-                  for (int j = 0; j < this.getSentenceSizeofremainingLabels(i); j++){
-                     //alt:   ReturnList.add(remainingLabels.getInputLabels().get(i).getSentenceArray().get(j).toPhrase);
-                     ReturnList.add(this.PhraseremainingLabels(i,j));
-                }
-        }
-        return(ReturnList);
-}**/
        
         //Methode generatePhrase
  

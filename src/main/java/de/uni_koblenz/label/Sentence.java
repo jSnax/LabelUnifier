@@ -84,7 +84,7 @@ public class Sentence implements java.io.Serializable{
 	}
 
 	/*
-	 * method to check is a sentence is given in passive form
+	 * method to check whether a sentence is given in passive form
 	 */
 	public static boolean isPassive(List<Word> w){
 

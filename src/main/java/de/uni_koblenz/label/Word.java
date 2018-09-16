@@ -170,19 +170,7 @@ public class Word implements java.io.Serializable{
 		Synonyms.add(newSyn);
 	}
 	
-	public Word cloneWord(){
-		Word clone = new Word();
-		clone.setBaseform(this.getBaseform());
-		clone.setClusterPosition(this.getClusterPosition());
-		clone.setDominance(this.dominance);
-		// clone.setGrammaticalRelations(this.getGrammaticalRelations());
-		// Type mismatch for some reason...
-		clone.setOriginalForm(this.getOriginalForm());
-		clone.setPartOfSpeech(this.getPartOfSpeech());
-		clone.setRole(this.getRole());
-		clone.setSynonyms(this.getSynonyms());
-		return(clone);
-	}
+
 
 
 	/*  stem(String toStem)
@@ -236,36 +224,7 @@ public class Word implements java.io.Serializable{
 		}
 	}
 	
-	/* calculates the dominance of a word based on the sum of it appeareance
-	 * Probably obsolete due to method calculateDominance in WordCluster
-	 */
 	
-/*	public void calculateDominance(List<Word> allWords) {
-		int dominanceCalculator = 0;
-		
-		// shorter version of the loop below ########################
-		for (Word w : allWords) {
-			if (w.baseform.equals(this.baseform)) {
-				dominanceCalculator++;
-			} else {
-				continue;
-			}
-		
-		}
-		// OLD METHOD BELOW
-		for (int zaehler = 0; zaehler < allWords.size(); zaehler++) {
-			if (allWords.get(zaehler).baseform.equals(this.baseform)) {
-				dominanceCalculator++;
-			} else {
-				continue;
-			}
-			
-		}
-		// OLD METHOD ABOVE
-		this.dominance = dominanceCalculator;
-		
-	}	
-*/
 	
 	@Override
 	public String toString() {
@@ -307,17 +266,4 @@ public class Word implements java.io.Serializable{
 
 }
 	
-	/* stem nimmt String originalForm als Input und gibt String(?) baseForm als Output
-	 * 
-	 * public void stem (String originalForm) {
-		
-		*/
-		
-	/* Calculate dominance nimmt Label[] ?? und gibt eine geordnete Reihenfolge von Integern dominance aus - d.h. berechnet das dominante Wort/Label
-		 * 
-		 * public void calculateDominance (Label[] ??){
-		 * 
-		 * }
-
-	 */
 	
