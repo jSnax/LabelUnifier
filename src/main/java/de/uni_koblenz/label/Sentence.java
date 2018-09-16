@@ -37,8 +37,7 @@ public class Sentence implements java.io.Serializable{
 	private List<Word> wordsarray = new ArrayList<Word>();
 	private transient CoreSentence asCoreSentence;
 	private String contentAsString;
-	public Phrase toPhrase;
-	public List<Phrase> possiblePhrases;
+	public ArrayList<Phrase> possiblePhrases;
 	
 	public Sentence(CoreSentence sentence) throws JWNLException {
 		contentAsString=sentence.text();
@@ -61,6 +60,14 @@ public class Sentence implements java.io.Serializable{
 
 
 
+	public List<Phrase> getPossiblePhrases() {
+		return possiblePhrases;
+	}
+
+	public void setPossiblePhrases(ArrayList<Phrase> possiblePhrases) {
+		this.possiblePhrases = possiblePhrases;
+	}
+
 	public CoreSentence getAsCoreSentence() {
 		return asCoreSentence;
 	}
@@ -81,6 +88,7 @@ public class Sentence implements java.io.Serializable{
 	public void setContentAsString(String contentAsString) {
 		this.contentAsString = contentAsString;
 	}
+
 
 	/*
 	 * method to check whether a sentence is given in passive form
@@ -278,7 +286,7 @@ public class Sentence implements java.io.Serializable{
 		return result;
 	}
 	
-		public ArrayList<Phrase> toPhrase(PhraseStructureList StructureList, Realiser realiser, NLGFactory nlgFactory){
+		public void toPhrase(PhraseStructureList StructureList, Realiser realiser, NLGFactory nlgFactory){
 			// This function creates Phrases according to PhraseStructures, but only if they fit the Sentence
 			Sentence tempSentence = new Sentence();
 			tempSentence.setWordsarray(this.getWordsarray());
@@ -746,7 +754,7 @@ public class Sentence implements java.io.Serializable{
 				// In that case, create a Phrase that's identical to the original Sentence
 				// Mind that "NoStructureFound" is set to true here in order to display to the user that this Phrase was not generated from a PhraseStructure
 			}
-			return(result);
+			this.setPossiblePhrases(result);
 		}
 		
 //new methods for shortening
