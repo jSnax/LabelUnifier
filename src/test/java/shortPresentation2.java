@@ -219,7 +219,7 @@ public class shortPresentation2 {
 	
 	//testList.getInputLabels().get(4).getSentenceArray().get(0).getWordsarray().get(4).setRole(RoleLeopold.SUBJECT);
 	//testList.getInputLabels().get(4).getSentenceArray().get(0).getWordsarray().get(0).setRole(RoleLeopold.BUSINESS_OBJECT);
-	for (int i = 0; i < testList.getInputLabels().size(); i++){
+/*	for (int i = 0; i < testList.getInputLabels().size(); i++){
 		for (int j = 0; j < testList.getInputLabels().get(i).getSentenceArray().size(); j++){
 			ArrayList<Phrase> tempPhrase = testList.getInputLabels().get(i).getSentenceArray().get(j).toPhrase(completeList, realiser, nlgFactory);
 			PhraseListList.add(tempPhrase);
@@ -252,6 +252,6 @@ public class shortPresentation2 {
 	
 	PhraseList demoPhrasenCompare = new PhraseList();
 	demoPhrasenCompare.setWholeInput(PhraseListList);
-	demoPhrasenCompare.phraseCompareAndDecision(testList);
+	demoPhrasenCompare.phraseCompareAndDecision(testList);*/
 	}
 }
