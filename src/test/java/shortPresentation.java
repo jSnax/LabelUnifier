@@ -139,6 +139,7 @@ public class shortPresentation {
 	}
 	PhraseStructureList completeList = new PhraseStructureList();
 	
+	PhraseList finalList = new PhraseList();
 	ArrayList<ArrayList<Phrase>> PhraseListList = new ArrayList<ArrayList<Phrase>>();
 
 	completeList.sortStructures();
@@ -146,7 +147,7 @@ public class shortPresentation {
 	for (int i = 0; i < testList.getInputLabels().size(); i++){
 		for (int j = 0; j < testList.getInputLabels().get(i).getSentenceArray().size(); j++){
 			ArrayList<Phrase> tempPhrase = testList.getInputLabels().get(i).getSentenceArray().get(j).toPhrase(completeList, realiser, nlgFactory);
-			PhraseListList.add(tempPhrase);
+			finalList.addPhraseList(tempPhrase);
 		}
 	}
 	
@@ -163,20 +164,19 @@ public class shortPresentation {
 			lines.add("Label "+i+" was: "+testList.getInputLabels().get(i).getSentenceArray().get(j).getContentAsString());
 			System.out.println("Possible Phrases:");
 			lines.add("Possible Phrases:");
-			for (int k = 0; k < PhraseListList.get(i).size(); k++){
-				System.out.println("Phrase "+k+": "+PhraseListList.get(i).get(k).getFullContent());
-				lines.add("Phrase "+k+": "+PhraseListList.get(i).get(k).getFullContent());
+			for (int k = 0; k < finalList.getWholeInput().get(i).size(); k++){
+				System.out.println("Phrase "+k+": "+finalList.getWholeInput().get(i).get(k).getFullContent());
+				lines.add("Phrase "+k+": "+finalList.getWholeInput().get(i).get(k).getFullContent());
 			}
 			System.out.println("");
 			lines.add("");
 		}
 	}
+	finalList.createClusters();
 	java.nio.file.Path file = Paths.get("result.txt");
     Files.write(file, lines, Charset.forName("UTF-8"));
 	System.out.println("---------------------");
-	PhraseList demoPhrasenCompare = new PhraseList();
-	demoPhrasenCompare.setWholeInput(PhraseListList);
-	demoPhrasenCompare.phraseCompareAndDecisionFinal(testList);
-	demoPhrasenCompare.writeToFile();
+	finalList.phraseCompareAndDecisionFinal(testList);
+	finalList.writeToFile();
 	}
 }
