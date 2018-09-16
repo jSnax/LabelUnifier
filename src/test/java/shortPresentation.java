@@ -77,6 +77,7 @@ public class shortPresentation {
 	
 	// Create DomainThesaurus
 	DomainThesaurus thesaurus = new DomainThesaurus();
+	testList.numberLabels();
 	// Set Input Labels to previously created Label list
 	
 	/*System.out.println("Printing Labels:");

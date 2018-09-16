@@ -25,7 +25,6 @@ public class LabelList implements java.io.Serializable{
  
     private List<Word> allWords = new ArrayList<Word>();
     private List<Label> inputLabels = new ArrayList<Label>();
-    // new variable #####################################
    
     public transient static StanfordCoreNLP pipeline;
     public LabelList() {
@@ -86,7 +85,19 @@ public class LabelList implements java.io.Serializable{
         return result;
     }
     
-   
+    
+    
+
+	public void numberLabels(){
+    	for (int i = 0; i < this.getInputLabelsSize(); i++){
+    		this.getInputLabels().get(i).setPosition(i);
+    		for (int j = 0; j < this.getSentenceArraySize(i); j++){
+    			this.getInputLabels().get(i).getSentenceArray().get(j).setPositionInLabel(j);
+    		}
+    	}
+    }
+
+	
     public void findSynsets(ForbiddenWords banList) throws JWNLException{
         Dictionary dictionary = Dictionary.getDefaultResourceInstance();
         net.sf.extjwnl.data.IndexWord tempWord;
