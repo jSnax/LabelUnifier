@@ -19,44 +19,14 @@ import de.uni_koblenz.label.*;
 
 public class PhraseList {
 	
-	private Vector<String> vectorSpace;
+	/*private Vector<String> vectorSpace;
 	private List<Phrase> phrases;
 	private ArrayList<ArrayList<Phrase>> wholeInput;
 	private ArrayList<String> phrasesFinal;
 	private ArrayList<PhraseCluster> allBuiltClusters;
 	private ArrayList<String> finalPhrasesAndTheirLabels = new ArrayList<String>();;
 	
-    private static Map<String, Integer> sortByValue(Map<String, Integer> unsortMap) {
-
-        // 1. Convert Map to List of Map
-        List<Map.Entry<String, Integer>> list =
-                new LinkedList<Map.Entry<String, Integer>>(unsortMap.entrySet());
-
-        // 2. Sort list with Collections.sort(), provide a custom Comparator
-        //    Try switch the o1 o2 position for a different order
-        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
-            public int compare(Map.Entry<String, Integer> o1,
-                               Map.Entry<String, Integer> o2) {
-                return (o2.getValue()).compareTo(o1.getValue());
-            }
-        });
-
-        // 3. Loop the sorted list and put it into a new insertion order Map LinkedHashMap
-        Map<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
-        for (Map.Entry<String, Integer> entry : list) {
-            sortedMap.put(entry.getKey(), entry.getValue());
-        }
-
-        /*
-        //classic iterator example
-        for (Iterator<Map.Entry<String, Integer>> it = list.iterator(); it.hasNext(); ) {
-            Map.Entry<String, Integer> entry = it.next();
-            sortedMap.put(entry.getKey(), entry.getValue());
-        }*/
-
-
-        return sortedMap;
-    }
+    
 	
 	public PhraseList() {
 		this.phrasesFinal = new ArrayList<String>();
@@ -114,7 +84,7 @@ public class PhraseList {
 		this.phrases.add(phrase);
 	}
 	
-	public ArrayList<PhraseCluster> createClusters(){
+	/*public ArrayList<PhraseCluster> createClusters(){
 		ArrayList<PhraseCluster> allClusters = new ArrayList<PhraseCluster>();
 		ArrayList<ArrayList<Phrase>> leftInput = new ArrayList<ArrayList<Phrase>>();
 		while (this.wholeInput.size()>0){
@@ -160,11 +130,11 @@ public class PhraseList {
 		// without additional variables in phrase. Namely, I think we need the position of the label from which the phrase was created
 		// Since phrases are generated from sentences and labels may have multiple sentences, this is actually a bit tricky again
 		return null;
-	}
+	}*/
 	
 	
 	
-	public void phraseCompareAndDecision(LabelList labelList) {
+	/*public void phraseCompareAndDecision(LabelList labelList) {
 		System.out.println("Die vollst�ndige Phrasenlist beinhaltet:");
 		ArrayList<Integer> controller = new ArrayList<Integer>();
 		for (int i = 0; i < this.wholeInput.size(); i++) {
@@ -233,9 +203,9 @@ public class PhraseList {
 				}
 				finalPhrasesAndTheirLabels.add("\n");	
 		}
-	}
+	}*/
 	
-	public void phraseCompareAndDecisionFinal(LabelList labelList) {
+	/*public void phraseCompareAndDecisionFinal(LabelList labelList) {
 		ArrayList<Integer> controller = new ArrayList<Integer>();
 		PhraseCluster firstCluster = new PhraseCluster();
 		String firstPhrase = this.wholeInput.get(0).get(0).getFullContent();
@@ -318,11 +288,11 @@ public class PhraseList {
 			finalPhrasesAndTheirLabels.add("\n");
 			
 		}
-	}
-	public void writeToFile() throws Exception{
+	}*/
+	/*public void writeToFile() throws Exception{
 		java.nio.file.Path file = Paths.get("finalFile.txt");
 	    Files.write(file, finalPhrasesAndTheirLabels, Charset.forName("UTF-8"));
-	}
+	}*/
 }
 
 
