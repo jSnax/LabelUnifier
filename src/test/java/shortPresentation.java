@@ -53,6 +53,7 @@ public class shortPresentation {
 			"Employee checked tiny invoice",
 			"Employee verifies small invoice",
 			"Employees check bills",
+			"Verify bill. Feed dog.",
 			"Company pays bill",
 			"Bill is payed by company",
 			"Verify bill",
@@ -139,15 +140,12 @@ public class shortPresentation {
 	}
 	PhraseStructureList completeList = new PhraseStructureList();
 	
-	PhraseList finalList = new PhraseList();
-	ArrayList<ArrayList<Phrase>> PhraseListList = new ArrayList<ArrayList<Phrase>>();
 
 	completeList.sortStructures();
 	
 	for (int i = 0; i < testList.getInputLabels().size(); i++){
 		for (int j = 0; j < testList.getInputLabels().get(i).getSentenceArray().size(); j++){
-			ArrayList<Phrase> tempPhrase = testList.getInputLabels().get(i).getSentenceArray().get(j).toPhrase(completeList, realiser, nlgFactory);
-			finalList.addPhraseList(tempPhrase);
+			testList.getInputLabels().get(i).getSentenceArray().get(j).toPhrase(completeList, realiser, nlgFactory);
 		}
 	}
 	
@@ -160,23 +158,24 @@ public class shortPresentation {
     
 	for (int i = 0; i < testList.getInputLabels().size(); i++){
 		for (int j = 0; j < testList.getInputLabels().get(i).getSentenceArray().size(); j++){
-			System.out.println("Label "+i+" was: "+testList.getInputLabels().get(i).getSentenceArray().get(j).getContentAsString());
-			lines.add("Label "+i+" was: "+testList.getInputLabels().get(i).getSentenceArray().get(j).getContentAsString());
+			System.out.println("Label "+i+", Sentence "+j+ " was: "+testList.getInputLabels().get(i).getSentenceArray().get(j).getContentAsString());
+			lines.add("Label "+i+", Sentence "+j+ " was: "+testList.getInputLabels().get(i).getSentenceArray().get(j).getContentAsString());
 			System.out.println("Possible Phrases:");
 			lines.add("Possible Phrases:");
-			for (int k = 0; k < finalList.getWholeInput().get(i).size(); k++){
-				System.out.println("Phrase "+k+": "+finalList.getWholeInput().get(i).get(k).getFullContent());
-				lines.add("Phrase "+k+": "+finalList.getWholeInput().get(i).get(k).getFullContent());
+			for (int k = 0; k < testList.getInputLabels().get(i).getSentenceArray().get(j).possiblePhrases.size(); k++){
+				System.out.println("Phrase "+k+": "+testList.getInputLabels().get(i).getSentenceArray().get(j).possiblePhrases.get(k).getFullContent());
+				lines.add("Phrase "+k+": "+testList.getInputLabels().get(i).getSentenceArray().get(j).possiblePhrases.get(k).getFullContent());
 			}
 			System.out.println("");
 			lines.add("");
 		}
 	}
-	finalList.createClusters();
+	
+	ArrayList<PhraseCluster> finalList = testList.createClusters();
 	java.nio.file.Path file = Paths.get("result.txt");
     Files.write(file, lines, Charset.forName("UTF-8"));
 	System.out.println("---------------------");
-	finalList.phraseCompareAndDecisionFinal(testList);
-	finalList.writeToFile();
+	//finalList.phraseCompareAndDecisionFinal(testList);
+	//finalList.writeToFile();
 	}
 }
