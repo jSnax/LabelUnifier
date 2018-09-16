@@ -38,8 +38,7 @@ public class Sentence implements java.io.Serializable{
 	private transient CoreSentence asCoreSentence;
 	private String contentAsString;
 	public Phrase toPhrase;
-	public List<Phrase> possiblePhrases ;
-	private int positionInLabel;
+	public List<Phrase> possiblePhrases;
 	
 	public Sentence(CoreSentence sentence) throws JWNLException {
 		contentAsString=sentence.text();
@@ -72,16 +71,6 @@ public class Sentence implements java.io.Serializable{
 		this.asCoreSentence = asCoreSentence;
 	}
 
-
-	
-
-	public int getPositionInLabel() {
-		return positionInLabel;
-	}
-
-	public void setPositionInLabel(int positionInLabel) {
-		this.positionInLabel = positionInLabel;
-	}
 
 	public String getContentAsString() {
 		return contentAsString;
