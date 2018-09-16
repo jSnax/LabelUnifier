@@ -3,7 +3,13 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,10 +26,47 @@ public class PhraseList {
 	private ArrayList<PhraseCluster> allBuiltClusters;
 	private ArrayList<String> finalPhrasesAndTheirLabels = new ArrayList<String>();;
 	
+    private static Map<String, Integer> sortByValue(Map<String, Integer> unsortMap) {
+
+        // 1. Convert Map to List of Map
+        List<Map.Entry<String, Integer>> list =
+                new LinkedList<Map.Entry<String, Integer>>(unsortMap.entrySet());
+
+        // 2. Sort list with Collections.sort(), provide a custom Comparator
+        //    Try switch the o1 o2 position for a different order
+        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
+            public int compare(Map.Entry<String, Integer> o1,
+                               Map.Entry<String, Integer> o2) {
+                return (o2.getValue()).compareTo(o1.getValue());
+            }
+        });
+
+        // 3. Loop the sorted list and put it into a new insertion order Map LinkedHashMap
+        Map<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
+        for (Map.Entry<String, Integer> entry : list) {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+
+        /*
+        //classic iterator example
+        for (Iterator<Map.Entry<String, Integer>> it = list.iterator(); it.hasNext(); ) {
+            Map.Entry<String, Integer> entry = it.next();
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }*/
+
+
+        return sortedMap;
+    }
+	
 	public PhraseList() {
 		this.phrasesFinal = new ArrayList<String>();
 		this.allBuiltClusters = new ArrayList<PhraseCluster>();
+		this.wholeInput = new ArrayList<ArrayList<Phrase>>();
  	}
+	
+	public void addPhraseList (ArrayList<Phrase> phraseList){
+		this.wholeInput.add(phraseList);
+	}
 	
 	public Vector<String> getVectorSpace() {
 		return vectorSpace;
@@ -68,9 +111,58 @@ public class PhraseList {
 	}
 
 	public void addPhrase(Phrase phrase) {
-		Phrase phrase2 = phrase;
-		this.phrases.add(phrase2);
+		this.phrases.add(phrase);
 	}
+	
+	public ArrayList<PhraseCluster> createClusters(){
+		ArrayList<PhraseCluster> allClusters = new ArrayList<PhraseCluster>();
+		ArrayList<ArrayList<Phrase>> leftInput = new ArrayList<ArrayList<Phrase>>();
+		while (this.wholeInput.size()>0){
+			Map<String,Integer> frequencies = new HashMap<String, Integer>();
+			Map<String,ArrayList<Integer>> labelsOfPhrases = new HashMap<String, ArrayList<Integer>>();
+			for (int phraseListCounter = 0; phraseListCounter < this.wholeInput.size(); phraseListCounter++){
+				for (int phraseCounter = 0; phraseCounter < this.wholeInput.get(phraseListCounter).size(); phraseCounter++){
+					if (frequencies.containsKey(this.wholeInput.get(phraseListCounter).get(phraseCounter).getFullContent())){
+						frequencies.put(this.getWholeInput().get(phraseListCounter).get(phraseCounter).getFullContent(), frequencies.get(this.getWholeInput().get(phraseListCounter).get(phraseCounter).getFullContent())+1);
+						ArrayList<Integer> tempList = new ArrayList<Integer>();
+						tempList = labelsOfPhrases.get(this.getWholeInput().get(phraseListCounter).get(phraseCounter).getFullContent());
+						tempList.add(phraseListCounter);
+						labelsOfPhrases.put(this.getWholeInput().get(phraseListCounter).get(phraseCounter).getFullContent(), tempList);
+					}
+					else {
+						frequencies.put(this.getWholeInput().get(phraseListCounter).get(phraseCounter).getFullContent(), 1);
+						ArrayList<Integer> tempList = new ArrayList<Integer>();
+						tempList.add(phraseListCounter);
+						labelsOfPhrases.put(this.getWholeInput().get(phraseListCounter).get(phraseCounter).getFullContent(), tempList);
+					}
+					// Maps Phrases to their respective frequency over all possible Phrases
+				}
+			}
+			frequencies = sortByValue(frequencies);
+			// sorts Map by value with highest value first
+			PhraseCluster currentCluster = new PhraseCluster();
+			// creates Cluster that will be filled
+			Map.Entry<String,Integer> entry = frequencies.entrySet().iterator().next();
+			currentCluster.setBuiltPhrase(entry.getKey());
+			// Writes first KEY of map [a phrase content as string] on the current cluster
+			ArrayList<Integer> positions = labelsOfPhrases.get(entry.getKey());
+			currentCluster.setLabelPositions(positions);
+			// saves the positions of original labels [rather sentences, actually] on the cluster
+			for (int removalCounter = 0; removalCounter < positions.size(); removalCounter++){
+				leftInput.add(this.getWholeInput().get(removalCounter));
+				this.getWholeInput().remove(removalCounter);
+			}
+			// removes all entries from wholeInput, over which we iterate, while saving them on leftInput from which we will generate alternative Clusters
+		}
+		
+		//TODO: Test whether this actually works up to this point :D Ran out of time sadly
+		// Work with leftInput to create alternative clusters. Also, I'm not entirely sure at this point whether we can re-order left input
+		// without additional variables in phrase. Namely, I think we need the position of the label from which the phrase was created
+		// Since phrases are generated from sentences and labels may have multiple sentences, this is actually a bit tricky again
+		return null;
+	}
+	
+	
 	
 	public void phraseCompareAndDecision(LabelList labelList) {
 		System.out.println("Die vollst�ndige Phrasenlist beinhaltet:");
