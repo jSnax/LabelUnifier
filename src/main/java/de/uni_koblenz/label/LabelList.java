@@ -1,8 +1,14 @@
 package de.uni_koblenz.label;
  
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
- 
+import java.util.Map;
+
 import de.uni_koblenz.cluster.PhraseCluster;
 import de.uni_koblenz.cluster.WordCluster;
 import de.uni_koblenz.enums.PartOfSpeechTypes;
@@ -29,6 +35,38 @@ public class LabelList implements java.io.Serializable{
     public transient static StanfordCoreNLP pipeline;
     public LabelList() {
        
+    }
+    
+    private static Map<String, Integer> sortByValue(Map<String, Integer> unsortMap) {
+
+        // 1. Convert Map to List of Map
+        List<Map.Entry<String, Integer>> list =
+                new LinkedList<Map.Entry<String, Integer>>(unsortMap.entrySet());
+
+        // 2. Sort list with Collections.sort(), provide a custom Comparator
+        //    Try switch the o1 o2 position for a different order
+        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
+            public int compare(Map.Entry<String, Integer> o1,
+                               Map.Entry<String, Integer> o2) {
+                return (o2.getValue()).compareTo(o1.getValue());
+            }
+        });
+
+        // 3. Loop the sorted list and put it into a new insertion order Map LinkedHashMap
+        Map<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
+        for (Map.Entry<String, Integer> entry : list) {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+
+        /*
+        //classic iterator example
+        for (Iterator<Map.Entry<String, Integer>> it = list.iterator(); it.hasNext(); ) {
+            Map.Entry<String, Integer> entry = it.next();
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }*/
+
+
+        return sortedMap;
     }
  
     /*
@@ -410,72 +448,116 @@ public class LabelList implements java.io.Serializable{
     return( this.getInputLabels().get(i).getSentenceArray().get(t).getWordsarray().isEmpty());
     }
    
-   
- 
-   
-    /*public LabelList matchLabels(LabelList remainingLabels, List<WordCluster> ClusterList, PhraseCluster Cluster){
-        Label DefiningLabel = remainingLabels.getInputLabels().get(0);
-        remainingLabels.getInputLabels().remove(0);
-        boolean Equals = true;
-        List<Integer> tempIntList = new ArrayList<Integer>();
-        for (int i = 0; i < remainingLabels.getInputLabels().size(); i++){
-            int j = 0;
-            while (Equals && j < remainingLabels.getInputLabels().get(i).getSentenceArray().get(0).getWordsarray().size()){
-                if (remainingLabels.getInputLabels().get(i).getSentenceArray().get(0).getWordsarray().get(j).getClusterPosition() != DefiningLabel.getSentenceArray().get(0).getWordsarray().get(j).getClusterPosition()){
-                    Equals = false;
-                }
-                j++;
-            }
-            /* Iterates over all Words in all Labels. If within a certain label each word at position i lies in the same WordCluster as
-               the word at position i in DefiningLabel, they are considered equal. Else Equals will be set false.
-            if (Equals){
-                Cluster.matchingLabels.add(remainingLabels.getInputLabels().get(i));
-                tempIntList.add(i);
-            }
-            else Equals = true;
-            // Adds the equal label to the LabelCluster
-        }
-        for (int i = tempIntList.size() - 1; i >= 0; i--){
-            int z = tempIntList.get(i);
-            remainingLabels.getInputLabels().remove(z);
-            tempIntList.remove(i);
-        }
-        // Removes matched Labels from the LabelList
-        return (remainingLabels);
-    }
-    // It's important to call this method using a LabelCluster that was just created from remainingLabels*/
-   
-    /* public List<Phrase> generatePhraseList(LabelList remainingLabels, PhraseStructure Structure){
-        List<Phrase> ReturnList = new ArrayList<Phrase>();
-        for (int i = 0; i < remainingLabels.getInputLabels().size(); i++){
-            for (int j = 0; j < remainingLabels.getInputLabels().get(i).getSentenceArray().size(); j++){
-                ReturnList.add(remainingLabels.getInputLabels().get(i).getSentenceArray().get(j).toPhrase);
-            }
-        }
-        return(ReturnList);
-        */
     
-    //kürzere Version von generatePhraseList
-    public List<Phrase> generatePhraseList(LabelList remainingLabels, PhraseStructure Structure){
-        List<Phrase> ReturnList = new ArrayList<Phrase>();
-        for (Label l : remainingLabels.getInputLabels()) {
-        	for (Sentence s : l.getSentenceArray()) {
-        		ReturnList.add(s.toPhrase);
-        	}
-        }
-        return(ReturnList);
-    }
+    /*public void numberLabels(){
+    	for (int i = 0; i < this.getInputLabelsSize(); i++){
+    		this.getInputLabels().get(i).setLabelPosition(i);
+    		int j = 0;
+    		for (j = 0; j < this.getSentenceArraySize(i); j++){
+    			this.getInputLabels().get(i).getSentenceArray().get(j).setBelongsToLabel(i);
+    			this.getInputLabels().get(i).getSentenceArray().get(j).setSentencePosition(j);
+    		}
+    		this.getInputLabels().get(i).setSentenceAmount(j-1);
+    	}
+    }*/
+   
+    public ArrayList<PhraseCluster> createClusters(){
+    	ArrayList<PhraseCluster> alternativeClusters = new ArrayList<PhraseCluster>();
+		ArrayList<PhraseCluster> frequencyClusters = new ArrayList<PhraseCluster>();
+		for (int labelCounter = 0; labelCounter < this.getInputLabelsSize(); labelCounter++){
+			for (int sentenceCounter = 0; sentenceCounter < this.getSentenceArraySize(labelCounter); sentenceCounter++){
+				PhraseCluster currentCluster = new PhraseCluster();
+				currentCluster.setWasLabel(labelCounter);
+				currentCluster.setWasSentence(sentenceCounter);
+				currentCluster.setAlternativeCluster(true);
+				ArrayList<String> phraseList = new ArrayList<String>();
+				for (int phraseCounter = 0; phraseCounter < this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases().size(); phraseCounter++){
+					phraseList.add(this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases().get(phraseCounter).getFullContent());
+				}
+				currentCluster.setAllPhrases(phraseList);
+				alternativeClusters.add(currentCluster);
+			}
+		}
+		// Stores all possible phrases to all labels and sentences in order on ArrayList "alternativeClusters"
+		// This List will be displayed last in the final output file, it needs to be created first though
+		while (this.getInputLabelsSize() > 0){
+			Map<String,Integer> frequencies = new HashMap<String, Integer>();
+			Map<String,ArrayList<ArrayList<Integer>>> labelsOfPhrases = new HashMap<String, ArrayList<ArrayList<Integer>>>();
+			for (int labelCounter = 0; labelCounter < this.getInputLabelsSize(); labelCounter++){
+				for (int sentenceCounter = 0; sentenceCounter < this.getSentenceArraySize(labelCounter); sentenceCounter++){
+					for (int phraseCounter = 0; phraseCounter < this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases().size(); phraseCounter++){
+						if (frequencies.containsKey(this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases().get(phraseCounter).getFullContent())){
+							frequencies.put(this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases().get(phraseCounter).getFullContent(), frequencies.get(this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases().get(phraseCounter).getFullContent())+1);
+							ArrayList<ArrayList<Integer>> tempListList = new ArrayList<ArrayList<Integer>>();
+							tempListList = labelsOfPhrases.get(this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases().get(phraseCounter).getFullContent());
+							ArrayList<Integer> tempList = new ArrayList<Integer>();
+							tempList.add(labelCounter);
+							tempList.add(sentenceCounter);
+							tempListList.add(tempList);
+							labelsOfPhrases.put(this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases().get(phraseCounter).getFullContent(), tempListList);
+						}
+						else {
+							frequencies.put(this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases().get(phraseCounter).getFullContent(), 1);
+							ArrayList<ArrayList<Integer>> tempListList = new ArrayList<ArrayList<Integer>>();
+							//tempListList = labelsOfPhrases.get(this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases().get(phraseCounter).getFullContent());
+							ArrayList<Integer> tempList = new ArrayList<Integer>();
+							tempList.add(labelCounter);
+							tempList.add(sentenceCounter);
+							tempListList.add(tempList);
+							labelsOfPhrases.put(this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases().get(phraseCounter).getFullContent(), tempListList);
+						}
+						// Maps Phrases to their respective frequency over all possible Phrases
+					}
+				}
+			}
+			frequencies = sortByValue(frequencies);
+			// sorts Map by value with highest value first
+			PhraseCluster currentCluster = new PhraseCluster();
+			// creates Cluster that will be filled
+			Map.Entry<String,Integer> entry = frequencies.entrySet().iterator().next();
+			currentCluster.setBuiltPhrase(entry.getKey());
+			// Writes first KEY of map [a phrase content as string] on the current cluster
+			ArrayList<ArrayList<Integer>> positions = labelsOfPhrases.get(entry.getKey());
+			currentCluster.setLabelAndSentencePositions(positions);
+			currentCluster.setAlternativeCluster(false);
+			// saves the positions of original labels AND sentences on the cluster
+			// They are mapped as a ArrayList of ArrayLists of Integers, in the following way:
+			// In each ArrayList of Integers, there are only two entries: The first one is the original position of the label
+			// while the second one is the original position of the sentence within the label
+			// Example: [5,3] refers to the 3rd sentence of the 5th label from the original list
+			for (int removalCounter = 0; removalCounter < positions.size(); removalCounter++){
+				int tempInt = positions.get(positions.size()-removalCounter-1).get(0);
+				if (this.getSentenceArraySize(tempInt) == 1){
+					this.getInputLabels().remove(tempInt);
+
+				}
+				else {
+					int tempInt2 = positions.get(positions.size()-removalCounter-1).get(1);
+					this.getInputLabels().get(tempInt).getSentenceArray().remove(tempInt2);
+				}
+				//TODO: Fix this shit
+			}
+			// removes Labels from which a phrase was already displayed as an optimal phrase from counting
+			frequencyClusters.add(currentCluster);
+		}
+		for (int i = 0; i < alternativeClusters.size(); i++){
+			frequencyClusters.add(alternativeClusters.get(i));
+		}
+		
+		return frequencyClusters;
+	}
+   
+
+    
+
     
        
-        //Methode generatePhrase
  
-        public int getSentenceSizeofremainingLabels(int i){
-            return(this.getInputLabels().get(i).getSentenceArray().size());
-            }
+    public int getSentenceSizeofremainingLabels(int i){
+    	return(this.getInputLabels().get(i).getSentenceArray().size());
+    }
  
-        public Phrase PhraseremainingLabels(int i, int j){
-            return(this.getInputLabels().get(i).getSentenceArray().get(j).toPhrase);
-            }
+
            
        
     }

@@ -8,31 +8,26 @@ import de.uni_koblenz.phrase.Phrase;
 
 public class PhraseCluster {
 
-	public ArrayList<Integer> labelPositions;
-	public ArrayList<String> matchingLabels;
+	public ArrayList<ArrayList<Integer>> labelAndSentencePositions;
+	public ArrayList<String> allPhrases;
 	public String builtPhrase; 
+	private int wasLabel;
+	private int wasSentence;
+	private boolean isAlternativeCluster; 
 	
-	public PhraseCluster(LabelList RemainingLabels) {
-		/*this.matchingPhrases = new ArrayList<Phrase>(); 
-		Label DefiningLabel = RemainingLabels.getInputLabels().get(0); 
-		matchingLabels.add(DefiningLabel);
-		// Takes the first remaining label in the LabelList and creates a new LabelCluster for it*/
-		//matchinlabels = arraylist<arraylist<Phrase>>();
-		//It saves the arrayList of the Labels that fit with the DefiningLabel according to the String Comparison
-		//
-}
+
 	
 	public PhraseCluster() {
-		this.matchingLabels = new ArrayList<String>();
+		this.allPhrases = new ArrayList<String>();
 	}
 
 
-		public List<String> getMatchingLabels() {
-			return matchingLabels;
+		public List<String> getAllPhrases() {
+			return allPhrases;
 		}
 
-		public void setMatchingLabels(ArrayList<String> matchingLabels) {
-			this.matchingLabels = matchingLabels;
+		public void setAllPhrases(ArrayList<String> allPhrases) {
+			this.allPhrases = allPhrases;
 		}
 
 
@@ -45,11 +40,42 @@ public class PhraseCluster {
 			this.builtPhrase = builtPhrase;
 		}	
 
-		public ArrayList<Integer> getLabelPositions() {
-			return labelPositions;
+		public ArrayList<ArrayList<Integer>> getLabelAndSentencePositions() {
+			return labelAndSentencePositions;
 		}
 
-		public void setLabelPositions(ArrayList<Integer> labelPositions) {
-			this.labelPositions = labelPositions;
+		public void setLabelAndSentencePositions(ArrayList<ArrayList<Integer>> labelAndSentencePositions) {
+			this.labelAndSentencePositions = labelAndSentencePositions;
 		}
+
+
+		public int getWasLabel() {
+			return wasLabel;
+		}
+
+		public void setWasLabel(int wasLabel) {
+			this.wasLabel = wasLabel;
+		}
+
+		public int getWasSentence() {
+			return wasSentence;
+		}
+
+		public void setWasSentence(int wasSentence) {
+			this.wasSentence = wasSentence;
+		}
+
+
+		public boolean isAlternativeCluster() {
+			return isAlternativeCluster;
+		}
+
+
+		public void setAlternativeCluster(boolean isAlternativeCluster) {
+			this.isAlternativeCluster = isAlternativeCluster;
+		}
+
+		
+		
+		
 }
