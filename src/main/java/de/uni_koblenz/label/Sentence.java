@@ -3,6 +3,7 @@ package de.uni_koblenz.label;
 import java.text.Normalizer.Form;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import de.uni_koblenz.cluster.GrammaticalRelationBetweenWords;
@@ -14,6 +15,7 @@ import de.uni_koblenz.phrase.Phrase;
 import de.uni_koblenz.phrase.PhraseStructure;
 import de.uni_koblenz.phrase.PhraseStructureList;
 import edu.stanford.nlp.ling.CoreLabel;
+import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.naturalli.NaturalLogicAnnotations;
 import edu.stanford.nlp.pipeline.CoreSentence;
 import edu.stanford.nlp.semgraph.SemanticGraph;
@@ -31,6 +33,7 @@ import simplenlg.lexicon.*;
 import simplenlg.realiser.english.*;
 import simplenlg.phrasespec.*;
 import simplenlg.features.*;
+import java.util.Comparator;
 
 public class Sentence implements java.io.Serializable{
 	
@@ -181,6 +184,25 @@ public class Sentence implements java.io.Serializable{
 	    	 */
 	    	if(relationName==RelationName.COMPOUND_MODIFIER||relationName==RelationName.PHRASAL_VERB_PARTICLE) {
 	    		toRemove.add(targetWord);
+	    		//TODO
+	    		/*
+	    		 *  Replace Temporary method that uses string manipulation with a more elegant solution.
+	    		 */
+	    		List<IndexedWord> tempVertices=new ArrayList<IndexedWord>(); 
+	    		tempVertices.addAll(graph.getChildrenWithReln(edge.getSource(), edge.getRelation()));
+	    		tempVertices.add(edge.getSource());
+	    		System.out.println("unsorted");
+	    		System.out.println(tempVertices);
+	    		Collections.sort(tempVertices, new Comparator<IndexedWord>(){
+					public int compare(IndexedWord indexword1, IndexedWord indexword2) {
+						return indexword1.index()-indexword2.index();
+					}
+	    		});
+	    		System.out.println("sorted");
+	    		System.out.println(tempVertices);
+	    		
+	    		
+	    		
 	    		if(edge.getSource().index()>edge.getTarget().index()&&!sourceWord.getBaseform().contains(" ")) {
 	    			sourceWord.setBaseform(targetWord.getBaseform()+" "+sourceWord.getBaseform());
 	    			sourceWord.setOriginalForm(targetWord.getOriginalForm()+" "+sourceWord.getOriginalForm());
