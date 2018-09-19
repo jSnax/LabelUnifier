@@ -186,33 +186,33 @@ public class Sentence implements java.io.Serializable{
 	    		toRemove.add(targetWord);
 	    		//TODO
 	    		/*
-	    		 *  Replace Temporary method that uses string manipulation with a more elegant solution.
+	    		 * Maybe problems with compound words that are also have phrasal verb particile
+	    		 * 
+	    		 *  Check if baseform and originalform were already created and skip this process
 	    		 */
+	    		
+	    		// get all words that are part of the compound word e.g. "hospital birth certificate"
 	    		List<IndexedWord> tempVertices=new ArrayList<IndexedWord>(); 
 	    		tempVertices.addAll(graph.getChildrenWithReln(edge.getSource(), edge.getRelation()));
 	    		tempVertices.add(edge.getSource());
-	    		System.out.println("unsorted");
-	    		System.out.println(tempVertices);
+	    		
+	    		// Sort List with all compound words by their index.
 	    		Collections.sort(tempVertices, new Comparator<IndexedWord>(){
 					public int compare(IndexedWord indexword1, IndexedWord indexword2) {
 						return indexword1.index()-indexword2.index();
 					}
 	    		});
-	    		System.out.println("sorted");
-	    		System.out.println(tempVertices);
+	    		// combine Strings to create one "big" word.
+	    		String tempbase="";
+	    		String temporiginal="";
 	    		
-	    		
-	    		
-	    		if(edge.getSource().index()>edge.getTarget().index()&&!sourceWord.getBaseform().contains(" ")) {
-	    			sourceWord.setBaseform(targetWord.getBaseform()+" "+sourceWord.getBaseform());
-	    			sourceWord.setOriginalForm(targetWord.getOriginalForm()+" "+sourceWord.getOriginalForm());
-	    		}else if(edge.getSource().index()>edge.getTarget().index()) {
-	    			sourceWord.setBaseform(sourceWord.getBaseform().substring(0, sourceWord.getBaseform().lastIndexOf(" ")+1)+targetWord.getBaseform()+" "+sourceWord.getBaseform().substring(sourceWord.getBaseform().lastIndexOf(" ")+1));
-	    			sourceWord.setOriginalForm(sourceWord.getOriginalForm().substring(0, sourceWord.getOriginalForm().lastIndexOf(" ")+1)+targetWord.getOriginalForm()+" "+sourceWord.getOriginalForm().substring(sourceWord.getOriginalForm().lastIndexOf(" ")+1));
-	    		}else {
-	    			sourceWord.setBaseform(sourceWord.getBaseform()+" "+targetWord.getBaseform());
-	    			sourceWord.setOriginalForm(sourceWord.getOriginalForm()+" "+targetWord.getOriginalForm());
+	    		for(IndexedWord word:tempVertices) {
+	    			tempbase+=word.lemma()+" ";
+	    			temporiginal+=word.originalText()+" ";
 	    		}
+	    		sourceWord.setBaseform(tempbase.trim());
+	    		sourceWord.setOriginalForm(temporiginal.trim());
+	    		
 	    	/*
 	    	 *  Removing Punctuation
 	    	 */
