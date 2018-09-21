@@ -98,13 +98,18 @@ public class Sentence implements java.io.Serializable{
 	 */
 	public static boolean isPassive(List<Word> w){
 
-		for (int i = 0; i < w.size(); i++) {
-			for (int j = 0; j < w.get(i).getGrammaticalRelations().size(); j++) {	
-				if(w.get(i).getGrammaticalRelations().get(j).getGrammaticalRelationName()!=null) {
+		for(int x = 0; x < w.size(); x++) {
+			if(w.get(x).getOriginalForm().equals("by"))
+				
+				for (int i = 0; i < w.size(); i++) {
+					for (int j = 0; j < w.get(i).getGrammaticalRelations().size(); j++) {	
+				
+						if(w.get(i).getGrammaticalRelations().get(j).getGrammaticalRelationName()!=null) {
 					
-					if(w.get(i).getGrammaticalRelations().get(j).getGrammaticalRelationName().equals(RelationName.NOMINAL_PASSIVE_SUBJECT)
-						|| w.get(i).getGrammaticalRelations().get(j).getGrammaticalRelationName().equals(RelationName.CONTROLLING_NOMINAL_PASSIVE_SUBJECT)) 
+							if(w.get(i).getGrammaticalRelations().get(j).getGrammaticalRelationName().equals(RelationName.NOMINAL_PASSIVE_SUBJECT)
+									|| w.get(i).getGrammaticalRelations().get(j).getGrammaticalRelationName().equals(RelationName.CONTROLLING_NOMINAL_PASSIVE_SUBJECT)) 
 						return true;
+						}
 					}
 				}
 			}
@@ -115,14 +120,13 @@ public class Sentence implements java.io.Serializable{
 	 * method to switch the subject with the business object if the sentence is in a passive form
 	 */
 	public static void passiveHandling(List<Word> w) {
-	
+		
 		for(int i = 0; i < w.size(); i++) {
-			
+		
 			if(isPassive(w)==true) {
 			
 				if((w.get(i).getPartOfSpeech()!=null)
-						&& (w.get(i).getPartOfSpeech().getJwnlType()==POS.NOUN || w.get(i).getPartOfSpeech()==PartOfSpeechTypes.PERSONAL_PRONOUN)
-						&& w.get(i).getRole().equals(RoleLeopold.BUSINESS_OBJECT)){
+						&& (w.get(i).getPartOfSpeech().getJwnlType()==POS.NOUN || w.get(i).getPartOfSpeech()==PartOfSpeechTypes.PERSONAL_PRONOUN)){
 
 					if(i==1) {
 						if(w.get(i-1).getOriginalForm().equals("by")) {
@@ -238,8 +242,8 @@ public class Sentence implements java.io.Serializable{
     	// get root as Word
 		Word root=wordsarray.get(asCoreSentence.dependencyParse().getFirstRoot().index()-1);
 		
-		RelationName[] subjects= {RelationName.SUBJECT,RelationName.NOMINAL_SUBJECT,RelationName.NOMINAL_PASSIVE_SUBJECT,RelationName.CONTROLLING_NOMINAL_PASSIVE_SUBJECT};
-		RelationName[] objects= {RelationName.DIRECT_OBJECT,RelationName.OBJECT};
+		RelationName[] subjects= {RelationName.SUBJECT,RelationName.NOMINAL_SUBJECT};
+		RelationName[] objects= {RelationName.DIRECT_OBJECT,RelationName.OBJECT,RelationName.NOMINAL_PASSIVE_SUBJECT,RelationName.CONTROLLING_NOMINAL_PASSIVE_SUBJECT};
 
         // check if root of dependency tree is a verb
     	if(root.getPartOfSpeech().getJwnlType()==POS.VERB) {

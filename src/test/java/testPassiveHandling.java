@@ -42,13 +42,18 @@ public class testPassiveHandling {
 	
 	public static boolean isPassive(List<Word> w){
 
-		for (int i = 0; i < w.size(); i++) {
-			for (int j = 0; j < w.get(i).getGrammaticalRelations().size(); j++) {	
-				if(w.get(i).getGrammaticalRelations().get(j).getGrammaticalRelationName()!=null) {
+		for(int x = 0; x < w.size(); x++) {
+			if(w.get(x).getOriginalForm().equals("by"))
+				
+				for (int i = 0; i < w.size(); i++) {
+					for (int j = 0; j < w.get(i).getGrammaticalRelations().size(); j++) {	
+				
+						if(w.get(i).getGrammaticalRelations().get(j).getGrammaticalRelationName()!=null) {
 					
-					if(w.get(i).getGrammaticalRelations().get(j).getGrammaticalRelationName().equals(RelationName.NOMINAL_PASSIVE_SUBJECT)
-						|| w.get(i).getGrammaticalRelations().get(j).getGrammaticalRelationName().equals(RelationName.CONTROLLING_NOMINAL_PASSIVE_SUBJECT)) 
+							if(w.get(i).getGrammaticalRelations().get(j).getGrammaticalRelationName().equals(RelationName.NOMINAL_PASSIVE_SUBJECT)
+									|| w.get(i).getGrammaticalRelations().get(j).getGrammaticalRelationName().equals(RelationName.CONTROLLING_NOMINAL_PASSIVE_SUBJECT)) 
 						return true;
+						}
 					}
 				}
 			}
@@ -62,8 +67,7 @@ public class testPassiveHandling {
 			if(isPassive(w)==true) {
 			
 				if((w.get(i).getPartOfSpeech()!=null)
-						&& (w.get(i).getPartOfSpeech().getJwnlType()==POS.NOUN || w.get(i).getPartOfSpeech()==PartOfSpeechTypes.PERSONAL_PRONOUN)
-						&& w.get(i).getRole().equals(RoleLeopold.BUSINESS_OBJECT)){
+						&& (w.get(i).getPartOfSpeech().getJwnlType()==POS.NOUN || w.get(i).getPartOfSpeech()==PartOfSpeechTypes.PERSONAL_PRONOUN)){
 
 					if(i==1) {
 						if(w.get(i-1).getOriginalForm().equals("by")) {
@@ -102,6 +106,7 @@ public class testPassiveHandling {
 		System.out.println();
 				
 		String[] inputActive=new String[] {
+				"Peter eats a salad.",
 				"Mr Grant calls an ambulance.",
 				"The company pays bill",
 				"Tom writes a letter.",
@@ -115,12 +120,12 @@ public class testPassiveHandling {
 
 		};
 		String[] inputPassive=new String[] {
+
 				"An ambulance is called by Mr Grant.",
 				"Bill is payed by company",
 				"The letter is written by Tom.",	
 				"At dinner, Six shrimp were eaten by Harry.",
 				"The savannah is roamed by beautiful giraffes.",
-				"A movie is going to be watched by us tonight.",
 				"The Grand Canyon is viewed by thousands of tourists every year.",
 				"The metal beams were eventually corroded by the saltwater",
 				"Sugar cane is raised by some people in Hawaii.",
