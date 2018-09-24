@@ -20,11 +20,12 @@ public class DomainThesaurus {
 			AllWords = allWords;
 		}
 
-	public DomainThesaurus() {
+	public DomainThesaurus(/*String url*/) {		//	-> this line will be needed in productive mode
 		
 		// read from custom file DomainThesaurus those words which override their respective synonyms (like "check" vs verify or "invoice" vs bill)
 		// user needs to change the file address to his own local address of course
-		String dtFile = "src/test/resources/Structures_And_Thesaurus/DomainThesaurus.txt"; 
+		String dtFile = "src/test/resources/Structures_And_Thesaurus/DomainThesaurus.txt";
+    	//String dtFile = url + "\\DomainThesaurus.txt"; -> this line will be needed in productive mode
         // iterate a BufferedReader to read dtFile
 		BufferedReader br = null;
         String line = "";

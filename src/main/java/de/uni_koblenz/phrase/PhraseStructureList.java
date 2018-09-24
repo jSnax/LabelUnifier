@@ -19,9 +19,10 @@ import java.io.IOException;
 public class PhraseStructureList {
 	List<PhraseStructure> AllStructures;
 	
-    public PhraseStructureList() throws Exception {
+    public PhraseStructureList(/*String url*/) throws Exception {							//	-> this line will be needed in productive mode
     	
     	String tsvFile = "src/test/resources/Structures_And_Thesaurus/PhraseStructureList.txt";
+    	//String tsvFile = url + "\\PhraseStructureList.txt";									-> this line will be needed in productive mode
     	// ToDo: Ultimately, the file needs to be read from the JAR's location. Since we don't have a JAR currently,
     	// the file source used above has to be altered to suit the actual location
     	// Once we have the JAR, refer to the link below for possible fixes

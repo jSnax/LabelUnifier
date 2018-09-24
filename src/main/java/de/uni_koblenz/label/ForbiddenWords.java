@@ -21,10 +21,11 @@ public class ForbiddenWords {
 			AllWords = allWords;
 		}
 
-	public ForbiddenWords() {
+	public ForbiddenWords(/*String url*/) {					//	-> this line will be needed in productive mode
 		
 		// read forbiddenWords from file dtFile at user-specified source
-		String dtFile = "src/test/resources/forbiddenWords.txt"; 
+		String dtFile = "src/test/resources/forbiddenWords.txt";
+    	//String dtFile = url + "\\PhraseStructureList.txt";	-> this line will be needed in productive mode
         // create BufferedReader to read dtFile
 		BufferedReader br = null;
         String line = "";
