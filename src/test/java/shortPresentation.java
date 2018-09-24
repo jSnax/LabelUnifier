@@ -60,7 +60,7 @@ public class shortPresentation {
 			"bill is taken from box",
 			"take bill from box",
 			"Employer pays salary from savings",
-			"Rich Employer pays big salary from huge savings quickly",
+			"Rich Employer pays big, beautiful salary from huge savings quickly",
 			"Cat feeds cute dog well",
 			"Cat feeds sweet dog well",
 			"Dog feeds charming cat nicely",
