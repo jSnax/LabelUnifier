@@ -443,17 +443,15 @@ public class LabelList implements java.io.Serializable{
     }
    
     
-    /*public void numberLabels(){
+    public void numberLabels(){
     	for (int i = 0; i < this.getInputLabelsSize(); i++){
     		this.getInputLabels().get(i).setLabelPosition(i);
     		int j = 0;
     		for (j = 0; j < this.getSentenceArraySize(i); j++){
-    			this.getInputLabels().get(i).getSentenceArray().get(j).setBelongsToLabel(i);
     			this.getInputLabels().get(i).getSentenceArray().get(j).setSentencePosition(j);
     		}
-    		this.getInputLabels().get(i).setSentenceAmount(j-1);
     	}
-    }*/
+    }
    
     public ArrayList<PhraseCluster> createClusters(){
     	ArrayList<PhraseCluster> alternativeClusters = new ArrayList<PhraseCluster>();
@@ -464,11 +462,7 @@ public class LabelList implements java.io.Serializable{
 				currentCluster.setWasLabel(labelCounter);
 				currentCluster.setWasSentence(sentenceCounter);
 				currentCluster.setAlternativeCluster(true);
-				ArrayList<String> phraseList = new ArrayList<String>();
-				for (int phraseCounter = 0; phraseCounter < this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases().size(); phraseCounter++){
-					phraseList.add(this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases().get(phraseCounter).getFullContent());
-				}
-				currentCluster.setAllPhrases(phraseList);
+				currentCluster.setAllPhrases(this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases());
 				alternativeClusters.add(currentCluster);
 			}
 		}
@@ -476,31 +470,55 @@ public class LabelList implements java.io.Serializable{
 		// This List will be displayed last in the final output file, it needs to be created first though
 		while (this.getInputLabelsSize() > 0){
 			Map<String,Integer> frequencies = new HashMap<String, Integer>();
+			// In this map, the frequencies of all phrases are stored and linked to the corresponding phrase
 			Map<String,ArrayList<ArrayList<Integer>>> labelsOfPhrases = new HashMap<String, ArrayList<ArrayList<Integer>>>();
+			// In this map, the position of labels in the original input list is stored and linked to the corresponding phrase
+			Map<String,ArrayList<ArrayList<Integer>>> positionsMap = new HashMap<String, ArrayList<ArrayList<Integer>>>();
+			// In this map, the position of labels in the shortened input list is stored and linked to the corresponding phrase
 			for (int labelCounter = 0; labelCounter < this.getInputLabelsSize(); labelCounter++){
 				for (int sentenceCounter = 0; sentenceCounter < this.getSentenceArraySize(labelCounter); sentenceCounter++){
 					for (int phraseCounter = 0; phraseCounter < this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases().size(); phraseCounter++){
 						if (frequencies.containsKey(this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases().get(phraseCounter).getFullContent())){
+							// If the maps already contain the current phrase...
 							frequencies.put(this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases().get(phraseCounter).getFullContent(), frequencies.get(this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases().get(phraseCounter).getFullContent())+1);
+							// Increase the frequency counter of said phrase by 1 and...
 							ArrayList<ArrayList<Integer>> tempListList = new ArrayList<ArrayList<Integer>>();
 							tempListList = labelsOfPhrases.get(this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases().get(phraseCounter).getFullContent());
 							ArrayList<Integer> tempList = new ArrayList<Integer>();
-							tempList.add(labelCounter);
-							tempList.add(sentenceCounter);
+							tempList.add(this.getInputLabels().get(labelCounter).getLabelPosition());
+							tempList.add(this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getSentencePosition());
 							tempListList.add(tempList);
 							labelsOfPhrases.put(this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases().get(phraseCounter).getFullContent(), tempListList);
+							// Add the position in the original input list to labelsOfPhrases and...
+							ArrayList<ArrayList<Integer>> tempListList2 = new ArrayList<ArrayList<Integer>>();
+							tempListList2 = positionsMap.get(this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases().get(phraseCounter).getFullContent());
+							ArrayList<Integer> tempList2 = new ArrayList<Integer>();
+							tempList2.add(labelCounter);
+							tempList2.add(sentenceCounter);
+							tempListList2.add(tempList2);
+							positionsMap.put(this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases().get(phraseCounter).getFullContent(), tempListList2);
+							// Add the position in the shortened input list to positionsMap
 						}
 						else {
+							// If the maps does not already contain the current phrase...
 							frequencies.put(this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases().get(phraseCounter).getFullContent(), 1);
+							// Add the phrase to frequencies with counter 1 and ...
 							ArrayList<ArrayList<Integer>> tempListList = new ArrayList<ArrayList<Integer>>();
-							//tempListList = labelsOfPhrases.get(this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases().get(phraseCounter).getFullContent());
 							ArrayList<Integer> tempList = new ArrayList<Integer>();
-							tempList.add(labelCounter);
-							tempList.add(sentenceCounter);
+							tempList.add(this.getInputLabels().get(labelCounter).getLabelPosition());
+							tempList.add(this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getSentencePosition());
 							tempListList.add(tempList);
 							labelsOfPhrases.put(this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases().get(phraseCounter).getFullContent(), tempListList);
+							// Add the phrase to labelsOfPhrases with the corresponding label and sentence position of the original input list and ...
+							ArrayList<ArrayList<Integer>> tempListList2 = new ArrayList<ArrayList<Integer>>();
+							ArrayList<Integer> tempList2 = new ArrayList<Integer>();
+							tempList2.add(labelCounter);
+							tempList2.add(sentenceCounter);
+							tempListList2.add(tempList2);
+							positionsMap.put(this.getInputLabels().get(labelCounter).getSentenceArray().get(sentenceCounter).getPossiblePhrases().get(phraseCounter).getFullContent(), tempListList2);
+							// Add the phrase to positionsMap with the corresponding label and sentence position of the shortened input list
+
 						}
-						// Maps Phrases to their respective frequency over all possible Phrases
 					}
 				}
 			}
@@ -513,12 +531,14 @@ public class LabelList implements java.io.Serializable{
 			// Writes first KEY of map [a phrase content as string] on the current cluster
 			ArrayList<ArrayList<Integer>> positions = labelsOfPhrases.get(entry.getKey());
 			currentCluster.setLabelAndSentencePositions(positions);
-			currentCluster.setAlternativeCluster(false);
 			// saves the positions of original labels AND sentences on the cluster
 			// They are mapped as a ArrayList of ArrayLists of Integers, in the following way:
 			// In each ArrayList of Integers, there are only two entries: The first one is the original position of the label
 			// while the second one is the original position of the sentence within the label
 			// Example: [5,3] refers to the 3rd sentence of the 5th label from the original list
+			positions = positionsMap.get(entry.getKey());
+			// Saves the positions of the current phrase in the shortened list in order to remove them for further counts
+			currentCluster.setAlternativeCluster(false);
 			for (int removalCounter = 0; removalCounter < positions.size(); removalCounter++){
 				int tempInt = positions.get(positions.size()-removalCounter-1).get(0);
 				if (this.getSentenceArraySize(tempInt) == 1){
@@ -529,7 +549,6 @@ public class LabelList implements java.io.Serializable{
 					int tempInt2 = positions.get(positions.size()-removalCounter-1).get(1);
 					this.getInputLabels().get(tempInt).getSentenceArray().remove(tempInt2);
 				}
-				//TODO: Fix this shit
 			}
 			// removes Labels from which a phrase was already displayed as an optimal phrase from counting
 			frequencyClusters.add(currentCluster);
