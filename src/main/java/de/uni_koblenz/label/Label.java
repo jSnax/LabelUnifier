@@ -30,6 +30,7 @@ public class Label implements java.io.Serializable{
 	private String labelAsString;
 	private transient SemanticGraph parsedLabel;
 	private boolean isFinal;
+	private int labelPosition;
 
 
 	
@@ -90,8 +91,14 @@ public class Label implements java.io.Serializable{
 		this.parsedLabel = parsedLabel;
 	}
 	
-	
-	
+
+	public int getLabelPosition() {
+		return labelPosition;
+	}
+
+	public void setLabelPosition(int labelPosition) {
+		this.labelPosition = labelPosition;
+	}
 
 	public boolean isFinal() {
 		return isFinal;

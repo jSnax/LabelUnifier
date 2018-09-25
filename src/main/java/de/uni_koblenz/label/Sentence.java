@@ -40,6 +40,7 @@ public class Sentence implements java.io.Serializable{
 	private List<Word> wordsarray = new ArrayList<Word>();
 	private transient CoreSentence asCoreSentence;
 	private String contentAsString;
+	private int sentencePosition;
 	public ArrayList<Phrase> possiblePhrases;
 	
 	public Sentence(CoreSentence sentence) throws JWNLException {
@@ -63,7 +64,7 @@ public class Sentence implements java.io.Serializable{
 
 
 
-	public List<Phrase> getPossiblePhrases() {
+	public ArrayList<Phrase> getPossiblePhrases() {
 		return possiblePhrases;
 	}
 
@@ -92,6 +93,16 @@ public class Sentence implements java.io.Serializable{
 		this.contentAsString = contentAsString;
 	}
 
+	
+	
+
+	public int getSentencePosition() {
+		return sentencePosition;
+	}
+
+	public void setSentencePosition(int sentencePosition) {
+		this.sentencePosition = sentencePosition;
+	}
 
 	/*
 	 * method to check whether a sentence is given in passive form
