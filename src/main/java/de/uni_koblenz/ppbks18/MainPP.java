@@ -109,6 +109,7 @@ public class MainPP {
 	}*/
 	
 	ForbiddenWords bannedList = new ForbiddenWords();
+	testList.numberLabels();
 	testList.findSynsets(bannedList);
 	/*System.out.println("Printing Synsets:");
 	for (int i = 0; i < testList.getInputLabels().size(); i++){

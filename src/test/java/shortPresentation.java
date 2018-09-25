@@ -96,6 +96,7 @@ public class shortPresentation {
 	}*/
 	
 	ForbiddenWords bannedList = new ForbiddenWords();
+	testList.numberLabels();
 	testList.findSynsets(bannedList);
 	/*System.out.println("Printing Synsets:");
 	for (int i = 0; i < testList.getInputLabels().size(); i++){
@@ -153,8 +154,7 @@ public class shortPresentation {
 		System.out.println("");
 	}
 	
-	System.out.println("Full Phrases to matching Labels:");
-    List<String> lines = new ArrayList<String>(); 
+	/*System.out.println("Full Phrases to matching Labels:");
     
 	for (int i = 0; i < testList.getInputLabels().size(); i++){
 		for (int j = 0; j < testList.getInputLabels().get(i).getSentenceArray().size(); j++){
@@ -169,12 +169,52 @@ public class shortPresentation {
 			System.out.println("");
 			lines.add("");
 		}
+	}*/
+    List<String> lines = new ArrayList<String>(); 
+	ArrayList<String> originalContent = new ArrayList<String>();
+	for (int i = 0; i < testList.getInputLabels().size(); i++){
+		for (int j = 0; j < testList.getInputLabels().get(i).getSentenceArray().size(); j++){
+			originalContent.add(testList.getInputLabels().get(i).getSentenceArray().get(j).getContentAsString());
+		}
 	}
-	
 	ArrayList<PhraseCluster> finalList = testList.createClusters();
+	
+	// Below, the output is supposed to be realized
+	// The print commands are placeholders at this point
+	int i = 0;
+	System.out.println("Recommended generalized labels:");
+	while (i < finalList.size() && !finalList.get(i).isAlternativeCluster()){
+		System.out.println("");
+		System.out.println("Phrase "+i);
+		System.out.println(finalList.get(i).getBuiltPhrase());
+		System.out.println("With the corresponding original labels:");
+		for (int j = 0; j < finalList.get(i).getLabelAndSentencePositions().size(); j++){
+			System.out.println("Label "+finalList.get(i).getLabelAndSentencePositions().get(j).get(0)+", Sentence "+finalList.get(i).getLabelAndSentencePositions().get(j).get(1));
+		}
+		// Simply prints out the Phrases and matching original labels
+		i++;
+	}
+	System.out.println("");
+	System.out.println("----------------------------------------------");
+	System.out.println("");
+	System.out.println("Full list of possible labels:");
+	for (int j = i; j < finalList.size(); j++){
+		System.out.println("");
+		System.out.println("Label "+finalList.get(j).getWasLabel()+", Sentence "+finalList.get(j).getWasSentence()+" was:");
+		System.out.println(originalContent.get(j-i));
+		if (finalList.get(j).getAllPhrases().get(0).getNoStructureFound()){
+			System.out.println("No applicable PhraseStructure was found.");
+		}
+		else {
+			System.out.println("Possible Phrases:");
+			for (int counter = 0; counter < finalList.get(j).getAllPhrases().size(); counter++){
+				System.out.println("Phrase "+counter+": "+finalList.get(j).getAllPhrases().get(counter).getFullContent());
+			}
+		}
+	}
+	// Prints out the original list of labels with their corresponding phrases
 	java.nio.file.Path file = Paths.get("result.txt");
     Files.write(file, lines, Charset.forName("UTF-8"));
-	System.out.println("---------------------");
 	//finalList.phraseCompareAndDecisionFinal(testList);
 	//finalList.writeToFile();
 	}
