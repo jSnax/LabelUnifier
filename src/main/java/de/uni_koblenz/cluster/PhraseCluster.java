@@ -9,7 +9,7 @@ import de.uni_koblenz.phrase.Phrase;
 public class PhraseCluster {
 
 	public ArrayList<ArrayList<Integer>> labelAndSentencePositions;
-	public ArrayList<String> allPhrases;
+	public ArrayList<Phrase> allPhrases;
 	public String builtPhrase; 
 	private int wasLabel;
 	private int wasSentence;
@@ -18,15 +18,15 @@ public class PhraseCluster {
 
 	
 	public PhraseCluster() {
-		this.allPhrases = new ArrayList<String>();
+		this.allPhrases = new ArrayList<Phrase>();
 	}
 
 
-		public List<String> getAllPhrases() {
+		public List<Phrase> getAllPhrases() {
 			return allPhrases;
 		}
 
-		public void setAllPhrases(ArrayList<String> allPhrases) {
+		public void setAllPhrases(ArrayList<Phrase> allPhrases) {
 			this.allPhrases = allPhrases;
 		}
 
