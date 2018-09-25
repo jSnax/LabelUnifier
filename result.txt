@@ -46,9 +46,12 @@ Label 9, Sentence 0 was: Employer pays salary from savings.
 Possible Phrases:
 Phrase 0: Employer pays salary.
 
-Label 10, Sentence 0 was: Rich Employer pays big, beautiful salary from huge savings quickly.
+Label 10, Sentence 0 was: Rich Employer pays big salary from huge savings quickly.
 Possible Phrases:
-Phrase 0: Rich Employer quickly payed huge, beautiful salary from huge savings.
+Phrase 0: Rich Employer payed huge salary.
+Phrase 1: Huge salary was payed by Rich Employer.
+Phrase 2: Rich Employer pays huge salary.
+Phrase 3: Rich Employer quickly payed salary.
 
 Label 11, Sentence 0 was: Cat feeds cute dog well.
 Possible Phrases:

@@ -15,16 +15,12 @@ import java.io.IOException;
 
 public class PhraseStructure {
 
-	String phraseElements;
+
 	List<PhraseStructureTypes> elements = new ArrayList<PhraseStructureTypes>();
 
 	
 	public PhraseStructure() {
 		
-	}
-
-	public void setPhraseElements(String phraseElements) {
-		this.phraseElements = phraseElements;
 	}
 
 	

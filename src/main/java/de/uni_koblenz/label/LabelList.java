@@ -130,10 +130,7 @@ public class LabelList implements java.io.Serializable{
         Dictionary dictionary = Dictionary.getDefaultResourceInstance();
         net.sf.extjwnl.data.IndexWord tempWord;
         List<net.sf.extjwnl.data.Synset> tempSyn;
-        PointerTargetNodeList nodelist = null;
-       
-        //shorter version of the for loops below ##############################
-       
+        PointerTargetNodeList nodelist = null;       
         // iteration over all labels
         for (Label l : this.getInputLabels()) {
             // iteration over all sentences in label
@@ -210,9 +207,6 @@ public class LabelList implements java.io.Serializable{
         Dictionary dictionary = Dictionary.getDefaultResourceInstance();
         net.sf.extjwnl.data.IndexWord tempWord;
         List<net.sf.extjwnl.data.Synset> tempSyn;
-       
-        //shorter version of the for loops below ##############################
-       
         // iteration over all labels
         for (Label l : this.getInputLabels()) {
             // iteration over all sentences in label
