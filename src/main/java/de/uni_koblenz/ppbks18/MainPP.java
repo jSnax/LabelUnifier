@@ -167,28 +167,50 @@ public class MainPP {
 		System.out.println("");
 	}
 	
-	System.out.println("Full Phrases to matching Labels:");
     List<String> lines = new ArrayList<String>(); 
-    
+	ArrayList<String> originalContent = new ArrayList<String>();
 	for (int i = 0; i < testList.getInputLabels().size(); i++){
 		for (int j = 0; j < testList.getInputLabels().get(i).getSentenceArray().size(); j++){
-			System.out.println("Label "+i+", Sentence "+j+ " was: "+testList.getInputLabels().get(i).getSentenceArray().get(j).getContentAsString());
-			lines.add("Label "+i+", Sentence "+j+ " was: "+testList.getInputLabels().get(i).getSentenceArray().get(j).getContentAsString());
-			System.out.println("Possible Phrases:");
+			originalContent.add(testList.getInputLabels().get(i).getSentenceArray().get(j).getContentAsString());
+		}
+	}
+	ArrayList<PhraseCluster> finalList = testList.createClusters();
+	
+	// Below, the output is realized
+	int i = 0;
+	lines.add("Recommended generalized labels:");
+	while (i < finalList.size() && !finalList.get(i).isAlternativeCluster()){
+		lines.add("");
+		lines.add("Phrase "+i);
+		lines.add(finalList.get(i).getBuiltPhrase());
+		lines.add("With the corresponding original labels:");
+		for (int j = 0; j < finalList.get(i).getLabelAndSentencePositions().size(); j++){
+			lines.add("Label "+finalList.get(i).getLabelAndSentencePositions().get(j).get(0)+", Sentence "+finalList.get(i).getLabelAndSentencePositions().get(j).get(1));
+		}
+		// Simply prints out the Phrases and matching original labels
+		i++;
+	}
+	lines.add("");
+	lines.add("----------------------------------------------");
+	lines.add("");
+	lines.add("Full list of possible phrases:");
+	for (int j = i; j < finalList.size(); j++){
+		lines.add("");
+		lines.add("Label "+finalList.get(j).getWasLabel()+", Sentence "+finalList.get(j).getWasSentence()+" was:");
+		lines.add(originalContent.get(j-i));
+		if (finalList.get(j).getAllPhrases().get(0).getNoStructureFound()){
+			lines.add("No applicable PhraseStructure was found.");
+		}
+		else {
 			lines.add("Possible Phrases:");
-			for (int k = 0; k < testList.getInputLabels().get(i).getSentenceArray().get(j).possiblePhrases.size(); k++){
-				System.out.println("Phrase "+k+": "+testList.getInputLabels().get(i).getSentenceArray().get(j).possiblePhrases.get(k).getFullContent());
-				lines.add("Phrase "+k+": "+testList.getInputLabels().get(i).getSentenceArray().get(j).possiblePhrases.get(k).getFullContent());
+			for (int counter = 0; counter < finalList.get(j).getAllPhrases().size(); counter++){
+				lines.add("Phrase "+counter+": "+finalList.get(j).getAllPhrases().get(counter).getFullContent());
 			}
-			System.out.println("");
-			lines.add("");
 		}
 	}
 	
-	ArrayList<PhraseCluster> finalList = testList.createClusters();
 	java.nio.file.Path file = Paths.get("result.txt");
     Files.write(file, lines, Charset.forName("UTF-8"));
-	System.out.println("---------------------");
 	//finalList.phraseCompareAndDecisionFinal(testList);
 	//finalList.writeToFile();
 	}
