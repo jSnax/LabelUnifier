@@ -57,3 +57,8 @@ ADV("ADVERB"),
 Prep("PREPOSITION"),
 POS("PREPOSITIONAL_OBJECT_SINGULAR"),
 POP("PREPOSITIONAL_OBJECT_PLURAL");
+
+Configure program:
+To use the program add your absolute path to your folder containing the PhraseStructureList.txt, DomainThesaurus.txt and the ForbiddenWords.txt in the conf.txt.
+The conf file must remain in the same folder as the .jar. PhraseStructureList.txt, DomainThesaurus.txt and the ForbiddenWords.txt can be edited as described above.
+To use the program open a terminal and change to the directory containing the .jar and use "java -jar <jarName>.jar".
