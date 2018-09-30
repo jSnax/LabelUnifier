@@ -361,8 +361,10 @@ public class Sentence implements java.io.Serializable{
 				passive = false;
 				error = false;
 				prepositionFound = false;
+				boolean plural = false;
 				// Creating lots of variables that will be used later in this function
-				while (i < Structure.getElements().size() && !error){ 
+				while (i < Structure.getElements().size() && !error){
+					plural = false;
 					j = 0;
 					// j refers to the position of the word that's currently being looked at in the Sentence
 					boolean found = false;
@@ -405,9 +407,7 @@ public class Sentence implements java.io.Serializable{
 						break;
 					case NPO:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
-							//old: if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "BUSINESS_OBJECT"){
 							if ((this.POSofTempWord(j) == "NNS" || this.POSofTempWord(j) == "NNPS") && this.RoleOfTempWord(j) == "BUSINESS_OBJECT" && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
-								//old: tempString = tempSentence.getWordsarray().get(j).getBaseform();
 								tempString = this.BaseOfTempWord(j);
 								objectPosition = j;
 								this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
@@ -427,9 +427,7 @@ public class Sentence implements java.io.Serializable{
 						break;
 					case NPS:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
-							//old:	if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "SUBJECT"){
 							if ((this.POSofTempWord(j) == "NNS" || this.POSofTempWord(j) == "NNPS") && this.RoleOfTempWord(j) == "SUBJECT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
-								//old: tempString = tempSentence.getWordsarray().get(j).getBaseform();
 								tempString = this.BaseOfTempWord(j);
 								subjectPosition = j;
 								this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
@@ -444,9 +442,7 @@ public class Sentence implements java.io.Serializable{
 						break;
 					case NSO:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
-							//old: if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "BUSINESS_OBJECT"){
 							if ((this.POSofTempWord(j) == "NN" || this.POSofTempWord(j) == "NNP") && this.RoleOfTempWord(j) == "BUSINESS_OBJECT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
-							//old:	tempString = tempSentence.getWordsarray().get(j).getBaseform();
 								tempString = this.BaseOfTempWord(j);
 								objectPosition = j;
 								this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
@@ -460,9 +456,7 @@ public class Sentence implements java.io.Serializable{
 						break;
 					case NSS:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
-						//old:	if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.NOUN && tempSentence.getWordsarray().get(j).getRole().name() == "SUBJECT"){
 							if ((this.POSofTempWord(j) == "NN" || this.POSofTempWord(j) == "NNP") && this.RoleOfTempWord(j) == "SUBJECT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
-							//old:	tempString = tempSentence.getWordsarray().get(j).getBaseform();
 							tempString = this.BaseOfTempWord(j);
 							subjectPosition = j;
 							this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
@@ -474,6 +468,56 @@ public class Sentence implements java.io.Serializable{
 						if (tempString == "") error = true;
 						// See Noun Plural Object
 						break;
+					case NO:
+						while (tempString == "" && j < tempSentence.getWordsarray().size()){
+							if (this.RoleOfTempWord(j) == "BUSINESS_OBJECT" && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
+								if (this.POSofTempWord(j) == "NNS" || this.POSofTempWord(j) == "NNPS"){
+									tempString = this.BaseOfTempWord(j);
+									objectPosition = j;
+									this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
+									plural = true;
+								}
+								if (this.POSofTempWord(j) == "NN" || this.POSofTempWord(j) == "NNP"){
+									tempString = this.BaseOfTempWord(j);
+									objectPosition = j;
+									this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
+								}
+								// NO refers to a noun in object form with unspecified plurality.
+								// In the two if clauses above, it is checked whether the object was in plural or singular form
+							}
+							j++;
+						}
+						// See Noun Plural Object
+						object = nlgFactory.createNounPhrase(tempString);
+						if (plural) object.setPlural(true);
+						p.setObject(object);
+						if (tempString == "") error = true;
+						// See Noun Plural Object. The only addition at this point is that the plurality is set dependent on the boolean "plural" which was set above
+						break;
+					case NS:
+						while (tempString == "" && j < tempSentence.getWordsarray().size()){
+							if (this.RoleOfTempWord(j) == "SUBJECT" && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
+								if (this.POSofTempWord(j) == "NNS" || this.POSofTempWord(j) == "NNPS"){
+									tempString = this.BaseOfTempWord(j);
+									subjectPosition = j;
+									this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
+									plural = true;
+								}
+								if (this.POSofTempWord(j) == "NN" || this.POSofTempWord(j) == "NNP"){
+									tempString = this.BaseOfTempWord(j);
+									subjectPosition = j;
+									this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
+								}
+								// See NO
+							}
+							j++;
+						}
+						subject = nlgFactory.createNounPhrase(tempString);
+						if (plural) subject.setPlural(true);
+						p.setSubject(subject);
+						if (tempString == "") error = true;
+						// See NO
+						break;
 					case PP:
 						// Since SimpleNLG creates Periods anyway, this PartOfSpeechType needs no code to function.
 						break;
@@ -481,13 +525,10 @@ public class Sentence implements java.io.Serializable{
 						if (!(Structure.isProperSentence())) error = true;
 						p.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.YES_NO);	
 						// SimpleNLG can't really handle questions that don't have a Subject, Verb AND Object. Therefore, error is set true if not all of those can be found in the given PhraseStructure
-						//TODO: Maybe catch this while processing the PhraseStructure Input List?
 					    break;
 					case VB:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
-						//old:	if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
 							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
-							//old:	tempString = tempSentence.getWordsarray().get(j).getBaseform();
 								tempString = this.BaseOfTempWord(j);
 								this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
@@ -501,9 +542,7 @@ public class Sentence implements java.io.Serializable{
 						break;
 					case VI:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
-							//old: if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
 							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
-							//old: 	tempString = tempSentence.getWordsarray().get(j).getBaseform();
 							tempString = this.BaseOfTempWord(j);
 							this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
@@ -517,9 +556,7 @@ public class Sentence implements java.io.Serializable{
 						break;
 					case VPrP:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
-							//old: if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
 							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
-							//old:	tempString = tempSentence.getWordsarray().get(j).getBaseform();
 								tempString = this.BaseOfTempWord(j);
 								this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
@@ -533,9 +570,7 @@ public class Sentence implements java.io.Serializable{
 						break;
 					case VP:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
-						//old:	if (tempSentence.getWordsarray().get(j).getPartOfSpeech().getJwnlType() == POS.VERB && tempSentence.getWordsarray().get(j).getRole().name() == "ACTION"){
 							if (this.jwnlPOSofTempWord(j) == POS.VERB && this.RoleOfTempWord(j) == "ACTION"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
-							//old:	tempString = tempSentence.getWordsarray().get(j).getBaseform();
 							tempString = this.BaseOfTempWord(j);
 							this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
@@ -726,6 +761,30 @@ public class Sentence implements java.io.Serializable{
 						preposition.addComplement(prepositionalObject);
 						if (tempString == "") error = true;
 						// See Noun Plural Object
+						break;
+					case PO:
+						while (tempString == "" && j < tempSentence.getWordsarray().size()){
+							if (this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT" && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
+								if (this.POSofTempWord(j) == "NNS" || this.POSofTempWord(j) == "NNPS"){
+									tempString = this.BaseOfTempWord(j);
+									prepObjectPosition = j;
+									this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
+									plural = true;
+								}
+								if (this.POSofTempWord(j) == "NN" || this.POSofTempWord(j) == "NNP"){
+									tempString = this.BaseOfTempWord(j);
+									prepObjectPosition = j;
+									this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
+								}
+								// See NO
+							}
+							j++;
+						}
+						prepositionalObject = nlgFactory.createNounPhrase(tempString);
+						if (plural) prepositionalObject.setPlural(true);
+						preposition.addComplement(prepositionalObject);
+						if (tempString == "") error = true;
+						// See NO
 						break;
 					default:
 						break;

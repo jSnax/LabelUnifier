@@ -125,6 +125,15 @@ public class PhraseStructureList {
 					case APO:
         				tempList.add(PhraseStructureTypes.APO);
 						break;
+					case NO:
+        				tempList.add(PhraseStructureTypes.NO);
+						break;
+					case NS:
+        				tempList.add(PhraseStructureTypes.NS);
+						break;
+					case PO:
+        				tempList.add(PhraseStructureTypes.PO);
+						break;
 					default:
 						break;
         		}
