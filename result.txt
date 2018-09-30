@@ -3,59 +3,55 @@ Recommended generalized labels:
 Phrase 0
 Check invoice.
 With the corresponding original labels:
-Label 3, Sentence 0
-Label 6, Sentence 0
-Label 7, Sentence 0
-Label 8, Sentence 0
-Label 14, Sentence 0
+Label 3, Sentence 0 (Verify bill.)
+Label 6, Sentence 0 (Verify bill.)
+Label 14, Sentence 0 (Take bill.)
 
 Phrase 1
-Employee checks small invoice.
+Cat feeds dog.
 With the corresponding original labels:
-Label 0, Sentence 0
-Label 1, Sentence 0
+Label 11, Sentence 0 (Cat feeds cute dog well.)
+Label 12, Sentence 0 (Cat feeds sweet dog well.)
+Label 15, Sentence 0 (Big cat feeds small dog.)
 
 Phrase 2
-Cat fed dog well.
+Employee checks invoice.
 With the corresponding original labels:
-Label 11, Sentence 0
-Label 12, Sentence 0
+Label 0, Sentence 0 (Employee checked tiny invoice.)
+Label 1, Sentence 0 (Employee verifies small invoice.)
 
 Phrase 3
 Company pays invoice.
 With the corresponding original labels:
-Label 4, Sentence 0
-Label 5, Sentence 0
+Label 4, Sentence 0 (Company pays bill.)
+Label 5, Sentence 0 (Bill is payed by company.)
 
 Phrase 4
-Dog feeds charming cat.
+Pay salary from savings.
 With the corresponding original labels:
-Label 13, Sentence 0
+Label 9, Sentence 0 (Employer pays salary from savings.)
+Label 10, Sentence 0 (Rich Employer pays big salary from huge savings quickly.)
 
 Phrase 5
-Cat feeds small dog.
+Check invoice from box.
 With the corresponding original labels:
-Label 15, Sentence 0
+Label 7, Sentence 0 (Bill is taken from box.)
+Label 8, Sentence 0 (Take bill from box.)
 
 Phrase 6
-Employer pays salary.
+Dog feeds cat.
 With the corresponding original labels:
-Label 9, Sentence 0
+Label 13, Sentence 0 (Dog feeds charming cat nicely.)
 
 Phrase 7
-Employees check bills.
+Employees check invoices.
 With the corresponding original labels:
-Label 2, Sentence 0
+Label 2, Sentence 0 (Employees check bills.)
 
 Phrase 8
 Feed dog.
 With the corresponding original labels:
-Label 3, Sentence 1
-
-Phrase 9
-Rich Employer quickly payed huge, beautiful salary from huge savings.
-With the corresponding original labels:
-Label 10, Sentence 0
+Label 3, Sentence 1 (Feed dog.)
 
 ----------------------------------------------
 
@@ -64,20 +60,17 @@ Full list of possible phrases:
 Label 0, Sentence 0 was:
 Employee checked tiny invoice.
 Possible Phrases:
-Phrase 0: Employee checked small invoice.
-Phrase 1: Small invoice was checked by employee.
-Phrase 2: Employee checks small invoice.
+Phrase 0: Employee checks invoice.
 
 Label 1, Sentence 0 was:
 Employee verifies small invoice.
 Possible Phrases:
-Phrase 0: Employee checked small invoice.
-Phrase 1: Small invoice was checked by employee.
-Phrase 2: Employee checks small invoice.
+Phrase 0: Employee checks invoice.
 
 Label 2, Sentence 0 was:
 Employees check bills.
-No applicable PhraseStructure was found.
+Possible Phrases:
+Phrase 0: Employees check invoices.
 
 Label 3, Sentence 0 was:
 Verify bill.
@@ -107,46 +100,37 @@ Phrase 0: Check invoice.
 Label 7, Sentence 0 was:
 Bill is taken from box.
 Possible Phrases:
-Phrase 0: Check invoice.
+Phrase 0: Check invoice from box.
 
 Label 8, Sentence 0 was:
 Take bill from box.
 Possible Phrases:
-Phrase 0: Check invoice.
+Phrase 0: Check invoice from box.
 
 Label 9, Sentence 0 was:
 Employer pays salary from savings.
 Possible Phrases:
-Phrase 0: Employer pays salary.
+Phrase 0: Pay salary from savings.
 
 Label 10, Sentence 0 was:
-Rich Employer pays big, beautiful salary from huge savings quickly.
+Rich Employer pays big salary from huge savings quickly.
 Possible Phrases:
-Phrase 0: Rich Employer quickly payed huge, beautiful salary from huge savings.
+Phrase 0: Pay salary from savings.
 
 Label 11, Sentence 0 was:
 Cat feeds cute dog well.
 Possible Phrases:
-Phrase 0: Cat fed dog cute.
-Phrase 1: Dog cute was fed by cat.
-Phrase 2: Cat feeds dog cute.
-Phrase 3: Cat fed dog well.
+Phrase 0: Cat feeds dog.
 
 Label 12, Sentence 0 was:
 Cat feeds sweet dog well.
 Possible Phrases:
-Phrase 0: Cat fed sweet dog.
-Phrase 1: Sweet dog was fed by cat.
-Phrase 2: Cat feeds sweet dog.
-Phrase 3: Cat fed dog well.
+Phrase 0: Cat feeds dog.
 
 Label 13, Sentence 0 was:
 Dog feeds charming cat nicely.
 Possible Phrases:
-Phrase 0: Dog fed charming cat.
-Phrase 1: Charming cat was fed by dog.
-Phrase 2: Dog feeds charming cat.
-Phrase 3: Dog nicely fed cat.
+Phrase 0: Dog feeds cat.
 
 Label 14, Sentence 0 was:
 Take bill.
@@ -156,7 +140,4 @@ Phrase 0: Check invoice.
 Label 15, Sentence 0 was:
 Big cat feeds small dog.
 Possible Phrases:
-Phrase 0: Cat fed small dog.
-Phrase 1: Small dog was fed by cat.
-Phrase 2: Cat feeds small dog.
-Phrase 3: Huge cat feeds dog.
+Phrase 0: Cat feeds dog.

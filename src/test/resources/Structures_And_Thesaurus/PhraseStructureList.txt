@@ -1,12 +1,17 @@
-y, VB, NSS, NSO
-y, VI, NSO
+n, VB, NSS, NSO
+n, VI, NSO
 n, VB, NSO, AO
 n, VB, NSO
-y, NSS, VSP, NSO, AO, AO, Prep, POP, APO, ADV
-y, NSS, VSP, NSO, ADV
-y, NSS, VSP, NSO, AO
-y, VSP, NSS, NSO, PQ
-y, VPP, NSS, NSO, AO
-y, VB, NSS, NSO, AO
-y, VB, NSS, NSO, AS, AS
-y, VB, NSS, NSO, AS
+n, NSS, VSP, NSO, AO, AO, Prep, POP, APO, ADV
+n, NSS, VSP, NSO, ADV
+n, NSS, VSP, NSO, AO
+n, VSP, NSS, NSO, PQ
+n, VPP, NSS, NSO, AO
+n, VB, NSS, NSO, AO
+n, VB, NSS, NSO, AS, AS
+n, VB, NSS, NSO, AS
+n, VI, Prep, POS
+y, VI, NO
+y, VI, Prep, PO
+y, VI, NO, Prep, PO
+y, NS, VB, NO

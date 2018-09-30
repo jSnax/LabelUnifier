@@ -65,7 +65,8 @@ public class shortPresentation {
 			"Cat feeds sweet dog well",
 			"Dog feeds charming cat nicely",
 			"take bill",
-			"Big cat feeds small dog"
+			"Big cat feeds small dog",
+			"Wait for approval."
 			
 	};
 	
@@ -172,7 +173,9 @@ public class shortPresentation {
 		lines.add(finalList.get(i).getBuiltPhrase());
 		lines.add("With the corresponding original labels:");
 		for (int j = 0; j < finalList.get(i).getLabelAndSentencePositions().size(); j++){
-			lines.add("Label "+finalList.get(i).getLabelAndSentencePositions().get(j).get(0)+", Sentence "+finalList.get(i).getLabelAndSentencePositions().get(j).get(1));
+			int labelPosition = finalList.get(i).getLabelAndSentencePositions().get(j).get(0);
+			int sentencePosition = finalList.get(i).getLabelAndSentencePositions().get(j).get(1);
+			lines.add("Label "+labelPosition+", Sentence "+sentencePosition+" ("+testList.getInputLabels().get(labelPosition).getSentenceArray().get(sentencePosition).getContentAsString()+")");
 		}
 		// Simply prints out the Phrases and matching original labels
 		i++;

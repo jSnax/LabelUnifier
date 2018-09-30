@@ -85,9 +85,30 @@ public class LabelList implements java.io.Serializable{
        
     }
     
-    public LabelList cloneList(){
+    /*public LabelList cloneList(){
     	LabelList newList = new LabelList();
     	for (Label tempLabel : this.getInputLabels()){
+    		List<Label> tempList = newList.getInputLabels();
+    		tempList.add(tempLabel);
+    		newList.setInputLabels(tempList);
+    	}
+    	return (newList);
+    }*/
+    
+    public LabelList cloneList(){
+    	LabelList newList = new LabelList();
+    	for (int i = 0; i < this.getInputLabelsSize(); i++){
+    		Label tempLabel = new Label();
+    		List<Sentence> tempSentenceList = new ArrayList<Sentence>();
+    		for (int j = 0; j < this.getSentenceArraySize(i); j++){
+    			Sentence tempSentence = new Sentence();
+    			tempSentence.setSentencePosition(this.getInputLabels().get(i).getSentenceArray().get(j).getSentencePosition());
+    			tempSentence.setContentAsString(this.getInputLabels().get(i).getSentenceArray().get(j).getContentAsString());
+    			tempSentence.setPossiblePhrases(this.getInputLabels().get(i).getSentenceArray().get(j).getPossiblePhrases());
+    			tempSentenceList.add(tempSentence);
+    		}
+    		tempLabel.setSentenceArray(tempSentenceList);
+    		tempLabel.setLabelPosition(this.getInputLabels().get(i).getLabelPosition());
     		List<Label> tempList = newList.getInputLabels();
     		tempList.add(tempLabel);
     		newList.setInputLabels(tempList);
