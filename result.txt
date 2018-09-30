@@ -59,7 +59,7 @@ Label 10, Sentence 0
 
 ----------------------------------------------
 
-Full list of possible labels:
+Full list of possible phrases:
 
 Label 0, Sentence 0 was:
 Employee checked tiny invoice.
