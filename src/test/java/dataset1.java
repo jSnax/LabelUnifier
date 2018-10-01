@@ -198,12 +198,13 @@ public class dataset1 {
 		    	*/
 		    	System.out.println("#################################");
 		    	System.out.println("pairs have to be identical:");
-		    	System.out.println("##########################################################");
+		    	System.out.println("#################################");
 		        for(int k=0;k<nList1.getLength();k++) {
 		        	if(labelid.indexOf(nList1.item(k).getAttributes().item(0).getNodeValue().replaceAll(".*#", ""))>=0&&labelid.indexOf(nList2.item(k).getAttributes().item(0).getNodeValue().replaceAll(".*#", ""))>=0) {
 		        		
 		        		System.out.println(labelname.get(labelid.indexOf(nList1.item(k).getAttributes().item(0).getNodeValue().replaceAll(".*#", ""))));
 		        		System.out.println(labelname.get(labelid.indexOf(nList2.item(k).getAttributes().item(0).getNodeValue().replaceAll(".*#", ""))));
+		        		System.out.println();
 		        		
 		        		/*
 		        		int i1=0;
