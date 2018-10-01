@@ -33,9 +33,9 @@ public class LabelList implements java.io.Serializable{
     private List<Label> inputLabels = new ArrayList<Label>();
    
     public transient static StanfordCoreNLP pipeline;
-    public LabelList() {
-       
-    }
+    public LabelList(){	
+    	
+	}
     
     private static Map<String, Integer> sortByValue(Map<String, Integer> unsortMap) {
 

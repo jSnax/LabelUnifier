@@ -30,7 +30,7 @@ Phrase 4
 Pay salary from savings.
 With the corresponding original labels:
 Label 9, Sentence 0 (Employer pays salary from savings.)
-Label 10, Sentence 0 (Rich Employer pays big salary from huge savings quickly.)
+Label 10, Sentence 0 (Rich Employer pays big, beautiful salary from huge savings quickly.)
 
 Phrase 5
 Check invoice from box.
@@ -39,16 +39,31 @@ Label 7, Sentence 0 (Bill is taken from box.)
 Label 8, Sentence 0 (Take bill from box.)
 
 Phrase 6
+Send letter of approval.
+With the corresponding original labels:
+Label 18, Sentence 0 (Send letter of acceptance.)
+
+Phrase 7
 Dog feeds cat.
 With the corresponding original labels:
 Label 13, Sentence 0 (Dog feeds charming cat nicely.)
 
-Phrase 7
+Phrase 8
 Employees check invoices.
 With the corresponding original labels:
 Label 2, Sentence 0 (Employees check bills.)
 
-Phrase 8
+Phrase 9
+Send letter of rejection.
+With the corresponding original labels:
+Label 17, Sentence 0 (Send letter of rejection.)
+
+Phrase 10
+Wait for approval.
+With the corresponding original labels:
+Label 16, Sentence 0 (Wait for approval.)
+
+Phrase 11
 Feed dog.
 With the corresponding original labels:
 Label 3, Sentence 1 (Feed dog.)
@@ -113,7 +128,7 @@ Possible Phrases:
 Phrase 0: Pay salary from savings.
 
 Label 10, Sentence 0 was:
-Rich Employer pays big salary from huge savings quickly.
+Rich Employer pays big, beautiful salary from huge savings quickly.
 Possible Phrases:
 Phrase 0: Pay salary from savings.
 
@@ -141,3 +156,18 @@ Label 15, Sentence 0 was:
 Big cat feeds small dog.
 Possible Phrases:
 Phrase 0: Cat feeds dog.
+
+Label 16, Sentence 0 was:
+Wait for approval.
+Possible Phrases:
+Phrase 0: Wait for approval.
+
+Label 17, Sentence 0 was:
+Send letter of rejection.
+Possible Phrases:
+Phrase 0: Send letter of rejection.
+
+Label 18, Sentence 0 was:
+Send letter of acceptance.
+Possible Phrases:
+Phrase 0: Send letter of approval.

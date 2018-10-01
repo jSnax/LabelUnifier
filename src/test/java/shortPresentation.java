@@ -45,34 +45,13 @@ public class shortPresentation {
 	System.out.println("Started.");
 	Lexicon lexicon = Lexicon.getDefaultLexicon();
 	NLGFactory nlgFactory = new NLGFactory(lexicon);
-	SPhraseSpec p = nlgFactory.createClause();
     Realiser realiser = new Realiser(lexicon);
-	Dictionary dictionary = Dictionary.getDefaultResourceInstance();
-	
-	String[] input=new String[] {
-			"Employee checked tiny invoice",
-			"Employee verifies small invoice",
-			"Employees check bills",
-			"Verify bill. Feed dog.",
-			"Company pays bill",
-			"Bill is payed by company",
-			"Verify bill",
-			"bill is taken from box",
-			"take bill from box",
-			"Employer pays salary from savings",
-			"Rich Employer pays big, beautiful salary from huge savings quickly",
-			"Cat feeds cute dog well",
-			"Cat feeds sweet dog well",
-			"Dog feeds charming cat nicely",
-			"take bill",
-			"Big cat feeds small dog",
-			"Wait for approval."
-			
-	};
-	
 
 	// Fill Labels with word arrays
-	LabelList testList = new LabelList(input);
+	
+	inputList input = new inputList();
+	
+	LabelList testList = new LabelList(input.getInput());
 	
 	System.out.println("Printing Preprocessing results:");
 	System.out.println(testList);
