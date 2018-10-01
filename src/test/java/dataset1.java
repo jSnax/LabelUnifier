@@ -263,7 +263,7 @@ public class dataset1 {
 		    	NodeList tempList=document.getElementsByTagName(tag);
 		    	for(int i=0;i<tempList.getLength();i++) {
 		    		if(!tempList.item(i).getAttributes().getNamedItem("name").getTextContent().equals("")){
-			    		labelname.add(tempList.item(i).getAttributes().getNamedItem("name").getTextContent());
+			    		labelname.add(tempList.item(i).getAttributes().getNamedItem("name").getTextContent().replaceAll("[\n\r]", " "));
 			    		labelid.add(tempList.item(i).getAttributes().getNamedItem("id").getTextContent());
 		    		}
 		    	}
