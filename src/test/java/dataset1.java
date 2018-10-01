@@ -200,38 +200,35 @@ public class dataset1 {
 		    	System.out.println("pairs have to be identical:");
 		    	System.out.println("#################################");
 		        for(int k=0;k<nList1.getLength();k++) {
-		        	if(labelid.indexOf(nList1.item(k).getAttributes().item(0).getNodeValue().replaceAll(".*#", ""))>=0&&labelid.indexOf(nList2.item(k).getAttributes().item(0).getNodeValue().replaceAll(".*#", ""))>=0) {
-		        		
-		        		System.out.println(labelname.get(labelid.indexOf(nList1.item(k).getAttributes().item(0).getNodeValue().replaceAll(".*#", ""))));
-		        		System.out.println(labelname.get(labelid.indexOf(nList2.item(k).getAttributes().item(0).getNodeValue().replaceAll(".*#", ""))));
-		        		System.out.println();
-		        		
-		        		/*
-		        		int i1=0;
-		        		String final1="not";
-		        		String final2="found";
-		        		while (i1 < finalList.size() && !finalList.get(i1).isAlternativeCluster()){
-				    		//lines.add(finalList.get(i1).getBuiltPhrase());
-				    		for (int j = 0; j < finalList.get(i1).getLabelAndSentencePositions().size(); j++){
-				    			if (finalList.get(i1).getLabelAndSentencePositions().get(j).get(0)==labelid.indexOf(nList1.item(k).getAttributes().item(0).getNodeValue().replaceAll(".*#", ""))){
-				    				final1=finalList.get(i1).getBuiltPhrase();
-				    			}
-				    			if (finalList.get(i1).getLabelAndSentencePositions().get(j).get(0)==labelid.indexOf(nList2.item(k).getAttributes().item(0).getNodeValue().replaceAll(".*#", ""))){
-				    				final2=finalList.get(i1).getBuiltPhrase();
-				    			}
-				    			
-				    			
-				    		}
-				    		i1++;
-		        		}
-		        		System.out.println(final1+" "+final2);
-		        		System.out.println();
-		        		//    collector.checkThat(final1, containsString(final2));
-		        		 * 
-		        		 * 
-		        		 */
-		        	}
-		        	
+	        		System.out.println(labelname.get(labelid.indexOf(nList1.item(k).getAttributes().item(0).getNodeValue().replaceAll(".*#", ""))));
+	        		System.out.println(labelname.get(labelid.indexOf(nList2.item(k).getAttributes().item(0).getNodeValue().replaceAll(".*#", ""))));
+	        		System.out.println();
+	        		
+	        		/*
+	        		int i1=0;
+	        		String final1="not";
+	        		String final2="found";
+	        		while (i1 < finalList.size() && !finalList.get(i1).isAlternativeCluster()){
+			    		//lines.add(finalList.get(i1).getBuiltPhrase());
+			    		for (int j = 0; j < finalList.get(i1).getLabelAndSentencePositions().size(); j++){
+			    			if (finalList.get(i1).getLabelAndSentencePositions().get(j).get(0)==labelid.indexOf(nList1.item(k).getAttributes().item(0).getNodeValue().replaceAll(".*#", ""))){
+			    				final1=finalList.get(i1).getBuiltPhrase();
+			    			}
+			    			if (finalList.get(i1).getLabelAndSentencePositions().get(j).get(0)==labelid.indexOf(nList2.item(k).getAttributes().item(0).getNodeValue().replaceAll(".*#", ""))){
+			    				final2=finalList.get(i1).getBuiltPhrase();
+			    			}
+			    			
+			    			
+			    		}
+			    		i1++;
+	        		}
+	        		System.out.println(final1+" "+final2);
+	        		System.out.println();
+	        		//    collector.checkThat(final1, containsString(final2));
+	        		 * 
+	        		 * 
+	        		 */
+	        	
 		        }
 		            
 		    }
@@ -249,6 +246,12 @@ public class dataset1 {
 		
 	}
 	public static Map<String, List<String>> readlabels(String university) throws SAXException, IOException, ParserConfigurationException{
+		String[] tags={
+			"task",
+			"intermediateCatchEvent",
+			"startEvent"
+		};
+		
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 		Document document = documentBuilder.parse("src/test/resources/dataset1/models/"+university+".bpmn");
@@ -256,12 +259,15 @@ public class dataset1 {
     	List<String> labelid = new ArrayList<String>();
 		if(document != null)
 	    {
-	    	NodeList tempList=document.getElementsByTagName("task");
-	    	for(int i=0;i<tempList.getLength();i++) {
-	    		labelname.add(tempList.item(i).getAttributes().getNamedItem("name").getTextContent());
-	    		labelid.add(tempList.item(i).getAttributes().getNamedItem("id").getTextContent());
-	    		
-	    	}
+			for(String tag:tags){
+		    	NodeList tempList=document.getElementsByTagName(tag);
+		    	for(int i=0;i<tempList.getLength();i++) {
+		    		if(!tempList.item(i).getAttributes().getNamedItem("name").getTextContent().equals("")){
+			    		labelname.add(tempList.item(i).getAttributes().getNamedItem("name").getTextContent());
+			    		labelid.add(tempList.item(i).getAttributes().getNamedItem("id").getTextContent());
+		    		}
+		    	}
+			}
 	    }
 	    Map<String,List<String>> map =new HashMap();
 	    map.put("labelname",labelname);
