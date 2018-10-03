@@ -1,4 +1,0 @@
-Check invoice.
-Put the bill in a folder.
-Move full catalogue to facility.
-Verify bill.
