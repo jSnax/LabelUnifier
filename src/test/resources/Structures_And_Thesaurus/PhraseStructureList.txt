@@ -1,16 +1,3 @@
-n, VB, NSS, NSO
-n, VI, NSO
-n, VB, NSO, AO
-n, VB, NSO
-n, NSS, VSP, NSO, AO, AO, Prep, POP, APO, ADV
-n, NSS, VSP, NSO, ADV
-n, NSS, VSP, NSO, AO
-n, VSP, NSS, NSO, PQ
-n, VPP, NSS, NSO, AO
-n, VB, NSS, NSO, AO
-n, VB, NSS, NSO, AS, AS
-n, VB, NSS, NSO, AS
-n, VI, Prep, POS
 y, VI, NO
 y, VI, Prep, PO
 y, VI, NO, Prep, PO

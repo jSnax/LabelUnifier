@@ -71,6 +71,37 @@ Prep("PREPOSITION"),
 POS("PREPOSITIONAL_OBJECT_SINGULAR"),
 POP("PREPOSITIONAL_OBJECT_PLURAL");
 
+
+For better understanding of PhraseStructures, here are some examples:
+
+y, VI, NSO
+This structure transforms labels into short sentences consisting of a verb in imperative form and an object in singular form.
+It can only be applied to sentences that contain a verb (in any form) and an object in singular. Plural objects are not considered by this structure.
+Examples: 
+"Employee verifies bills." => <PhraseStructure does not match label.>
+"Box was moved." => "Move box."
+
+y, VSP, NS, NO, PQ
+This structure transforms labels into questions consisting of a verb in past tense, a subject (either plural or singular), an object (either plural or singular)- 
+Examples:
+"Employee verifies bills." => "Did employee verify bills?"
+"Boxes were moved by truck." => "Did truck move boxes?"
+
+y, VI, NO, AO [Erklärung Adjektive]
+This structure transforms labels into sentences consisting of a verb in imperative form, an object (either plural or singular) and an adjective for said object.
+If the original label does not contain an adjective for the object, this structure can not be applied.
+Examples:
+"Employee verifies bills." => <PhraseStructure does not match label.>
+"Employee verifies many bills." => "Verify many bills."
+
+y, DetDef, NS, VB, NO [Singular & Plural ||Erklärung Artikel]
+This structure transforms labels into sentences consisting of a verb in standard present form, a subject and object (both either plural or singular) and adds an definite article in front of the subject.
+The definite article does not have to exist in the original label for this structure to be applied.
+Examples:
+"Employee verifies bill." => "The employee verifies bill."
+"An employee verifies a small bill." => "The employee verifies bill."
+
+
 Configure program:
 To use the program add your absolute path to your folder containing the PhraseStructureList.txt, DomainThesaurus.txt and the ForbiddenWords.txt in the conf.txt.
 The conf file must remain in the same folder as the .jar. PhraseStructureList.txt, DomainThesaurus.txt and the ForbiddenWords.txt can be edited as described above.
