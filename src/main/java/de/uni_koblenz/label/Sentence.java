@@ -721,7 +721,7 @@ public class Sentence implements java.io.Serializable{
 						break;
 					case Prep:
 						while (tempString == "" && j < tempSentence.getWordsarray().size()){
-							if (this.getWordsarray().get(j).getPartOfSpeech() == PartOfSpeechTypes.PREPOSITION_SUBORDINATING_CONJUNCTION && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
+							if ((this.getWordsarray().get(j).getPartOfSpeech() == PartOfSpeechTypes.PREPOSITION_SUBORDINATING_CONJUNCTION || this.getWordsarray().get(j).getPartOfSpeech() == PartOfSpeechTypes.TO) && this.RoleOfTempWord(j) == "OPTIONAL_INFORMATION_FRAGMENT"  && this.getWordsarray().get(j).getAlreadyUsedForStructure() == false){
 							tempString = this.BaseOfTempWord(j);
 							this.getWordsarray().get(j).setAlreadyUsedForStructure(true);
 							}
