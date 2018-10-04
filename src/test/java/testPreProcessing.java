@@ -11,6 +11,20 @@ public class testPreProcessing {
 	
 		String[] test=new String[] {
 				
+				// passive
+				"By bad accident he got injured.",
+				"An ambulance is called by Mr Grant.",
+				"Bill is payed by company",
+				"The letter is written by Tom.",	
+				"At dinner, Six shrimp were eaten by Harry.",
+				"The savannah is roamed by beautiful giraffes.",
+				"The Grand Canyon is viewed by thousands of tourists every year.",
+				"The metal beams were eventually corroded by the saltwater",
+				"Sugar cane is raised by some people in Hawaii.",
+				"The obstacle course was run by me in record time.",
+				"The entire stretch of highway was paved by the crew.",
+				"A safety video will be watched by staff every year.",
+				
 				// compound
 				"School university teachers.",
 				"Signed up.",
