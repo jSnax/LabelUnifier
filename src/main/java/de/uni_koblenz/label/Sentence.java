@@ -188,9 +188,12 @@ public class Sentence implements java.io.Serializable{
 	    	// get RelationName Enum from String
 	    	RelationName relationName=null;
 	    	try {
-	    		relationName=RelationName.valueOf(edge.getRelation().getLongName().toUpperCase().replace(' ', '_'));
+	    		if(edge.getRelation()!=null && edge.getRelation().getLongName()!=null) {
+	    			relationName=RelationName.valueOf(edge.getRelation().getLongName().toUpperCase().replace(' ', '_'));
+	    		}
 	    	}catch(IllegalArgumentException e){
 	    		relationName=null;
+	    		System.out.println("NO relationname for " +edge.getTarget().originalText() +": "+edge.getRelation().getShortName() );
 	    	}finally {
 	    		
 	    	}
