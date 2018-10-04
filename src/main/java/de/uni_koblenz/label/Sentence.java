@@ -132,33 +132,10 @@ public class Sentence implements java.io.Serializable{
 	 */
 	public static void passiveHandling(List<Word> w) {
 		
-		for(int i = 0; i < w.size(); i++) {
-		
-			if(isPassive(w)==true) {
-			
-				if((w.get(i).getPartOfSpeech()!=null)
-						&& (w.get(i).getPartOfSpeech().getJwnlType()==POS.NOUN || w.get(i).getPartOfSpeech()==PartOfSpeechTypes.PERSONAL_PRONOUN)){
-
-					if(i==1) {
-						if(w.get(i-1).getOriginalForm().equals("by")) {
-							w.get(i).setRole(RoleLeopold.SUBJECT); }
-					
-					}else if(i==2) {
-						if(w.get(i-2).getOriginalForm().equals("by")|| w.get(i-1).getOriginalForm().equals("by")) {
-							w.get(i).setRole(RoleLeopold.SUBJECT); }
-					
-					}else if(i>=3) {
-						if(w.get(i-3).getOriginalForm().equals("by") || w.get(i-2).getOriginalForm().equals("by") || w.get(i-1).getOriginalForm().equals("by")){
-							w.get(i).setRole(RoleLeopold.SUBJECT); }
-						if(w.get(i-2).getRole().equals(RoleLeopold.SUBJECT) || w.get(i-1).getRole().equals(RoleLeopold.SUBJECT)) {
-							w.get(i).setRole(RoleLeopold.OPTIONAL_INFORMATION_FRAGMENT); }
-						
-					}else{
-						if(w.get(i).getOriginalForm().equals("by") && w.get(i+1).getPartOfSpeech().getJwnlType()==POS.NOUN) {
-							w.get(i+1).setRole(RoleLeopold.SUBJECT);
-						}else if(w.get(i).getOriginalForm().equals("by") && w.get(i+2).getPartOfSpeech().getJwnlType()==POS.NOUN) {
-							w.get(i+1).setRole(RoleLeopold.SUBJECT); }
-					}	
+		if(isPassive(w)) {
+			for(Word word:w) {
+				if(word.getOriginalForm().equals("by")) {
+					word.getGrammaticalRelationsByName(RelationName.CASE_MARKER).get(0).getSourceWord().setRole(RoleLeopold.SUBJECT);
 				}
 			}
 		}
@@ -303,7 +280,8 @@ public class Sentence implements java.io.Serializable{
     		System.out.println("NO METHOD WORKED TO FIND ROLE for: " + asCoreSentence.text());
     	}
     	
-    	
+	    //redefining role for passive sentences
+	    passiveHandling(wordsarray);
     	/*
     	 *  IMPORTANT THIS HAS TO BE ON THE END OF THE CONSTRUCTOR (PreProcessing)
     	 */
@@ -311,8 +289,7 @@ public class Sentence implements java.io.Serializable{
     	// at this point because other methods rely on the fact that the index of corenlpsentence equals wordsarray 
 	    wordsarray.removeAll(toRemove);
 	    
-	    //redefining role for passive sentences
-	    passiveHandling(wordsarray);
+
     		
 	}
 	
