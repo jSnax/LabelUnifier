@@ -170,7 +170,7 @@ public class Sentence implements java.io.Serializable{
 	    		}
 	    	}catch(IllegalArgumentException e){
 	    		relationName=null;
-	    		System.out.println("NO relationname for " +edge.getTarget().originalText() +": "+edge.getRelation().getShortName() );
+	    		//System.out.println("NO relationname for " +edge.getTarget().originalText() +": "+edge.getRelation().getShortName() );
 	    	}finally {
 	    		
 	    	}

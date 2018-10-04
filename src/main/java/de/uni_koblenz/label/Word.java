@@ -42,10 +42,10 @@ public class Word implements java.io.Serializable{
 	public Word(String originalForm) {
 		this.originalForm = originalForm;
 	}
-	// main method
+	// constructor
 	public Word(CoreLabel token) throws JWNLException {
 		this.token=token;
-		// gets overwritten by method in Label/Sentence Object
+		// gets overwritten by method in Sentence Object (Subject, Business Object)
 		role=RoleLeopold.OPTIONAL_INFORMATION_FRAGMENT;
 		setOriginalForm(token.originalText());
 		tagLabel();
@@ -136,13 +136,13 @@ public class Word implements java.io.Serializable{
 	}
 	
 	/*
-	 * method to tag a label into PartOfSpeechTypes
+	 * method to set PartOfSpeechTypes by matching POS as String from corenlp with PartOfSpeechTypes enum
 	 */
 	public void tagLabel() {
 		String pos=token.tag();
 
         
-        // NEUE PART OF SPEECH ABFRAGE
+        // find a enum that matches the string
         for (PartOfSpeechTypes type : PartOfSpeechTypes.values()) {
         	if (pos.equals(type.getShortType())) {
         		this.setPartOfSpeech(type);
@@ -155,6 +155,7 @@ public class Word implements java.io.Serializable{
         	// set Symbol POS
         	if(pos.length()==1 && !pos.matches("[a-zA-Z0-9]")) {
         		this.setPartOfSpeech(PartOfSpeechTypes.SYMBOL);
+        	// set POS to NONE 
         	}else {
         		System.out.println("No POS enum found for: " + baseform + ":" + pos);
         		this.setPartOfSpeech(PartOfSpeechTypes.NONE);
@@ -172,48 +173,22 @@ public class Word implements java.io.Serializable{
 	
 
 
-
-	/*  stem(String toStem)
-	 *  method to get the lemma of a single Word using the CoreNLP Lemmatizer.
-	 
-	public void stem(String toStem){		 
-		StanfordCoreNLP pipeline = new StanfordCoreNLP(new Properties(){
-			
-			private static final long serialVersionUID = 1L;
-			{
-			  setProperty("annotators", "tokenize,ssplit,pos,lemma"); 
-			  	// initialize annotator dependencies 
-			}});
-
-			Annotation token = new Annotation(toStem);
-			pipeline.annotate(token); 
-			List<CoreMap> list = token.get(SentencesAnnotation.class);
-			String stemmed = list
-			                        .get(0).get(TokensAnnotation.class)
-			                        .get(0).get(LemmaAnnotation.class);
-			toStem = stemmed;
-	}*/ 
-
 	/*
 	 *  method to get the lemma of single Word using Wordnet via extJWNL
 	 */
 	public void stemWord() throws JWNLException {
 		
 		Dictionary dict = Dictionary.getDefaultResourceInstance();
-		POS pos = null;
-		if(partOfSpeech!=null) {
-			pos = partOfSpeech.getJwnlType();
-		}
-	    
-		if(pos == null) {
+		
+		if(partOfSpeech.getJwnlType() == null) {
 			setBaseform(getOriginalForm());
 		} else {
-            IndexWord word = dict.getIndexWord(pos,getOriginalForm());
+            IndexWord word = dict.getIndexWord(partOfSpeech.getJwnlType(),getOriginalForm());
             String lemma = null;
             if (word != null) {
                 lemma = word.getLemma();
             } else {
-                IndexWord toForm = dict.getMorphologicalProcessor().lookupBaseForm(pos,getOriginalForm());
+                IndexWord toForm = dict.getMorphologicalProcessor().lookupBaseForm(partOfSpeech.getJwnlType(),getOriginalForm());
                 if (toForm != null) {
                     lemma = toForm.getLemma();
                 } else {
@@ -227,6 +202,7 @@ public class Word implements java.io.Serializable{
 	
 	
 	@Override
+	// pretty print Preprocessing
 	public String toString() {
 		String grammaticalRelationAsString=" Grammatical relations: ";
 		for(GrammaticalRelationBetweenWords grammaticalRelation:grammaticalRelations) {
