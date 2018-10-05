@@ -32,6 +32,7 @@ public class dictionaryspeed {
 			 "brother"
 	};
 	@Test
+	// first load / warm up
 	public void test0() throws JWNLException {
 		Dictionary dict = Dictionary.getDefaultResourceInstance();
 
@@ -40,16 +41,23 @@ public class dictionaryspeed {
 	@Test
 	public void test() throws JWNLException {
 		Dictionary dict = Dictionary.getDefaultResourceInstance();
-
 		
 		for(String noun:nouns) {
 		
 			IndexWord word = dict.getIndexWord(POS.NOUN,noun);
 		}
 	}
-
 	@Test
+	//singleton
 	public void test2() throws JWNLException {
+		for(String noun:nouns) {
+			Dictionaryspeedsingleton dict2=Dictionaryspeedsingleton.getInstance();
+			dict2.getnounresult(noun);
+		}
+	}
+	//worst case
+	@Test
+	public void test3() throws JWNLException {
 		
 
 		
