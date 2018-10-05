@@ -34,6 +34,7 @@ public class Word implements java.io.Serializable{
 	private Integer ClusterPosition;
 	private boolean alreadyUsedForStructure;
 
+	private static Dictionary dict;
 	
 	public Word() {
 		
@@ -177,8 +178,9 @@ public class Word implements java.io.Serializable{
 	 *  method to get the lemma of single Word using Wordnet via extJWNL
 	 */
 	public void stemWord() throws JWNLException {
-		
-		Dictionary dict = Dictionary.getDefaultResourceInstance();
+		if(dict==null) {
+			dict = Dictionary.getDefaultResourceInstance();
+		}
 		
 		if(partOfSpeech.getJwnlType() == null) {
 			setBaseform(getOriginalForm());
