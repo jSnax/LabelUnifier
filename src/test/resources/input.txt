@@ -1,3 +1,61 @@
-Feed the good dog.
-Nourish the kitty.
-Open front door for small kitten.
+Receive application
+Check application in time
+Check application complete
+Hand application over to examining board
+Send rejection
+Send acceptance
+Receive application
+Score bachelors grade
+Score motivation
+Score qualifications
+Sum scores
+Invite applicant for appointment
+Appoint applicant
+Make decision
+Accept application
+Attach additional requirements
+Reject application
+Complete application
+Fill out application form
+Add certificate of bachelor degree
+Create and add CV
+Create and add English letter of motivation
+Add certificate of English language
+Add certificate of German language
+Add certificates of further language skills
+Add certificates of qualification
+Compare and send application
+Receive rejection
+Immatriculate
+Receive acceptance
+Take
+interview
+Receive application
+Check application in time
+Check application complete
+Hand application over to examining board
+Send rejection
+Send acceptance
+Check if bachelor equivalent to Uni Potsdam
+Set additional requirements
+Reject application
+Rank case
+Accept application
+Score bachelors grade by §7(1)(a) * 51
+Score qualifications by §7(1)(b) * 34
+Score qualifications by §7(1)(c) * 15
+Sum scores
+Add additional requirements
+Complete application
+Fill out application form
+Add certificate of bachelor degree
+Create and add CV
+Create and add letter of motivation
+Add certificate of German language
+Add recommendations
+Add certificates of qualification
+Add case-of-hardship certificate
+Send application
+Receive rejection
+Receive acceptance
+Immatriculate

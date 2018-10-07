@@ -31,8 +31,8 @@ public class MainPP {
 	DomainThesaurus thesaurus = new DomainThesaurus();
 	ForbiddenWords bannedList = new ForbiddenWords();
 	testList.numberLabels();
-	testList.findSynsets(bannedList);
-	List<WordCluster> AllClusters = testList.matchSynonyms();
+	testList.findSynsets2(bannedList);
+	List<WordCluster> AllClusters = testList.matchSynonyms2();
 	for (int i = 0; i < AllClusters.size(); i++){
 		AllClusters.get(i).calculateDominance(thesaurus);
 		AllClusters.get(i).generalizeWords();
